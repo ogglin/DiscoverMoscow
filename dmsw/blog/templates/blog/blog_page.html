@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    <div class="header-block">
+        <div class="head-image" style='background-image: url("{% static 'image/DXFAcXpXcAAmXrY.jpg' %}")'>
+        </div>
+        <div class="head-block">
+            <div class="head-title">
+                <div class="breadcrumbs">
+                    <a href="/">Главная</a>
+                    <a href="/tags/?tag=СоюзМультфильм" class="active">СоюзМультфильм</a>
+                </div>
+                <h1 class="title">Дома <br>с Союз- <br>мультфильмом</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="intro">Советская и российская государственная киностудия мультипликационных фильмов «Союзмультфильм» – советская и российская государственная киностудия мультипликационных фильмов, создана 10 июня 1936 года. За время ее существования выпущено около 1,5 тысяч мультфильмов в разных жанрах и художественных техниках: кукольной, пластилиновой и рисованной. Многие фильмы обогатили золотой фонд мировой анимационной классики, были отмечены престижными международными и российскими премиями и наградами, стали неотъемлемой частью русской культуры. Сегодня в стадии производства находятся сразу несколько проектов: современные анимационные сериалы, авторские короткометражные фильмы и полнометражные анимационные ленты.</div>
+        <div class="align-center">
+            <img src="{% static 'image/test-ugadaj-sovetskij-multfilm-po-krylatoj-fraze-teaser.jpg' %}">
+        </div>
+        <div class="flex-container-inline">
+            <div class="left">
+                <img src="{% static 'image/Soyuzmultfilm_Logo_b.png' %}">
+            </div>
+            <div class="right">
+                <p>Марафон авторского короткометражного кино. В программе фестиваля премьерные показы мультфильмов-победителей российских и международных фестивалей.</p>
+                <p>В программе несколько премьерных показов победителей российских и международных фестивалей. Так, в рамках марафона впервые демонстрируются призер Открытого российского фестиваля анимационного кино в г. Суздале 2019 года — «Три сестры» (режиссер Светлана Андрианова), «Выбор жюри» Международного анимационного фестиваля в Париже PIAFF 2018 года — «Белоснежье» (реж. Ирина Эльшанская), лауреат международного фестиваля в Оттаве в номинации «Лучший детский фильм» — «Урок плавания» (реж. Татьяна Окружнова), «Лучший фильм для детей по мнению детского жюри» в рамках 25-го Международного фестиваля анимационных фильмов в Штутгарте, призер Анимационного фестиваля Zebra в Словении, а также Leeds Young Film 2018 (Великобритания) — «Кокоша» (реж. Татьяна Мошкова), участник конкурсной программы «анимационного Оскара» — международного фестиваля в Анси — «Доброе сердце» (реж. Евгения Жиркова) и многие другие.</p>
+            </div>
+        </div>
+        <div class="flex-container-inline video-block">
+            <div>
+                <iframe src="https://www.youtube.com/embed/65aTScRmPrk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe src="https://www.youtube.com/embed/Bwl0UPMEqGw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe src="https://www.youtube.com/embed/hJNEfD9vDV8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe src="https://www.youtube.com/embed/5hfcuRh6NX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <hr>
+        <div class="container-inner">
+            <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/800128420&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        </div>
+        <hr>
+        <div class="align-center">
+            <h2>«Золотая сотня Союзмультфильма»</h2>
+            <p>Подборка из 100 мультфильмов — «Ну, Погоди!», «Жил был пес», «Ежик в тумане», «Тайна третьей планеты» и другие бриллианты коллекции Союзмультфильма.</p>
+        </div>
+    </div>
+    <div class="container-outlet">
+        <div class="owl-carousel">
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/Yw5CXQT7pX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/ipdyNNptBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/ANusyumevXI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br><br>
+        <p>Подборка из 100 мультфильмов — «Ну, Погоди!», «Жил был пес», «Ежик в тумане», «Тайна третьей планеты» и другие бриллианты коллекции Союзмультфильма.</p>
+        <hr>
+        <div class="flex-container video-block">
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/1vyuMrDsfqo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Qb7mDL5vrVk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block slider-block %}
+{% endblock %}

@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'Druk Wide';
+    src: url('../webfonts/DrukWideCy-Medium.eot');
+    src: url('../webfonts/DrukWideCy-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/DrukWideCy-Medium.woff2') format('woff2'),
+        url('../webfonts/DrukWideCy-Medium.woff') format('woff'),
+        url('../webfonts/DrukWideCy-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+* {
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: 130px;
+  box-sizing: content-box;
+}
+.flex-container {
+  /*генерирует flex-контейнер уровня блока*/
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  &-inline {
+    /*генерирует flex-контейнер уровня строки*/
+     width: 100%;
+     display: -webkit-inline-flex;
+     display: inline-flex;
+  }
+}
+.btn {
+  cursor: pointer;
+  color: $white;
+  border: 2px solid $white;
+  border-radius: 16px;
+  background-color: transparent;
+  text-transform: uppercase;
+  display: inline-block !important;
+  text-align: center;
+  font-size: 14pt;
+  line-height: 2em;
+  padding: 6px 18px;
+  text-decoration: none !important;
+  white-space: nowrap;
+  &:hover, &:focus {
+    text-decoration: none !important;
+    color: $black;
+    //border: 2px solid $black;
+    background-color: $white;
+  }
+}
+.slider_block {
+  height: 65vh;
+  position: relative;
+  z-index: 90;
+  &.sticky {
+      position: sticky;
+      top: calc(390px - 70vh);
+    .text-block {
+      bottom: 20px !important;
+    }
+  };
+}
+.slider {
+  position: relative;
+  overflow: hidden;
+  &_image {
+    height: 65vh;
+    max-height: 65vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    .text-block {
+      position: absolute;
+      bottom: 90px;
+      left: 100px;
+      text-align: left;
+      a {
+        font-size: 83px;
+        color: $white;
+        font-family: 'Druk Wide';
+        text-decoration: none;
+      }
+      .slider_subtitle {
+        max-width: 540px;
+        font-size: 30px;
+        color: $white;
+        text-align: left;
+        font-family: 'Montserrat', sans-serif;
+      }
+    }
+  }
+  .flex-control-nav {
+    bottom: 10px;
+    .flex-control-paging
+    {
+      li a {
+
+        .flex-active {
+
+        }
+      }
+    }
+  }
+  .flex-direction-nav {
+    bottom: calc(50% - 20px);
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    a {
+      color: $white;
+    }
+    .flex-nav-prev, .flex-nav-next {
+      height: 40px;
+    }
+    .flex-next {
+      right: 20px;
+    }
+    .flex-prev {
+      left: 20px;
+    }
+  }
+}

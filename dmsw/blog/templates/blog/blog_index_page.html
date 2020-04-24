@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogindexpage{% endblock %}
+
+{% block content %}
+    <div class="card-wrap">
+        {% for post in blogpages %}
+            {% with post=post.specific %}
+                <div class="card-item {{ post.page_color }}">
+{#                    <a href="{% pageurl post %}">#}
+                    <a href="/blog/дома-с-союзмультфильмом/">
+                        <div class="card-front {{ post.page_type }}"
+                             {% for tag in post.tags.all %}
+                                {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        >
+                            <div class="card-item-inner">
+                                {% if post.main_image %}
+                                {% image post.main_image scale-100 as img %}
+                                <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                {% endif %}
+                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                                <div class="tags">
+                                    {% for tag in post.tags.all %}
+                                        <span>#{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back {{ post.page_type_hover }}"
+                             {% for tag in post.tags.all %}
+                                {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        >
+                            <div class="card-item-inner">
+                                {% if post.animate_image %}
+                                    <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                                {% endif %}
+                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                                <p class="intro">{{ post.intro }}</p>
+                                <div class="tags">
+                                    {% for tag in post.tags.all %}
+                                        <span>#{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% block extra_js %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slide.css' %}">
+{% endblock %}
+{% block slider_right %}
+    <div class="slider-right">
+        <div id="block-for-slider-right">
+            <div id="viewport-right">
+                <ul id="slidewrapper-right">
+                    <li class="slide" style="background-color: #ef7e31;">
+                        <div class="slide-standart">
+                            <a href="" class="">#Собака у вас дома</a>
+                            <img src="{% static 'image/dog.png' %}">
+                            <p class="">
+                                Завести собаку: о верном друге и огромной ответственности
+                            </p>
+                        </div>
+                    </li>
+                    <li class="slide" style="background-color: #efe339">
+                        <div class="slide-calendar">
+                            <div class="date">
+                                <span>18</span>
+                                <small>сентября</small>
+                            </div>
+                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
+                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
+                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
+                            <a href="#" class="btn">Подборка на утро</a>
+                        </div>
+                    </li>
+                </ul>
+
+{#                <div id="prev-next-btns-right">#}
+{#                    <div id="prev-btn-right"><i class="fas fa-arrow-left"></i></div>#}
+{#                    <div id="next-btn-right"><i class="fas fa-arrow-right"></i></div>#}
+{#                </div>#}
+
+                <ul id="nav-btns-right">
+                    <li class="slide-nav-btn-right"></li>
+                    <li class="slide-nav-btn-right"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogindexpage{% endblock %}
+
+{% block content %}
+    <div class="card-wrap">
+        {% for post in blogpages %}
+            {% with post=post.specific %}
+                <div class="card-item">
+                    <a href="{% pageurl post %}">
+                        <div class="card-front {{ post.page_type }}"
+                             {% for tag in post.tags.all %}
+                                {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == tag.id %}
+                                         style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        >
+                            <div class="card-item-inner">
+                                {% if post.main_image %}
+                                {% image post.main_image scale-100 as img %}
+                                <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                {% endif %}
+                                <h2 class="title">{{ post.title }}</h2>
+                                <div class="tags">
+                                    {% for tag in post.tags.all %}
+                                        <span>#{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back {{ post.page_type_hover }}"
+                             {% for tag in post.tags.all %}
+                                {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == tag.id %}
+                                         style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        >
+                            <div class="card-item-inner">
+                                {% if post.animate_image %}
+                                    <div class="image_animate" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                                {% endif %}
+                                <p class="intro">{{ post.intro }}</p>
+                                <div class="tags">
+                                    {% for tag in post.tags.all %}
+                                        <span>#{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% block extra_js %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+{% endblock %}

@@ -1,0 +1,201 @@
+{% load static compress wagtailuserbar menu_tags slider_extras %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+        {# Global stylesheets #}
+        {% compress css %}
+            <link type="text/x-scss" href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+        {% endcompress %}
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {% block header %}
+            <header class="flex-container">
+                <nav class="navbar flex-container-inline">
+                  <a class="navbar-menu" id="btn_burger"><img src="{% static 'image/burger.png' %}" alt="menu"></a>
+                  <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}" alt="menu"></a>
+                  <div class="main_menu">{% main_menu %}</div>
+                  <div class="navbar-tags">
+{#                    {% flat_menu 'menu_tags' %}#}
+                      <div class="flex-container-inline">
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#культура</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#гастрономия</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#образование</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#образ жизни</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#дом</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="w-25">
+                              <li class="first"><a href="#">#путешествия</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                      </div>
+                      <div class="w-100 bottom">
+                          <a href="#">О проекте</a>
+                          <a href="#">Партнёры</a>
+                      </div>
+                  </div>
+                </nav>
+                <a href="#" id="btn_search"><i class="fas fa-search"></i></a>
+                <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
+            </header>
+        {% endblock %}
+        {% block slider-block %}
+            <div class="slider_block flex-container-inline">
+                <div class="col-75">
+                    {% show_slides %}
+                </div>
+                <div class="col-25">
+                    {% block slider_right %}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block footer %}
+            <footer>
+                <div class="flex-container-inline">
+                    <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
+                    <div class="navbar-footer">
+{#                        {% flat_menu 'menu_footer' %}#}
+                        <ul class="col">
+                              <li class="first"><a href="#">#культура</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                          <ul class="col">
+                              <li class="first"><a href="#">#гастрономия</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                          </ul>
+                          <ul class="col">
+                              <li class="first"><a href="#">#образование</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                          </ul>
+                          <ul class="col">
+                              <li class="first"><a href="#">#образ жизни</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                          </ul>
+                          <ul class="col">
+                              <li class="first"><a href="#">#дом</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                           </ul>
+                          <ul class="col">
+                              <li class="first"><a href="#">#путешествия</a></li>
+                              <li><a href="#">#музыка</a></li>
+                              <li><a href="#">#музей</a></li>
+                              <li><a href="#">#театр</a></li>
+                              <li><a href="#">#лекторий</a></li>
+                              <li class="more">...</li>
+                          </ul>
+                    </div>
+                    <div class="socblock">
+                        <a href=""><i class="fa fa-facebook"></i></a>
+                        <a href=""><i class="fa fa-twitter"></i></a>
+                        <a href=""><i class="fa fa-instagram"></i></a>
+                        <a href=""><i class="fa fa-google-plus"></i></a>
+                    </div>
+                    <div class="newsletter">
+                        <a class="btn">присоединиться к проекту</a>
+                    </div>
+                </div>
+                <div class="dop_links">
+                    <a href="#">О ПРОЕКТЕ</a>
+                    <a href="#">ПАРТНЕРЫ</a>
+                    <span class="copyright">© 2020 Discover Moscow. При поддержке Правительства Москвы. Все права защищены</span>
+                </div>
+{#                <div class="disclamer">#}
+{#                    <p>Перепечатка материалов данного  издания «_» (СМИ зарегистрировано Федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций — свидетельство Эл № ФС77-0000 от 00 мая 2020 года) возможна только с письменного разрешения редакции. При цитировании ссылка на www._ обязательна. Обратная связь c online редакцией info@_</p>#}
+{#                </div>#}
+            </footer>
+        {% endblock %}
+
+        {% wagtailuserbar %}
+        <!-- jQuery -->
+        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e930c46ed58b204"></script>
+        <!-- Font Awesome kit -->
+        <script src="https://kit.fontawesome.com/c39147399e.js" crossorigin="anonymous"></script>
+        {# Global javascript #}
+        <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/dmsw.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+
+    </body>
+</html>

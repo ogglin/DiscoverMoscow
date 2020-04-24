@@ -1,0 +1,37 @@
+{% load static wagtailimages_tags %}
+<div class="slider">
+        <div id="block-for-slider">
+            <div id="viewport">
+                <ul id="slidewrapper">
+                    {% for slide in slides %}
+                        {% image slide.image width-1000 as img %}
+                        <li class="slide">
+                            <div style='background-image: url("{{ img.url }}")' class="slider_image">
+                                <div class="text-block">
+                                    <a href="{{ slide.link }}" class="slider_tag">{{ slide.title }}</a>
+                                    <p class="slider_subtitle">{{ slide.subtitle }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div id="prev-next-btns">
+                    <div id="prev-btn"><i class="fas fa-arrow-left"></i></div>
+                    <div id="next-btn"><i class="fas fa-arrow-right"></i></div>
+                </div>
+
+                <ul id="nav-btns">
+                    <li class="slide-nav-btn"></li>
+                    <li class="slide-nav-btn"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slider.css' %}">
+{% endblock %}
+{% block extra_js %}
+
+{% endblock %}

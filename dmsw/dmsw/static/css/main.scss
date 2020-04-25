@@ -29,7 +29,7 @@ header {
         }
     }
     .navbar {
-        padding: 20px 40px;
+        padding: 20px 44px;
         width: auto;
         -webkit-flex-grow: 3;
         flex-grow: 3;
@@ -65,6 +65,7 @@ header {
             list-style: none;
             padding: 0 0 60px 0;
             li {
+                padding: 0 0 10px 0;
                 &.more {
                     font-size: 2em;
                     color: $white;
@@ -73,8 +74,7 @@ header {
                 a {
                     color: $white;
                     text-decoration: none;
-                    font-weight: bold;
-                    font-size: 18pt;
+                    font-size: 22px;
                     padding: 0 0 10px 0;
                     display: inline-block;
                     &:hover {
@@ -83,8 +83,8 @@ header {
                 }
                 &.first {
                     a {
-                        padding: 0 0 20px 0;
-                        font-size: 21.5pt;
+                        font-size: 30px;
+                        font-weight: 600;
                     }
                 }
             }
@@ -95,8 +95,7 @@ header {
         a {
             color: $white;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 18pt;
+            font-size: 20px;
             padding: 0 40px 10px 0;
             display: inline-block;
             &:hover {
@@ -105,7 +104,7 @@ header {
         }
     }
     .main_menu {
-        padding-left: 30px;
+        padding-left: 60px;
         display: -webkit-flex;
         display: flex;
         flex-wrap: wrap;
@@ -124,19 +123,20 @@ header {
             content: '...';
             position: absolute;
             right: 0;
-            font-size: 3em;
-            line-height: 0.5em;
+            font-size: 2.5em;
+            line-height: 0.7em;
             color: $white;
             cursor: pointer;
         }
         li {
-            padding: 0 20px;
+            padding: 0 40px 0 0;
             line-height: 3em;
             a {
                 color: $white;
                 text-decoration: none;
-                font-size: 21.5pt;
-                font-weight: bold;
+                font-size: 21.5px;
+                letter-spacing: 0.4px;
+                font-weight: 600;
                 &:hover {
                     text-decoration: underline;
                 }
@@ -160,7 +160,7 @@ footer {
         flex-wrap: wrap;
         align-items: flex-start;
         margin: 0;
-        padding: 0 0 60px 60px;
+        padding: 0 0 60px 75px;
         box-sizing: border-box;
         &.active {
             display: flex;
@@ -184,7 +184,7 @@ footer {
                     color: $white;
                     text-decoration: none;
                     font-weight: bold;
-                    font-size: 16pt;
+                    font-size: 16px;
                     padding: 0 0 10px 0;
                     display: inline-block;
                     &:hover {
@@ -193,7 +193,7 @@ footer {
                 }
                 &.first {
                     a {
-                        font-size: 21.5pt;
+                        font-size: 21.5px;
                         padding: 0 0 20px 0;
                     }
                 }
@@ -204,6 +204,8 @@ footer {
         text-align: center;
         padding-right: 40px;
         line-height: 2em;
+        font-size: 16px;
+        font-family: Helvetica, Arial, sans-serif;
         a {
             color: $white;
             padding-right: 40px;
@@ -224,6 +226,8 @@ footer {
         text-align: center;
     }
     .btn {
+        color: $white;
+        border: 1px solid $white;
         &:hover {
             background-color: $white;
         }
@@ -273,12 +277,12 @@ footer {
     height: 640px;
     position: relative;
     &.white {
-        .title {
+        .title, .tags, .intro {
             color: $white !important;
         }
     }
     &.black {
-        .title {
+        .title, .tags, .intro {
             color: $black !important;
         }
     }
@@ -294,7 +298,7 @@ footer {
         color: $black;
         width: calc(100% - 40px);
         text-align: center;
-        font-size: 24pt;
+        font-size: 24px;
         position: absolute;
         z-index: 2;
         height: 2.4em;
@@ -303,7 +307,7 @@ footer {
         left: 20px;
         text-transform: capitalize;
         small {
-            font-size: 20pt;
+            font-size: 20px;
             position: absolute;
             left: 0;
             top: 1.6em;
@@ -316,6 +320,9 @@ footer {
         position: absolute;
         bottom: 20px;
         left: 20px;
+        font-size: 16px;
+        font-family: "Courier New";
+        font-weight: 600;
     }
     .intro {
         color: $black;
@@ -379,6 +386,10 @@ footer {
         }
         .intro {
             top: calc(510px + 15px);
+            width: 100%;
+            left: 0;
+            padding: 0 35px;
+            box-sizing: border-box;
         }
         .tags {
             bottom: 35px;
@@ -433,27 +444,28 @@ footer {
 .container {
     font-family: 'Open Sans', sans-serif;
     margin: 0 auto;
-    width: 1160px;
+    width: 840px;
     font-size: 20px;
-    padding-bottom: 60px;
+    p {
+        padding-bottom: 1em;
+    }
     hr {
         border: none;
         padding: 40px;
     }
-    &-inner {
-        width: 840px;
+    &.inner {
+        width: 1160px;
         margin: 0 auto;
     }
     img {
         width: 100%;
         max-width: 100%;
-        margin: 40px 0;
     }
     .intro {
         font-weight: bold;
         text-align: center;
-        margin: 40px 0;
-        font-size: 27pt;
+        margin: 80px 0 60px;
+        font-size: 27px;
         color: $black;
         height: 3.6em;
         overflow: hidden;
@@ -469,6 +481,7 @@ footer {
         div {
             box-sizing: border-box;
             padding: 10px;
+            flex-grow: 1;
         }
     }
 }
@@ -479,6 +492,7 @@ footer {
     background-color: #f3f3f3;
     box-sizing: border-box;
     padding: 45px 0;
+    margin-bottom: 80px;
     &:before, &:after {
         position: absolute;
         content: '';
@@ -496,6 +510,35 @@ footer {
     }
     .slide-element {
         width: 66%;
+        text-align: left;
+        color: $black;
+        font-family: Helvetica, Arial, sans-serif;
+        .meta {
+            display: block;
+            padding: 25px 0 15px;
+            width: 150%;
+            font-weight: 600;
+            span {
+                padding-right: 10px;
+                margin-right: 10px;
+                position: relative;
+                &:after {
+                    position: absolute;
+                    content: '|';
+                    right: -5px;
+                }
+            }
+        }
+        h3 {
+            font-weight: 600;
+            padding-bottom: 15px;
+            width: 150%;
+        }
+        p {
+            height: 3.4em;
+            overflow: hidden;
+            width: 150%;
+        }
     }
 }
 .owl-nav {
@@ -537,12 +580,13 @@ h2 {
 }
 .header-block {
     background-color: #dfc980;
-    height: 50vh;
+    height: 69vh;
     padding: 60px 45px;
     margin-bottom: 30px;
     .head-image {
         float: left;
-        width: 40%;
+        width: calc(50% - 60px);
+        margin-right: 60px;
         height: 100%;
         background-repeat: no-repeat;
         background-size: cover;
@@ -550,10 +594,10 @@ h2 {
     }
     .head-block {
         position: relative;
-        padding: 0 60px;
+        padding: 0 60px 0 15px;
         float: left;
-        width: 59%;
-        height: 50vh;
+        width: 50%;
+        height: 100%;
         box-sizing: border-box;
         .head-title {
             position: absolute;
@@ -583,8 +627,8 @@ h2 {
         .title {
             color: #000000;
             font-family: 'Druk Wide';
-            font-size: 40pt;
-            padding: 20px 0 0;
+            font-size: 56px;
+            padding: 40px 0 0;
         }
     }
 }

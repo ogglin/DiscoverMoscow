@@ -12,6 +12,7 @@
   outline: none;
   padding: 0;
   margin: 0;
+  box-sizing: border-box !important;
 }
 body {
   font-family: 'Montserrat', sans-serif;
@@ -23,7 +24,8 @@ body {
 }
 .flex-container {
   /*генерирует flex-контейнер уровня блока*/
-  width: 100%;
+  max-width: 100%;
+  width: 100vw;
   display: -webkit-flex;
   display: flex;
   &-inline {
@@ -35,9 +37,9 @@ body {
 }
 .btn {
   cursor: pointer;
-  color: $white;
-  border: 2px solid $white;
-  border-radius: 16px;
+  color: $black;
+  border: 2px solid $black;
+  border-radius: 30px;
   background-color: transparent;
   text-transform: uppercase;
   display: inline-block !important;
@@ -55,12 +57,12 @@ body {
   }
 }
 .slider_block {
-  height: 65vh;
+  height: 69vh;
   position: relative;
   z-index: 90;
   &.sticky {
       position: sticky;
-      top: calc(390px - 70vh);
+      top: calc(390px - 53vh);
     .text-block {
       bottom: 20px !important;
     }
@@ -70,29 +72,30 @@ body {
   position: relative;
   overflow: hidden;
   &_image {
-    height: 65vh;
-    max-height: 65vh;
+    height: 69vh;
+    max-height: 69vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     position: relative;
     .text-block {
       position: absolute;
-      bottom: 90px;
-      left: 100px;
+      bottom: 50px;
+      left: 115px;
       text-align: left;
       a {
-        font-size: 83px;
+        font-size: 103px;
         color: $white;
         font-family: 'Druk Wide';
         text-decoration: none;
+        line-height: 0.9em;
       }
       .slider_subtitle {
-        max-width: 540px;
-        font-size: 30px;
+        max-width: 550px;
+        font-size: 44px;
         color: $white;
         text-align: left;
-        font-family: 'Montserrat', sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
       }
     }
   }

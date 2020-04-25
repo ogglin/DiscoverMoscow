@@ -20,6 +20,15 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+SECRET_KEY = '59bh9hwmjovry$@gjah!7pe5vrh*d+&_srj=udw*^w0w*y81ds'
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.moscow.vp4.ru',
+    'www.moscow.vp4.ru'
+]
+
 
 # Application definition
 
@@ -167,7 +176,7 @@ WAGTAIL_SITE_NAME = "DiscoverMoscow"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
+BASE_URL = 'http://moscow.vp4.ru'
 
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),

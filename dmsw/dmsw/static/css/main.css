@@ -178,7 +178,7 @@ header {
     -webkit-flex-grow: 3;
     flex-grow: 3; }
   header .logotype {
-    padding: 40px 40px 0 0;
+    margin: 40px 40px 0 0;
     width: 150px;
     height: auto; }
   header .navbar-tags {

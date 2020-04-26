@@ -58,6 +58,7 @@ body {
 }
 .slider_block {
   height: 69vh;
+  max-height: 640px;
   position: relative;
   z-index: 90;
   &.sticky {
@@ -73,7 +74,7 @@ body {
   overflow: hidden;
   &_image {
     height: 69vh;
-    max-height: 69vh;
+    max-height: 640px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

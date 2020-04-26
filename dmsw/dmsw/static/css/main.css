@@ -99,6 +99,7 @@ body {
 
 .slider_block {
   height: 69vh;
+  max-height: 640px;
   position: relative;
   z-index: 90; }
   .slider_block.sticky {
@@ -112,7 +113,7 @@ body {
   overflow: hidden; }
   .slider_image {
     height: 69vh;
-    max-height: 69vh;
+    max-height: 640px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -462,7 +463,8 @@ footer {
       width: 100%;
       left: 0;
       padding: 0 35px;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      font-size: 17px; }
     .card-item .card-back .tags {
       bottom: 35px;
       left: 35px; }

@@ -1,15 +1,20 @@
 .slider-right {
   text-align: center; }
   .slider-right .slide {
-    height: 69vh; }
+    height: 69vh;
+    max-height: 640px; }
   .slider-right .slide-standart, .slider-right .slide-calendar {
     padding: 14% 19% 8% !important;
     height: 100%;
-    box-sizing: border-box; }
+    position: relative; }
   .slider-right .slide-standart img {
     width: auto;
     max-width: 100%;
-    margin: 40px 0; }
+    max-height: 50%;
+    position: absolute;
+    left: 0;
+    top: 25%;
+    padding: 0 14% 0 19%; }
   .slider-right .slide-standart a {
     color: #ffffff;
     text-decoration: none;
@@ -23,7 +28,12 @@
     font-family: Helvetica, Arial, sans-serif;
     color: #ffffff;
     max-height: 4.8em;
-    overflow: hidden; }
+    overflow: hidden;
+    margin: 0;
+    position: absolute;
+    bottom: 8%;
+    left: 0;
+    padding: 0 14%; }
   .slider-right .slide-calendar {
     color: #000000; }
     .slider-right .slide-calendar .date {
@@ -46,14 +56,22 @@
         text-align: center;
         font-size: 21px; }
     .slider-right .slide-calendar .tag_link {
+      display: inline-block;
+      margin: 15px 0;
       font-size: 24px;
-      font-family: Helvetica, Arial, sans-serif; }
+      font-family: Helvetica, Arial, sans-serif;
+      cursor: pointer; }
     .slider-right .slide-calendar a {
       display: block;
       margin: 20px 0;
       text-decoration: none; }
       .slider-right .slide-calendar a:hover {
         text-decoration: underline; }
+    .slider-right .slide-calendar .btn {
+      margin: 0;
+      position: absolute;
+      bottom: 8%;
+      left: 19%; }
 
 .sticky .slide-standart, .sticky .slide-calendar {
   padding: 360px 60px 60px !important; }

@@ -19,7 +19,7 @@ body {
   width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
-  padding-top: 130px;
+  padding-top: 70px;
   box-sizing: content-box;
 }
 .flex-container {
@@ -28,6 +28,7 @@ body {
   width: 100vw;
   display: -webkit-flex;
   display: flex;
+  flex-wrap: wrap;
   &-inline {
     /*генерирует flex-контейнер уровня строки*/
      width: 100%;
@@ -85,15 +86,15 @@ body {
       left: 115px;
       text-align: left;
       a {
-        font-size: 103px;
+        font-size: 73px;
         color: $white;
         font-family: 'Druk Wide';
         text-decoration: none;
         line-height: 0.9em;
       }
       .slider_subtitle {
-        max-width: 550px;
-        font-size: 44px;
+        max-width: 450px;
+        font-size: 34px;
         color: $white;
         text-align: left;
         font-family: Helvetica, Arial, sans-serif;

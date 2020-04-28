@@ -33,10 +33,10 @@
     <body class="{% block body_class %}{% endblock %}">
         {% block header %}
             <header class="flex-container">
-                <nav class="navbar flex-container-inline">
-                  <a class="navbar-menu" id="btn_burger"><img src="{% static 'image/burger.png' %}" alt="menu"></a>
-                  <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}" alt="menu"></a>
-                  <div class="main_menu">{% main_menu %}</div>
+                <a class="navbar-menu" id="btn_burger"><img src="{% static 'image/burger.png' %}" alt="menu"></a>
+                <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}" alt="menu"></a>
+                <nav class="navbar">
+                  <div class="main_menu">{% main_menu %}<div id="more">...</div> </div>
                   <div class="navbar-tags">
 {#                    {% flat_menu 'menu_tags' %}#}
                       <div class="flex-container-inline">
@@ -46,7 +46,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="w-25">
                               <li class="first"><a href="#">#гастрономия</a></li>
@@ -54,7 +53,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="w-25">
                               <li class="first"><a href="#">#образование</a></li>
@@ -62,7 +60,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="w-25">
                               <li class="first"><a href="#">#образ жизни</a></li>
@@ -70,7 +67,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="w-25">
                               <li class="first"><a href="#">#дом</a></li>
@@ -78,7 +74,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="w-25">
                               <li class="first"><a href="#">#путешествия</a></li>
@@ -86,7 +81,7 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
+{#                              <li class="more">...</li>#}
                           </ul>
                       </div>
                       <div class="w-100 bottom">
@@ -125,7 +120,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                           <ul class="col">
                               <li class="first"><a href="#">#гастрономия</a></li>
@@ -158,7 +152,6 @@
                               <li><a href="#">#музей</a></li>
                               <li><a href="#">#театр</a></li>
                               <li><a href="#">#лекторий</a></li>
-                              <li class="more">...</li>
                           </ul>
                     </div>
                     <div class="socblock">

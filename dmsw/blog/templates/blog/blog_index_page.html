@@ -11,15 +11,14 @@
                 <div class="card-item {{ post.page_color }}">
 {#                    <a href="{% pageurl post %}">#}
                     <a href="/blog/дома-с-союзмультфильмом/">
-                        <div class="card-front {{ post.page_type }}"
-                             {% for tag in post.tags.all %}
+                        <div class="card-front {{ post.page_type }}">
+                            <div class="background"
                                 {% for ctag in post.color_tags %}
-                                    {% if ctag.tag_id == tag.id %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% endfor %}
-                            {% endfor %}
-                        >
+                            ></div>
                             <div class="card-item-inner">
                                 {% if post.main_image %}
                                 {% image post.main_image scale-100 as img %}
@@ -27,21 +26,18 @@
                                 {% endif %}
                                 <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
                                 <div class="tags">
-                                    {% for tag in post.tags.all %}
-                                        <span>#{{ tag.name }}</span>
-                                    {% endfor %}
+                                    <span>#{{ post.main_tag }}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-back {{ post.page_type_hover }}"
-                             {% for tag in post.tags.all %}
-                                {% for ctag in post.color_tags %}
-                                    {% if ctag.tag_id == tag.id %}
+                        <div class="card-back {{ post.page_type_hover }}">
+                            <div class="background"
+                                 {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% endfor %}
-                            {% endfor %}
-                        >
+                            ></div>
                             <div class="card-item-inner">
                                 {% if post.animate_image %}
                                     <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
@@ -49,9 +45,7 @@
                                 <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
                                 <p class="intro">{{ post.intro }}</p>
                                 <div class="tags">
-                                    {% for tag in post.tags.all %}
-                                        <span>#{{ tag }}</span>
-                                    {% endfor %}
+                                    <span>#{{ post.main_tag }}</span>
                                 </div>
                             </div>
                         </div>

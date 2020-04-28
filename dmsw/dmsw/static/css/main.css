@@ -289,7 +289,6 @@ header {
           text-decoration: underline; }
 
 footer {
-  border-top: 1px solid #ffffff;
   background-color: #000000;
   padding: 40px;
   z-index: 9999;
@@ -400,6 +399,7 @@ footer {
 .card-item {
   width: calc(100% / var(--columns));
   height: calc(100vw * 0.37);
+  min-height: 390px;
   position: relative; }
   .card-item.white .title, .card-item.white .tags, .card-item.white .intro {
     color: #ffffff !important; }

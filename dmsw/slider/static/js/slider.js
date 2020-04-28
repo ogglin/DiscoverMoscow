@@ -85,3 +85,7 @@ function setActive() {
         }
     })
 }
+
+$(window).resize(function() {
+    nextSlideRight();
+})

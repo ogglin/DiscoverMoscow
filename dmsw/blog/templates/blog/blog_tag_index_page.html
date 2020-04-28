@@ -5,7 +5,7 @@
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
-    <div class="card-wrap tagged">
+    <div class="card-wrap">
         {% for post in blogpages %}
             {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">
@@ -13,7 +13,7 @@
                     <a href="/blog/дома-с-союзмультфильмом/">
                         <div class="card-front {{ post.page_type }}">
                             <div class="background"
-                                 {% for ctag in post.color_tags %}
+                                {% for ctag in post.color_tags %}
                                     {% if ctag.tag_id == post.main_tag.id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
@@ -21,13 +21,9 @@
                             ></div>
                             <div class="card-item-inner">
                                 {% if post.main_image %}
-                                {% image post.main_image scale-100 as img %}
-                                <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                    {% image post.main_image scale-100 as img %}
+                                    <div class="image" style='background-image: url("{{ img.url }}")'></div>
                                 {% endif %}
-                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
-                                <div class="tags">
-                                    <span>#{{ post.main_tag }}</span>
-                                </div>
                             </div>
                         </div>
                         <div class="card-back {{ post.page_type_hover }}">
@@ -42,11 +38,13 @@
                                 {% if post.animate_image %}
                                     <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
                                 {% endif %}
-                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
                                 <p class="intro">{{ post.intro }}</p>
-                                <div class="tags">
-                                    <span>#{{ post.main_tag }}</span>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="card-meta {{ post.page_type_hover }}">
+                            <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                            <div class="tags">
+                                <span>#{{ post.main_tag }}</span>
                             </div>
                         </div>
                     </a>
@@ -77,12 +75,12 @@
                     <li class="slide" style="background-color: #efe339">
                         <div class="slide-calendar">
                             <div class="date">
-                                <span>18</span>
+                                <span>28</span>
                                 <small>сентября</small>
                             </div>
-                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
-                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
-                            <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>
+                            <a class="tag_link">Тренировка <br>с <strong>Полиной Киценко</strong></a>
+                            <a class="tag_link">Домашний стиль <br>с <strong>Натальей Барбье</strong></a>
+                            <a class="tag_link">Завтрак <br>с <strong>Аленой Долецкой</strong></a>
                             <a href="#" class="btn">Подборка на утро</a>
                         </div>
                     </li>

@@ -155,6 +155,9 @@ header {
         li {
             padding: 0 40px 0 0;
             margin-bottom: 1em;
+            &:last-child {
+                padding: 0;
+            }
             a {
                 color: $white;
                 text-decoration: none;

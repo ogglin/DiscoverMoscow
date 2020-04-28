@@ -120,10 +120,10 @@ function main_menu_collapse() {
     menu_items.each(function () {
         menu_width_cur += $(this).width() + 40
     })
-    if (menu_width < (menu_width_cur + 185.25)) {
+    if (menu_width < (menu_width_cur + 71.15)) {
         $('header .main_menu').addClass('collapse')
     }
-    if (menu_width >= (menu_width_cur + 185.25)) {
+    if (menu_width >= (menu_width_cur + 71.15)) {
         $('header .main_menu').removeClass('collapse')
     }
 }

@@ -276,6 +276,8 @@ header {
     header .nav li {
       padding: 0 40px 0 0;
       margin-bottom: 1em; }
+      header .nav li:last-child {
+        padding: 0; }
       header .nav li a {
         color: #ffffff;
         text-decoration: none;

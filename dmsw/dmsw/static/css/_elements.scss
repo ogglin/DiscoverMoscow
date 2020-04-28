@@ -45,11 +45,12 @@ body {
   text-transform: uppercase;
   display: inline-block !important;
   text-align: center;
-  font-size: 14pt;
+  font-size: calc(100vw * 0.011);
   line-height: 2em;
   padding: 6px 18px;
   text-decoration: none !important;
   white-space: nowrap;
+  font-weight: 500;
   &:hover, &:focus {
     text-decoration: none !important;
     color: $black;

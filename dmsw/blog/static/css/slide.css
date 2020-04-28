@@ -60,12 +60,14 @@
         text-align: center;
         font-size: 21px; }
     .slider-right .slide-calendar .tag_link {
-      display: inline-block;
-      margin: 0 0 20px 0;
-      font-size: 22px;
+      display: block;
+      margin: calc(100vw * 0.01) 0;
+      font-size: calc(100vw * 0.013);
       font-family: Helvetica, Arial, sans-serif;
       cursor: pointer;
-      padding: 0 40px; }
+      max-width: 100%;
+      text-align: center;
+      padding: 0 calc(100vw * 0.04); }
     .slider-right .slide-calendar a {
       display: block;
       margin: 18px 0;

@@ -88,11 +88,12 @@ body {
   text-transform: uppercase;
   display: inline-block !important;
   text-align: center;
-  font-size: 14pt;
+  font-size: calc(100vw * 0.011);
   line-height: 2em;
   padding: 6px 18px;
   text-decoration: none !important;
-  white-space: nowrap; }
+  white-space: nowrap;
+  font-weight: 500; }
   .btn:hover, .btn:focus {
     text-decoration: none !important;
     color: #000000;
@@ -216,7 +217,7 @@ header {
     header .navbar-tags ul {
       list-style: none;
       padding: 0 60px 60px 0;
-      width: calc(100% - var(--columns)); }
+      width: calc(100%/4); }
       header .navbar-tags ul:last-child {
         padding: 0 0 60px 0; }
       header .navbar-tags ul li {
@@ -236,7 +237,7 @@ header {
           font-size: 24px;
           font-weight: 500; }
   header .bottom {
-    margin-top: 60px; }
+    margin-top: 0; }
     header .bottom a {
       color: #ffffff;
       text-decoration: none;
@@ -354,8 +355,7 @@ footer {
     color: #ffffff;
     border: 1px solid #ffffff; }
     footer .btn:hover {
-      background-color: #ffffff;
-      font-weight: 600; }
+      background-color: #ffffff; }
 
 .socblock {
   width: 120px;
@@ -399,7 +399,7 @@ footer {
 
 .card-item {
   width: calc(100% / var(--columns));
-  height: calc(100vw * 0.45);
+  height: calc(100vw * 0.37);
   position: relative; }
   .card-item.white .title, .card-item.white .tags, .card-item.white .intro {
     color: #ffffff !important; }
@@ -407,10 +407,10 @@ footer {
     color: #000000 !important; }
   .card-item .image {
     background-size: contain;
-    background-position: center 100px;
+    background-position: center bottom;
     background-repeat: no-repeat;
     width: 50%;
-    height: 100%;
+    height: 50%;
     margin: 0 auto; }
   .card-item .title {
     color: #000000;
@@ -421,7 +421,7 @@ footer {
     z-index: 2;
     height: 2.4em;
     overflow: hidden;
-    top: calc(100vw * 0.27);
+    top: calc(100vw * 0.22);
     left: 20px;
     text-transform: capitalize; }
     .card-item .title small {
@@ -431,6 +431,18 @@ footer {
       top: 1.6em;
       width: 100%;
       font-weight: 400; }
+  .card-item .intro {
+    color: #000000;
+    max-height: 60px;
+    line-height: 20px;
+    overflow-y: hidden;
+    position: absolute;
+    z-index: 2;
+    top: calc(100vw * 0.22 + 70px);
+    left: 60px;
+    width: calc(100% - 120px);
+    text-align: center;
+    font-size: 15px; }
   .card-item .card-meta {
     position: absolute;
     z-index: 100;
@@ -446,18 +458,10 @@ footer {
       font-size: 15px;
       font-family: "PT Mono";
       font-weight: 400; }
-  .card-item .intro {
-    color: #000000;
-    max-height: 60px;
-    line-height: 20px;
-    overflow-y: hidden;
-    position: absolute;
-    z-index: 2;
-    top: calc(100vw * 0.27 + 70px);
-    left: 60px;
-    width: calc(100% - 120px);
-    text-align: center;
-    font-size: 15px; }
+    .card-item .card-meta.rekcard .title, .card-item .card-meta.rekcard .intro, .card-item .card-meta.rekcard .tags {
+      display: none; }
+    .card-item .card-meta:hover.video .title, .card-item .card-meta:hover.video .intro, .card-item .card-meta:hover.fullimage .title, .card-item .card-meta:hover.fullimage .intro, .card-item .card-meta:hover.rekcard .title, .card-item .card-meta:hover.rekcard .intro {
+      display: none; }
   .card-item .card-front, .card-item .card-back {
     position: absolute;
     top: 0;
@@ -492,21 +496,17 @@ footer {
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center; }
-    .card-item .card-front.rekcard .title, .card-item .card-front.rekcard .intro, .card-item .card-front.rekcard .tags {
-      display: none; }
   .card-item .card-back {
     transition: auto 1s ease-in 0.5s;
     display: none; }
-    .card-item .card-back .image {
-      background-position: center 115px; }
-    .card-item .card-back .title {
-      top: calc(430px + 15px); }
     .card-item .card-back .card-item-inner {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0; }
+    .card-item .card-back.video .title, .card-item .card-back.video .intro, .card-item .card-back.fullimage .title, .card-item .card-back.fullimage .intro, .card-item .card-back.rekcard .title, .card-item .card-back.rekcard .intro {
+      display: none; }
     .card-item .card-back.video .image, .card-item .card-back.fullimage .image, .card-item .card-back.rekcard .image {
       position: absolute;
       top: 0;
@@ -645,8 +645,7 @@ h2 {
 
 .header-block {
   background-color: #dfc980;
-  height: 69vh;
-  max-height: 640px;
+  height: calc(100vw * 0.375);
   padding: 60px 45px;
   margin-bottom: 30px; }
   .header-block .head-image {

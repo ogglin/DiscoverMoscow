@@ -2,7 +2,7 @@
 var docHeight = $(document).height();
 var footerHeight = $('footer').height();
 burgerHeight = docHeight - footerHeight - 130
-$('header .navbar-tags').css('height',burgerHeight)
+// $('header .navbar-tags').css('height',burgerHeight)
 $('#btn_burger').click(function () {
     $('.navbar-tags').addClass('active')
     $('#btn_burger').addClass('hide')

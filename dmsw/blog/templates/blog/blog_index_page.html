@@ -21,13 +21,9 @@
                             ></div>
                             <div class="card-item-inner">
                                 {% if post.main_image %}
-                                {% image post.main_image scale-100 as img %}
-                                <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                    {% image post.main_image scale-100 as img %}
+                                    <div class="image" style='background-image: url("{{ img.url }}")'></div>
                                 {% endif %}
-                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
-                                <div class="tags">
-                                    <span>#{{ post.main_tag }}</span>
-                                </div>
                             </div>
                         </div>
                         <div class="card-back {{ post.page_type_hover }}">
@@ -42,11 +38,13 @@
                                 {% if post.animate_image %}
                                     <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
                                 {% endif %}
-                                <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
                                 <p class="intro">{{ post.intro }}</p>
-                                <div class="tags">
-                                    <span>#{{ post.main_tag }}</span>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="card-meta">
+                            <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                            <div class="tags">
+                                <span>#{{ post.main_tag }}</span>
                             </div>
                         </div>
                     </a>
@@ -77,7 +75,7 @@
                     <li class="slide" style="background-color: #efe339">
                         <div class="slide-calendar">
                             <div class="date">
-                                <span>18</span>
+                                <span>28</span>
                                 <small>сентября</small>
                             </div>
                             <a class="tag_link">Тренировка с <strong>Полиной Киценко</strong></a>

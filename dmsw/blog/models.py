@@ -228,3 +228,23 @@ class BlogTagIndexPage(Page):
         return context
 
 
+class TypedPage(Page):
+    date = models.DateField("Post date")
+    text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)
+    hr = blocks.RichTextBlock(features=['hr'], blank=True)
+    content_body = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('html', RawHTMLBlock()),
+        ('video', EmbedBlock()),
+        ('text', text),
+        ('hr', hr),
+    ], null=True, blank=True, verbose_name="Статья")
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('date'),
+            FieldPanel('title'),
+        ], heading="Данные карточки"),
+        StreamFieldPanel('content_body')
+    ]

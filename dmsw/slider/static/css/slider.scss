@@ -74,14 +74,15 @@
     right: 30px;
     margin: 0;
     text-align: right;
+    height: auto;
 }
 
 .slide-nav-btn {
     position: relative;
     display: inline-block;
     list-style: none;
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     background-color: #fff;
     border-radius: 50%;
     margin: 3px;
@@ -89,7 +90,7 @@
         cursor: pointer;
     }
     &.active {
-        width: 20px;
-        height: 20px;
+        width: 14px;
+        height: 14px;
     }
 }

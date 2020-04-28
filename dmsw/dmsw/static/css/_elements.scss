@@ -58,8 +58,7 @@ body {
   }
 }
 .slider_block {
-  height: 69vh;
-  max-height: 640px;
+  height: calc(100vw * 0.375);
   position: relative;
   z-index: 90;
   &.sticky {
@@ -73,9 +72,11 @@ body {
 .slider {
   position: relative;
   overflow: hidden;
+  height: 100%;
+  div, ul, .slide {
+    height: 100%;
+  }
   &_image {
-    height: 69vh;
-    max-height: 640px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -85,16 +86,17 @@ body {
       bottom: 50px;
       left: 115px;
       text-align: left;
+      height: auto;
       a {
-        font-size: 73px;
+        font-size: calc(100vw * 0.045);
         color: $white;
         font-family: 'Druk Wide';
         text-decoration: none;
         line-height: 0.9em;
       }
       .slider_subtitle {
-        max-width: 450px;
-        font-size: 34px;
+        max-width: calc(100vw * 0.28);
+        font-size: calc(100vw * 0.021);
         color: $white;
         text-align: left;
         font-family: Helvetica, Arial, sans-serif;

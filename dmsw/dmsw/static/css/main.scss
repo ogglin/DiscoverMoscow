@@ -2,6 +2,10 @@
 @import "indents";
 @import "elements";
 
+body {
+    --columns: 4;
+    --slider_height: 60vh;
+}
 .hide {
     display: none !important;
 }
@@ -38,9 +42,12 @@ header {
         flex: 1 1 360px;
     }
     .logotype {
-        margin: 10px 50px 0 0;
-        width: 150px;
+        margin: 15px 50px 0 0;
+        width: 110px;
         height: auto;
+        img {
+            max-width: 100%;
+        }
     }
     .navbar-tags {
         border-top: 1px solid $white;
@@ -66,7 +73,11 @@ header {
         }
         ul {
             list-style: none;
-            padding: 0 0 60px 0;
+            padding: 0 60px 60px 0;
+            width: calc(100% - var(--columns));
+            &:last-child {
+                padding: 0 0 60px 0;
+            }
             li {
                 padding: 0 0 20px 0;
                 &.more {
@@ -140,14 +151,14 @@ header {
         height: 2em;
         overflow-y: hidden;
         position: relative;
-        margin: 20px 50px 0 0;
+        margin: 26px 50px 0 0;
         li {
             padding: 0 40px 0 0;
             margin-bottom: 1em;
             a {
                 color: $white;
                 text-decoration: none;
-                font-size: 16pt;
+                font-size: 16px;
                 letter-spacing: 0.4px;
                 font-weight: 600;
                 &:hover {
@@ -299,10 +310,11 @@ footer {
         }
     }
 }
+
 .card-item {
     //width: 16.6666%;
-    width: 25%;
-    height: 640px;
+    width: calc(100% / var(--columns));
+    height: calc(100vw * 0.45);
     position: relative;
     &.white {
         .title, .tags, .intro {
@@ -326,16 +338,16 @@ footer {
         color: $black;
         width: calc(100% - 40px);
         text-align: center;
-        font-size: 24px;
+        font-size: 22px;
         position: absolute;
         z-index: 2;
         height: 2.4em;
         overflow: hidden;
-        top: 430px;
+        top: calc(100vw * 0.27);
         left: 20px;
         text-transform: capitalize;
         small {
-            font-size: 20px;
+            font-size: 17px;
             position: absolute;
             left: 0;
             top: 1.6em;
@@ -343,26 +355,35 @@ footer {
             font-weight: 400;
         }
     }
-    .tags {
-        color: $black;
+    .card-meta {
         position: absolute;
-        bottom: 20px;
-        left: 20px;
-        font-size: 15px;
-        font-family: "PT Mono";
-        font-weight: 400;
+        z-index: 100;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        .tags {
+            color: $black;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 15px;
+            font-family: "PT Mono";
+            font-weight: 400;
+        }
     }
     .intro {
         color: $black;
-        max-height: 3.6em;
+        max-height: 60px;
+        line-height: 20px;
         overflow-y: hidden;
         position: absolute;
         z-index: 2;
-        top: 510px;
-        left: 20px;
-        width: calc(100% - 40px);
+        top: calc(100vw * 0.27 + 70px);
+        left: 60px;
+        width: calc(100% - 120px);
         text-align: center;
-        font-size: 15pt;
+        font-size: 15px;
     }
     .card-front, .card-back {
         position: absolute;
@@ -419,19 +440,7 @@ footer {
         .title {
             top: calc(430px + 15px);
         }
-        .intro {
-            top: calc(510px + 15px);
-            width: 100%;
-            left: 0;
-            padding: 0 35px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .tags {
-            bottom: 35px;
-            left: 35px;
-        }
-        .card-item-inner {
+       .card-item-inner {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -468,10 +477,10 @@ footer {
         .card-back {
             //z-index: 9;
             transition: auto 1s ease-out 0.5s;
-            top: -15px;
-            bottom: -15px;
-            left: -15px;
-            right: -15px;
+            top: -10px;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
             display: block;
             z-index: 99;
         }

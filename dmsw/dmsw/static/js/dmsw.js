@@ -24,6 +24,7 @@ var navBtnId_right = 0;
 var translateWidth_right = 0;
 var switchInterval_right = setInterval(nextSlide, slideInterval_right);
 slideNavs_right = $('.slide-nav-btn-right')
+setActive();
 $(document).ready(function() {
     setActive();
     $('#viewport-right').hover(function() {
@@ -93,6 +94,7 @@ function prevSlide() {
 }
 function setActive() {
     $('.slide-nav-btn-right').removeClass('active')
+    console.log(slideNow_right)
     slideNavs_right.each(function (index) {
         if (slideNow_right == index+1) {
             $( this ).addClass('active')

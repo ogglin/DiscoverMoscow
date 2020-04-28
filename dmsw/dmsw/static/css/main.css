@@ -127,14 +127,14 @@ body {
       text-align: left;
       height: auto; }
       .slider_image .text-block a {
-        font-size: calc(100vw * 0.045);
+        font-size: calc(100vw * 0.04);
         color: #ffffff;
         font-family: 'Druk Wide';
         text-decoration: none;
         line-height: 0.9em; }
       .slider_image .text-block .slider_subtitle {
         max-width: calc(100vw * 0.28);
-        font-size: calc(100vw * 0.021);
+        font-size: calc(100vw * 0.016);
         color: #ffffff;
         text-align: left;
         font-family: Helvetica, Arial, sans-serif; }

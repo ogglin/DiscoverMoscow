@@ -1,6 +1,8 @@
 @import "colors";
 @import "indents";
 @import "elements";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
     --columns: 4;
@@ -355,6 +357,7 @@ footer {
             top: 1.6em;
             width: 100%;
             font-weight: 400;
+            text-transform: none;
         }
     }
     .intro {
@@ -490,12 +493,13 @@ footer {
     }
 }
 .container {
-    font-family: Serif;
+    font-family: 'PT Serif', serif;
     margin: 0 auto;
     width: 840px;
     font-size: 20px;
     p {
         padding-bottom: 1em;
+        font-size: 18px;
     }
     hr {
         border: none;
@@ -517,7 +521,7 @@ footer {
         color: $black;
         height: 3.6em;
         overflow: hidden;
-        font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+        font-family: 'Montserrat', sans-serif;
     }
     .left {
         flex-basis: 50%;
@@ -675,7 +679,7 @@ h2 {
         .title {
             color: #000000;
             font-family: 'Druk Wide';
-            font-size: 56px;
+            font-size: calc(100vw * 0.04);
             padding: 40px 0 0;
         }
     }

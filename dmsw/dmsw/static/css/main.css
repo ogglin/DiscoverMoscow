@@ -180,7 +180,7 @@ header {
   header #btn_burger {
     cursor: pointer;
     padding: 12px 0 0 50px; }
-    header #btn_burger image {
+    header #btn_burger img {
       max-width: 85%; }
     header #btn_burger_close {
       cursor: pointer;

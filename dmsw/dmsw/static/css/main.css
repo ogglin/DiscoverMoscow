@@ -171,7 +171,8 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999; }
+  z-index: 9999;
+  height: 70px; }
   header #btn_search {
     line-height: 70px;
     margin: 0 40px;

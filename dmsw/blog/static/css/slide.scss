@@ -60,7 +60,7 @@
             display: flex;
             align-items: center;
             flex-flow: wrap;
-            align-content: space-around;
+            align-content: center;
         }
         .block_third {
             width: 100%;
@@ -101,7 +101,7 @@
         }
         a {
             display: block;
-            margin: 18px 0;
+            margin: 10px 0;
             text-decoration: none;
             &:hover {
                 text-decoration: underline;

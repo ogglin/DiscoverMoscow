@@ -94,7 +94,6 @@ function prevSlideRight() {
 }
 function setActive() {
     $('.slide-nav-btn-right').removeClass('active')
-    console.log(slideNow_right)
     slideNavs_right.each(function (index) {
         if (slideNow_right == index+1) {
             $( this ).addClass('active')
@@ -143,4 +142,5 @@ $(document).ready(function(){
       nav: true,
   });
   main_menu_collapse()
+
 });

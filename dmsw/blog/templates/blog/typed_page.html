@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags cfilters %}
+
+{% block body_class %}template-typed{% endblock %}
+
+{% block content %}
+    {% image page.main_image scale-100 as img %}
+    <div class="{{  page.url|clear_url }}">
+        <div class="header" style="background-image: url('{{ img.url }}')">
+            <h1>#{{ page.title }}</h1>
+        </div>
+{#    Parthners #}
+        <div class="navigate">
+            <div style="display: inline-block;">
+                <div class="left">
+                    <h2>Наши партнеры делают Москву лучше. Мы тоже. Поэтому всегда готовы к сотрудничеству.</h2>
+                </div>
+                <div class="right">
+                    <a class="btn">присоединиться к проекту</a>
+                </div>
+            </div>
+            <div class="filter_btns">
+                {% for tag in page.tags %}
+                    <a class="btn" area-label="{{ tag.name }}">#{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="content images">
+            {% for item in page.typed_gallery_images.all %}
+                {% image item.image scale-100 as img %}
+                <div class="partner_img" style="background-image: url('{{ img.url }}')" area="{{ item.main_tag }}">
+                    <p class="meta">
+                        {{ item.caption }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+{#    Parthners end #}
+
+{#    About #}
+    <div class="content abouts">
+        <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>
+        <div class="btn-block">
+            <a class="btn">скачать медиакит</a>
+            <a class="btn">присоединиться к проекту</a>
+        </div>
+        <div class="info-block">
+            <div class="items">
+                <p class="title">Адрес:</p>
+                <a href="https://yandex.ru/maps/-/CWssZ82W" target="_blank">127238 Россия, Москва, <br>ул. Правды, 12. стр. 1</a>
+            </div>
+            <div class="items">
+                <p class="title">Телефон:</p>
+                <a href="tel:+79035698752">+7 903 569 87 52</a> <br>
+                <a href="tel:+79161269857">+7 916 126 98 57</a>
+            </div>
+            <div class="items">
+                <p class="title">Email:</p>
+                <a href="mailto:info@discovermoscow.com">info@discovermoscow.com</a> <br>
+                <a href="mailto:olya@discovermoscow.com">olya@discovermoscow.com</a>
+            </div>
+        </div>
+        <div class="soc-block">
+            <a href=""><i class="fa fa-facebook"></i></a>
+            <a href=""><i class="fa fa-twitter"></i></a>
+            <a href=""><i class="fa fa-instagram"></i></a>
+            <a href=""><i class="fa fa-google-plus"></i></a>
+        </div>
+    </div>
+{#    About end #}
+
+    </div>
+
+{% endblock %}
+
+{% block slider-block %}
+{% endblock %}
+{% block extra_js %}
+    <script type="text/javascript">
+        label = ''
+        $(document).ready(function() {
+            all_parthners = $('.partner_img')
+            $('.filter_btns .btn').click(function () {
+                $('.filter_btns .btn').removeClass('active')
+                $(this).addClass('active')
+                if (label == $(this).attr('area-label')) {
+                    $(this).removeClass('active')
+                    all_parthners.each(function () {
+                        $(this).removeClass('hide')
+                    });
+                    label = ''
+                } else {
+                    label = $(this).attr('area-label')
+                    all_parthners.each(function () {
+                        if ($(this).attr('area') != label) {
+                            $(this).addClass('hide')
+                        } else {
+                            $(this).removeClass('hide')
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+{% endblock %}

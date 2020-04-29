@@ -29,7 +29,10 @@ header {
     }
     #btn_burger {
         cursor: pointer;
-        padding: 8px 0 0 50px;
+        padding: 12px 0 0 50px;
+        image {
+            max-width: 85%;
+        }
         &_close {
             cursor: pointer;
             padding: 20px 0 0 50px;
@@ -681,6 +684,168 @@ h2 {
             font-family: 'Druk Wide';
             font-size: calc(100vw * 0.04);
             padding: 40px 0 0;
+        }
+    }
+}
+.partners {
+    .header {
+        background-size: cover;
+        background-position: center;
+        line-height: 260px;
+        color: $white;
+        font-family: 'Druk Wide';
+        font-size: calc(100vw * 0.03);
+        padding: 0 110px;
+    }
+    .navigate {
+        background-color: #418dc1;
+        padding: 100px 220px 0;
+        color: $white;
+        .btn {
+            border-color: $white;
+            color: $white;
+            &:hover, &.active {
+                color: #418dc1;
+                background-color: $white;
+            }
+        }
+        .left, .right {
+            width: 50%;
+            float: left;
+        }
+        .left {
+            padding-right: 30px;
+            h2 {
+                font-size: calc(100vw * 0.0185);
+                font-family: 'Montserrat', sans-serif;
+            }
+        }
+        .right {
+            padding-left: 30px;
+            .btn {
+                font-size: calc(100vw * 0.014);
+                padding: calc(100vw * 0.008) calc(100vw * 0.035);
+            }
+        }
+        .filter_btns {
+            margin: 80px 0 0;
+            text-align: center;
+            .btn {
+                width: calc(100% * 0.23);
+                margin: 0 calc(100% * 0.01) 30px;
+                &:nth-child(1) {
+                    margin-left: 0;
+                }
+                &:nth-child(4n) {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+    .content {
+        display: inline-block;
+        width: 100%;
+        min-height: calc(100vw / 4);
+    }
+    .partner_img {
+        border-right: 1px solid #bfbfbf99;
+        border-top: 1px solid #bfbfbf99;
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-position: center;
+        float: left;
+        width: calc(100vw / 4);
+        height: calc(100vw / 4);
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 20px;
+        &:nth-child(4n) {
+            border-right: none;
+        }
+        &.hide {
+            opacity: 0.2;
+        }
+        .meta {
+            display: inline-flex;
+            font-family: "PT Mono";
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+    .abouts {
+        display: none;
+    }
+}
+.about {
+    .header {
+        background-size: cover;
+        background-position: center;
+        line-height: 260px;
+        color: $white;
+        font-family: 'Druk Wide';
+        font-size: calc(100vw * 0.03);
+        padding: 0 110px;
+    }
+    .navigate, .images {
+        display: none;
+    }
+    .content {
+        background-color: #418dc1;
+        color: $white;
+        padding: 100px 200px;
+        h2 {
+            font-size: calc(100vw * 0.0185);
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 100px;
+        }
+        .btn-block {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 100px;
+            .btn {
+                width: calc(100% * 0.4);
+                border-color: $white;
+                color: $white;
+                padding: calc(100vw * 0.004);
+                font-size: calc(100vw * 0.013);
+                &:hover, &.active {
+                    color: #418dc1;
+                    background-color: $white;
+                }
+            }
+        }
+        .info-block {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 100px;
+            .items {
+                text-align: center;
+                font-size: 16px;
+                font-family: 'Montserrat', sans-serif;
+                .title {
+                    color: #333333;
+                    margin-bottom: 15px;
+                }
+                a {
+                    line-height: 2em;
+                    color: $white;
+                    text-decoration: none;
+                }
+            }
+        }
+        .soc-block {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 100px;
+            padding: 0 calc(100% * 0.35);
+            a {
+                line-height: 2em;
+                color: $white;
+                text-decoration: none;
+                font-size: 1.5em;
+            }
         }
     }
 }

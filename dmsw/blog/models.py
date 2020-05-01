@@ -107,6 +107,62 @@ class BlogIndexPage(Page):
     #     FieldPanel('intro', classname="full")
     # ]
 
+class GalleryBlock(blocks.StreamBlock):
+    image = ImageChooserBlock()
+
+    class Meta:
+        template = 'blog/blocks/gallery_block.html'
+
+class ColumnBlock(blocks.StreamBlock):
+    paragraph = blocks.RichTextBlock()
+    image = ImageChooserBlock()
+    video = EmbedBlock()
+    html = blocks.RawHTMLBlock()
+    gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/column_block.html'
+
+class TwoColumnBlock(blocks.StructBlock):
+
+    left_column = ColumnBlock(icon='arrow-right', label='Left column content', null=True, blank=True, required=False)
+    right_column = ColumnBlock(icon='arrow-right', label='Right column content', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/two_column_block.html'
+        icon = 'placeholder'
+        label = 'Two Columns'
+
+
+class ContainerBlock(blocks.StructBlock):
+    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
+    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/container_block.html'
+        icon = 'placeholder'
+        label = 'Стандартный блок'
+
+
+class ContainerNarrowBlock(blocks.StructBlock):
+    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
+    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/container_narrow_block.html'
+        icon = 'placeholder'
+        label = 'Узкий блок'
+
+
+class ContainerWideBlock(blocks.StructBlock):
+    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
+    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/container_wide_block.html'
+        icon = 'placeholder'
+        label = 'Широкий блок'
+
 
 class BlogPage(Page):
     page_types = [
@@ -129,15 +185,11 @@ class BlogPage(Page):
     intro = models.CharField(max_length=250, verbose_name="Подзаголовок карточки")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
     text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)
-    hr = blocks.RichTextBlock(features=['hr'], blank=True)
+    hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
     content_body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('html', RawHTMLBlock()),
-        ('video', EmbedBlock()),
-        ('text', text),
-        ('hr', hr),
+        ('container', ContainerBlock()),
+        ('container_narrow', ContainerNarrowBlock()),
+        ('container_wide', ContainerWideBlock()),
     ], null=True, blank=True, verbose_name="Статья")
     # main_tag = BlogPageTag.objects.raw('SELECT tt.id, tt.name, bc.color FROM blog_coloredtag bc '
     #                                   'LEFT JOIN taggit_tag tt ON tt.id = bc.tag_id WHERE bc."order" = 0')
@@ -185,18 +237,31 @@ class BlogPage(Page):
             FieldPanel('main_tag'),
             FieldPanel('tags'),
             FieldPanel('main_color'),
-            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('page_type'),
+            FieldPanel('page_type_hover'),
+            FieldPanel('page_color'),
+            # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Данные карточки"),
-        FieldPanel('page_type'),
-        FieldPanel('page_type_hover'),
-        FieldPanel('page_color'),
-        FieldPanel('intro'),
-        ImageChooserPanel('main_image'),
-        FieldPanel('animate_image'),
+        MultiFieldPanel([
+            FieldPanel('intro'),
+            ImageChooserPanel('main_image'),
+            FieldPanel('animate_image'),
+        ]),
         StreamFieldPanel('content_body'),
-        FieldPanel('body', classname="full"),
-        InlinePanel('gallery_images', label="Галерея изображений"),
+        # FieldPanel('body', classname="full"),
+        # InlinePanel('gallery_images', label="Галерея изображений"),
     ]
+
+    def get_context(self, request):
+        # Filter by tag
+        tag = self.main_tag
+        blogpages = BlogPage.objects.filter(tags__name=tag)
+
+        # Update template context
+        context = super().get_context(request)
+        context['blogpages'] = blogpages
+
+        return context
 
     class Meta:
         ordering = ('date',)
@@ -276,7 +341,8 @@ class TypedPageGalleryImage(Orderable):
     image = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
     )
-    caption = models.CharField(blank=True, max_length=250)
+    caption = models.CharField(blank=True, max_length=250, verbose_name='подзаголовок')
+    link = models.CharField(blank=True, max_length=250, verbose_name='ссылка')
     main_tag = models.ForeignKey('Tag', null=True,
                                  blank=True,
                                  on_delete=models.SET_NULL,
@@ -286,6 +352,7 @@ class TypedPageGalleryImage(Orderable):
     panels = [
         ImageChooserPanel('image'),
         FieldPanel('caption'),
+        FieldPanel('link'),
         FieldPanel('main_tag'),
     ]
 

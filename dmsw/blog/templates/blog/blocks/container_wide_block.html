@@ -1,0 +1,17 @@
+<div class="container wide">
+    {% for item in self.onecol %}
+        {{ item }}
+    {% endfor %}
+    <div class="flex-container-inline two-column">
+        <div class="left">
+            {% for item in self.twocol.left_column %}
+                {{ item }}
+            {% endfor %}
+        </div>
+        <div class="right">
+            {% for item in self.twocol.right_column %}
+                {{ item }}
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% for item in self %}
+    {{ item.block_type }}
+    {{ item }}
+{% endfor %}

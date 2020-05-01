@@ -1,0 +1,10 @@
+{% load wagtailcore_tags wagtailimages_tags cfilters %}
+<div class="gallery">
+    <ul class="image-gallery gallery list-unstyled cS-hidden">
+        {% for item in self %}
+            <li data-thumb='/media/images/{{ item.value|clear_image_url }}'>
+                {{ item }}
+             </li>
+        {% endfor %}
+    </ul>
+</div>

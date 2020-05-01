@@ -29,11 +29,13 @@
         <div class="content images">
             {% for item in page.typed_gallery_images.all %}
                 {% image item.image scale-100 as img %}
-                <div class="partner_img" style="background-image: url('{{ img.url }}')" area="{{ item.main_tag }}">
-                    <p class="meta">
-                        {{ item.caption }}
-                    </p>
-                </div>
+                <a href="{{ item.link }}" target="_blank">
+                    <div class="partner_img" style="background-image: url('{{ img.url }}')" area="{{ item.main_tag }}">
+                        <p class="meta">
+                            {{ item.caption }}
+                        </p>
+                    </div>
+                </a>
             {% endfor %}
         </div>
 {#    Parthners end #}

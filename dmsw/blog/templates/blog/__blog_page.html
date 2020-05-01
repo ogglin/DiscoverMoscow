@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    <div class="header-block">
+    {% im %}
+        <div class="head-image" style='background-image: url("{% static 'image/prostokvashino.jpg' %}")'>
+        </div>
+        <div class="head-block">
+            <div class="head-title">
+                <div class="breadcrumbs">
+                    <a href="/">Главная</a>
+                    <a href="/tags/?tag=СоюзМультфильм" class="active">СоюзМультфильм</a>
+                </div>
+                <h1 class="title">Дома <br>с Союз- <br>мультфильмом</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="intro">Советская и российская государственная киностудия мультипликационных фильмов «Союзмультфильм» – советская и российская государственная киностудия мультипликационных фильмов, создана 10 июня 1936 года. За время ее существования выпущено около 1,5 тысяч мультфильмов в разных жанрах и художественных техниках: кукольной, пластилиновой и рисованной. Многие фильмы обогатили золотой фонд мировой анимационной классики, были отмечены престижными международными и российскими премиями и наградами, стали неотъемлемой частью русской культуры. Сегодня в стадии производства находятся сразу несколько проектов: современные анимационные сериалы, авторские короткометражные фильмы и полнометражные анимационные ленты.</div>
+    </div>
+    <div class="container inner">
+        <div class="align-center">
+            <a href="#" data-lightbox="1566885015004977" data-title="My caption"><img src="{% static 'image/1566885015004977.jpg' %}"></a>
+        </div>
+        <hr>
+        <div class="flex-container-inline">
+            <div class="left">
+                <img src="{% static 'image/Soyuzmultfilm_Logo_b.png' %}">
+            </div>
+            <div class="right">
+                <p>Марафон авторского короткометражного кино. В программе фестиваля премьерные показы мультфильмов-победителей российских и международных фестивалей.</p>
+                <p>В программе несколько премьерных показов победителей российских и международных фестивалей. Так, в рамках марафона впервые демонстрируются призер Открытого российского фестиваля анимационного кино в г. Суздале 2019 года — «Три сестры» (режиссер Светлана Андрианова), «Выбор жюри» Международного анимационного фестиваля в Париже PIAFF 2018 года — «Белоснежье» (реж. Ирина Эльшанская), лауреат международного фестиваля в Оттаве в номинации «Лучший детский фильм» — «Урок плавания» (реж. Татьяна Окружнова), «Лучший фильм для детей по мнению детского жюри» в рамках 25-го Международного фестиваля анимационных фильмов в Штутгарте, призер Анимационного фестиваля Zebra в Словении, а также Leeds Young Film 2018 (Великобритания) — «Кокоша» (реж. Татьяна Мошкова), участник конкурсной программы «анимационного Оскара» — международного фестиваля в Анси — «Доброе сердце» (реж. Евгения Жиркова) и многие другие.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container inner">
+        <div class="flex-container-inline video-block">
+            <div>
+                <iframe width="100%" height="350" src="https://www.youtube.com/embed/65aTScRmPrk?controls=0&showinfo=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe width="100%" height="350" src="https://www.youtube.com/embed/Bwl0UPMEqGw?controls=0&showinfo=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+{#            <div>#}
+{#                <iframe width="100%" src="https://www.youtube.com/embed/hJNEfD9vDV8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>#}
+{#            </div>#}
+{#            <div>#}
+{#                <iframe width="100%" src="https://www.youtube.com/embed/5hfcuRh6NX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>#}
+{#            </div>#}
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <p>Частыми гостями дома Морозовых были Третьяков, Шаляпин, Чехов, Тимирязев, Валентин Серов, Коровин, Остроухов, Васнецовы. А Левитан получил здесь кров. В 1889 г. Сергей Тимофеевич Морозов подарил Левитану собственную мастерскую, переделанную из оранжереи. Она сохранилась в глубине двора и отмечена мемориальной доской.</p>
+        <p>Следующим «узлом» истории старой усадьбы стал 1918 год, когда особняк превратился в штаб мятежных левых эсеров. В усадьбе располагался отряд ВЧК под началом левого эсера Попова. Именно здесь скрылся убийца германского посла Мирбаха Яков Блюмкин. Именно сюда приехал Феликс Дзержинский, чтобы арестовать его, однако сам был взят под арест по приказу Попова. Но уже 7 июля дом Морозова, откуда восставшие обстреливали так хорошо видный Кремль, был разгромлен частями Латышской дивизии.</p>
+        <hr>
+    </div>
+    <div class="container">
+        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/800128420&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="align-center">
+            <h2>«Золотая сотня Союзмультфильма»</h2>
+            <p>Подборка из 100 мультфильмов — «Ну, Погоди!», «Жил был пес», «Ежик в тумане», «Тайна третьей планеты» и другие бриллианты коллекции Союзмультфильма.</p>
+        </div>
+        <hr>
+    </div>
+    <div class="container-outlet">
+        <div class="owl-carousel">
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/Yw5CXQT7pX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p class="meta"><span>1|3</span> Экскурсовод А. В. Дмитриев</p>
+                <h3>Особняк Морозовых</h3>
+                <p>22 января 1862 года в доме открылась Кокоревская картинная галерея. В центральном помещении цокольного этажа размещался известный в то время ресторан «Тиволи», с зимним и летним садами, причем в летнем имелся «бельведер, с которого открывается прекрасный вид на Москву».</p>
+            </div>
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/ipdyNNptBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p class="meta"><span>2|3</span> Экскурсовод А. В. Дмитриев</p>
+                <h3>Особняк Морозовых</h3>
+                <p>22 января 1862 года в доме открылась Кокоревская картинная галерея. В центральном помещении цокольного этажа размещался известный в то время ресторан «Тиволи», с зимним и летним садами, причем в летнем имелся «бельведер, с которого открывается прекрасный вид на Москву».</p>
+            </div>
+            <div class="slide-element text-center">
+                <iframe width="150%" height="380" src="https://www.youtube.com/embed/ANusyumevXI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <span class="meta"><span>3|3</span> Экскурсовод А. В. Дмитриев</span>
+                <h3>Особняк Морозовых</h3>
+                <p>22 января 1862 года в доме открылась Кокоревская картинная галерея. В центральном помещении цокольного этажа размещался известный в то время ресторан «Тиволи», с зимним и летним садами, причем в летнем имелся «бельведер, с которого открывается прекрасный вид на Москву».</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <p>Подборка из 100 мультфильмов — «Ну, Погоди!», «Жил был пес», «Ежик в тумане», «Тайна третьей планеты» и другие бриллианты коллекции Союзмультфильма.</p>
+        <hr>
+    </div>
+    <div class="container inner">
+        <div class="flex-container video-block">
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/1vyuMrDsfqo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Qb7mDL5vrVk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <hr>
+    </div>
+<div class="card-wrap">
+	<div class="card-item white">
+	    <a href="/blog/дома-с-союзмультфильмом/">
+	        <div class="card-front fullimage">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+                    <div class="image" style="background-image: url('/media/images/5_-_kultura_QUgu5Il.scale-100.jpg')"></div>
+	            </div>
+	        </div>
+	        <div class="card-back video">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+
+	                    <div class="image" style="background-image: url('/media/5_-_культура.jpg')"></div>
+
+	                <p class="intro">Минздрав России, Киностудия «Союзмультфильм» и НМИЦ Здоровья детей представили новую серию видеороликов</p>
+	            </div>
+	        </div>
+	        <div class="card-meta video">
+	            <h2 class="title">#культура <small>Наследие культуры</small></h2>
+	            <div class="tags">
+	                <span>#культура</span>
+	            </div>
+	        </div>
+	    </a>
+	</div>
+
+
+
+	<div class="card-item black">
+
+	    <a href="/blog/дома-с-союзмультфильмом/">
+	        <div class="card-front standart">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+
+
+	                    <div class="image" style="background-image: url('/media/images/6_-_obrazovanie.scale-100.jpg')"></div>
+
+	            </div>
+	        </div>
+	        <div class="card-back video">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+
+	                    <div class="image" style="background-image: url('/media/6_-_образование.jpg')"></div>
+
+	                <p class="intro">Спектакль Тимофея Кулябина о времени, памяти, увядании и смерти.</p>
+	            </div>
+	        </div>
+	        <div class="card-meta video">
+	            <h2 class="title">#культура <small>Домашнее чтение</small></h2>
+	            <div class="tags">
+	                <span>#культура</span>
+	            </div>
+	        </div>
+	    </a>
+	</div>
+
+
+
+	<div class="card-item black">
+
+	    <a href="/blog/дома-с-союзмультфильмом/">
+	        <div class="card-front standart">
+	            <div class="background" style="background-color: #006D62"></div>
+	            <div class="card-item-inner">
+
+
+	                    <div class="image" style="background-image: url('/media/images/7_-_gastronomiia.scale-100.jpg')"></div>
+
+	            </div>
+	        </div>
+	        <div class="card-back standart">
+	            <div class="background" style="background-color: #006D62"></div>
+	            <div class="card-item-inner">
+
+	                    <div class="image" style="background-image: url('/media/7_-_гастрономия_ховер.png')"></div>
+
+	                <p class="intro">Тем, чья загруженность не позволяет уделять много времени спортивным упражнениям, следует обратить внимание на предложенный комплекс домашних тренировок</p>
+	            </div>
+	        </div>
+	        <div class="card-meta standart">
+	            <h2 class="title">#гастрономия <small>Упражнения на 20 минут</small></h2>
+	            <div class="tags">
+	                <span>#гастрономия</span>
+	            </div>
+	        </div>
+	    </a>
+	</div>
+
+
+
+	<div class="card-item white">
+
+	    <a href="/blog/дома-с-союзмультфильмом/">
+	        <div class="card-front fullimage">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+
+
+	                    <div class="image" style="background-image: url('/media/images/8_-_kultura.scale-100.jpg')"></div>
+
+	            </div>
+	        </div>
+	        <div class="card-back fullimage">
+	            <div class="background" style="background-color: #F9BEC0"></div>
+	            <div class="card-item-inner">
+
+	                    <div class="image" style="background-image: url('/media/8_-_культура_ховер.jpg')"></div>
+
+	                <p class="intro">Домашние любимцы радостно встретят, когда вы придете с работы</p>
+	            </div>
+	        </div>
+	        <div class="card-meta fullimage">
+	            <h2 class="title">#культура <small>Коллекция вин</small></h2>
+	            <div class="tags">
+	                <span>#культура</span>
+	            </div>
+	        </div>
+	    </a>
+	</div>
+</div>
+{% endblock %}
+
+{% block slider-block %}
+{% endblock %}

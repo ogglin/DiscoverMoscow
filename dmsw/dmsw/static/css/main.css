@@ -62,7 +62,7 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
   padding-top: 70px;
@@ -392,7 +392,7 @@ footer {
   display: flex;
   display: -webkit-flex;
   flex-wrap: wrap;
-  margin-top: -4px; }
+  margin-top: -6px; }
 
 .card-wrap.tagged .card-item:nth-child(2) .background, .card-wrap.tagged .card-item:nth-child(4) .background,
 .card-wrap.tagged .card-item:nth-child(5) .background, .card-wrap.tagged .card-item:nth-child(7) .background,
@@ -608,14 +608,6 @@ hr {
   box-sizing: border-box;
   padding: 45px 0;
   margin-bottom: 80px; }
-  .container.wide:before, .container.wide:after {
-    position: absolute;
-    content: '';
-    height: 100%;
-    width: calc(33% - 40px);
-    top: 0;
-    z-index: 3;
-    background-color: #f3f3f3b0; }
   .container.wide:before {
     left: 0; }
   .container.wide:after {
@@ -669,6 +661,15 @@ hr {
       padding-left: 0; }
     .video-block div:last-child, .video-element div:last-child {
       padding-right: 0; }
+    .video-block div iframe, .video-element div iframe {
+      width: 100% !important;
+      height: 100% !important; }
+      .video-block div iframe .ytp-title-channel, .video-block div iframe .ytp-chrome-top-buttons, .video-element div iframe .ytp-title-channel, .video-element div iframe .ytp-chrome-top-buttons {
+        display: none !important; }
+      .video-block div iframe .ytp-chrome-top, .video-element div iframe .ytp-chrome-top {
+        bottom: 0 !important; }
+      .video-block div iframe .ytp-title, .video-element div iframe .ytp-title {
+        align-self: flex-end !important; }
   .video-block .meta, .video-element .meta {
     display: block;
     padding: 25px 0 15px;
@@ -960,5 +961,23 @@ h2 {
       color: #ffffff;
       text-decoration: none;
       font-size: 1.5em; }
+
+.owl-carousel.owl-drag .owl-item.active:after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: 3;
+  background-color: #f3f3f3b0; }
+.owl-carousel.owl-drag .owl-item.active:nth-child(2):after {
+  background-color: transparent;
+  z-index: -1;
+  content: ''; }
+
+.owl-carousel.owl-drag .owl-item:nth-child(5):after {
+  background-color: transparent;
+  z-index: -1;
+  content: ''; }
 
 /*# sourceMappingURL=main.css.map */

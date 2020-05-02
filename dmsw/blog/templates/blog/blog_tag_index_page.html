@@ -5,7 +5,7 @@
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
-    <div class="card-wrap">
+    <div class="card-wrap tagged">
         {% for post in blogpages %}
             {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">

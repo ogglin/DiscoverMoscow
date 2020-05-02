@@ -142,5 +142,5 @@ $(document).ready(function(){
       nav: true,
   });
   main_menu_collapse()
-
+    $('.ytp-chrome-top').css('display','none')
 });

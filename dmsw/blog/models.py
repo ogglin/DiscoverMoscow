@@ -7,7 +7,7 @@ from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
 from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.api import APIField
-from wagtail.core.blocks import RawHTMLBlock
+from wagtail.core.blocks import RawHTMLBlock, BooleanBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.snippets.models import register_snippet
 from wagtail.core.models import Page, Orderable
@@ -17,7 +17,8 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
-from django.db.models.expressions import RawSQL
+from django.db import connection
+from collections import namedtuple
 
 @register_snippet
 class Tag(TaggitTag):
@@ -42,6 +43,17 @@ class BlogCategory(models.Model):
 
     class Meta:
         verbose_name_plural = 'категории'
+
+
+class AllTag():
+
+    def GetAllTag(self):
+        cursor = connection.cursor()
+        cursor.execute('SELECT tt.id, bc.parent_id_id, bc."order", tt.name, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY tt.id')
+        desc = cursor.description
+        nt_result = namedtuple('Result', [col[0] for col in desc])
+        rows = [nt_result(*row) for row in cursor.fetchall()]
+        return rows
 
 
 class CustomTagSerializer(Field):
@@ -100,7 +112,14 @@ class BlogIndexPage(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = self.get_children().live().order_by('-last_published_at')
+        # blogpages = self.get_children().live().order_by('-last_published_at')
+        blogpages = BlogPage.objects.all()
+        all_tags = AllTag().GetAllTag()
+        print(all_tags)
+        for tag in all_tags:
+            print(tag)
+        for page in blogpages:
+            print(page.main_tag_id)
         context['blogpages'] = blogpages
         return context
     # content_panels = Page.content_panels + [
@@ -113,10 +132,23 @@ class GalleryBlock(blocks.StreamBlock):
     class Meta:
         template = 'blog/blocks/gallery_block.html'
 
+class VideoBlock(blocks.StreamBlock):
+    video = EmbedBlock()
+
+    class Meta:
+        template = 'blog/blocks/video_block.html'
+
+class VideoItem(blocks.StreamBlock):
+    add_video = RawHTMLBlock()
+
+    class Meta:
+        template = 'blog/blocks/video_item.html'
+
 class ColumnBlock(blocks.StreamBlock):
     paragraph = blocks.RichTextBlock()
     image = ImageChooserBlock()
-    video = EmbedBlock()
+    video = VideoBlock(icon='placeholder', label='Видер блок', null=True, blank=True, required=False)
+    yt_video = VideoItem(icon='placeholder', label='Видер по id', null=True, blank=True, required=False)
     html = blocks.RawHTMLBlock()
     gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
 
@@ -181,6 +213,7 @@ class BlogPage(Page):
         ('white', 'Белый'),
         ('black', 'Черный'),
     ]
+    ontop = BooleanBlock(required=False)
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, verbose_name="Подзаголовок карточки")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
@@ -224,9 +257,21 @@ class BlogPage(Page):
         verbose_name="Основное изображение"
     )
     animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
+    ontop = models.BooleanField(null=True)
+    artical_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Изображение для статьи"
+    )
+
+    artical_title = models.TextField(max_length=200, null=True, verbose_name="Заголовок для статьи")
 
     api_fields = [
         APIField("title"),
+        APIField("artical_title"),
         # ... other fields to turn into JSON
         APIField("color_tags", serializer=CustomTagSerializer()),
     ]
@@ -247,6 +292,9 @@ class BlogPage(Page):
             ImageChooserPanel('main_image'),
             FieldPanel('animate_image'),
         ]),
+        FieldPanel('artical_title'),
+        FieldPanel('ontop', widget=forms.CheckboxInput),
+        ImageChooserPanel('artical_image'),
         StreamFieldPanel('content_body'),
         # FieldPanel('body', classname="full"),
         # InlinePanel('gallery_images', label="Галерея изображений"),

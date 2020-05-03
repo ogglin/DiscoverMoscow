@@ -649,6 +649,10 @@ hr {
       font-weight: 400;
       font-family: "PT Serif"; }
 
+.video-element div iframe {
+  width: 100% !important;
+  height: 100% !important; }
+
 .video-block, .video-element {
   width: 100%;
   flex-wrap: nowrap;
@@ -663,8 +667,7 @@ hr {
     .video-block div:last-child, .video-element div:last-child {
       padding-right: 0; }
     .video-block div iframe, .video-element div iframe {
-      width: 100% !important;
-      height: 100% !important; }
+      width: 100%; }
       .video-block div iframe .ytp-title-channel, .video-block div iframe .ytp-chrome-top-buttons, .video-element div iframe .ytp-title-channel, .video-element div iframe .ytp-chrome-top-buttons {
         display: none !important; }
       .video-block div iframe .ytp-chrome-top, .video-element div iframe .ytp-chrome-top {

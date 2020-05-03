@@ -644,6 +644,14 @@ hr {
         }
     }
 }
+.video-element {
+    div {
+        iframe {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+}
 .video-block, .video-element {
     width: 100%;
     flex-wrap: nowrap;
@@ -660,8 +668,7 @@ hr {
             padding-right: 0;
         }
         iframe {
-            width: 100% !important;
-            height: 100% !important;
+            width: 100%;
             .ytp-title-channel, .ytp-chrome-top-buttons {
                 display: none !important;
             }

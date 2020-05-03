@@ -96,11 +96,15 @@
                 gallery:true,
                 item:1,
                 thumbItem:4,
-                slideMargin: 0,
+                slideMargin: 10,
+                thumbMargin: 20,
                 speed:2500,
                 loop:true,
-                onSliderLoad: function() {
+                onSliderLoad: function(el) {
                     $('.image-gallery').removeClass('cS-hidden');
+                    el.lightGallery({
+                        selector: '.image-gallery .lslide'
+                    });
                 }
            });
            $('.lSPrev').click(function () {

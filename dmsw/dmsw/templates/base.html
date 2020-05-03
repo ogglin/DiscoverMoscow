@@ -1,4 +1,4 @@
-{% load static compress wagtailuserbar menu_tags slider_extras %}
+{% load static compress wagtailuserbar menu_tags slider_extras dop_slider_extras %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -102,7 +102,9 @@
                     {% show_slides %}
                 </div>
                 <div class="col-25">
+                    {% show_dop_slides %}
                     {% block slider_right %}
+
                     {% endblock %}
                 </div>
             </div>

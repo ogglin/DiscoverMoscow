@@ -9,8 +9,8 @@
         {% for post in blogpages %}
             {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">
-{#                    <a href="{% pageurl post %}">#}
-                    <a href="/blog/рассказы-об-особняках-москвы/">
+                    <a href="{% pageurl post %}">
+{#                    <a href="/blog/рассказы-об-особняках-москвы/">#}
                         <div class="card-front {{ post.page_type }}">
                             <div class="background"
                                 {% for ctag in post.color_tags %}
@@ -59,50 +59,5 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/slide.css' %}">
 {% endblock %}
 {% block slider_right %}
-    <div class="slider-right">
-        <div id="block-for-slider-right">
-            <div id="viewport-right">
-                <ul id="slidewrapper-right">
-                    <li class="slide" style="background-color: #ef7e31;">
-                        <div class="slide-standart">
-                            <a href="" class="">#Собака у вас дома</a>
-                            <img src="{% static 'image/dog.png' %}">
-                            <p class="">
-                                Завести собаку: о верном друге и огромной ответственности
-                            </p>
-                        </div>
-                    </li>
-                    <li class="slide" style="background-color: #efe339">
-                        <div class="slide-calendar">
-                            <div class="block_first">
-                                <div class="date">
-                                    <span>28</span>
-                                    <small>сентября</small>
-                                </div>
-                            </div>
-                            <div class="block_second">
-                                <a class="tag_link">Тренировка <br>с <strong>Полиной Киценко</strong></a>
-                                <a class="tag_link">Домашний стиль <br>с <strong>Натальей Барбье</strong></a>
-                                <a class="tag_link">Завтрак <br>с <strong>Аленой Долецкой</strong></a>
-                            </div>
-                            <div class="block_third">
-                                <a href="#" class="btn">Подборка на утро</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-{#                <div id="prev-next-btns-right">#}
-{#                    <div id="prev-btn-right"><i class="fas fa-arrow-left"></i></div>#}
-{#                    <div id="next-btn-right"><i class="fas fa-arrow-right"></i></div>#}
-{#                </div>#}
-
-                <ul id="nav-btns-right">
-                    <li class="slide-nav-btn-right"></li>
-                    <li class="slide-nav-btn-right"></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 

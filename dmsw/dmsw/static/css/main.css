@@ -563,7 +563,8 @@ hr {
     margin: 0 auto; }
   .container img {
     width: 100%;
-    max-width: 100%; }
+    max-width: 100%;
+    height: auto; }
   .container .intro {
     font-weight: 500;
     text-align: center;
@@ -736,41 +737,34 @@ hr {
 h2 {
   padding-bottom: 10px; }
 
-.gallery .lSSlideOuter {
-  overflow: visible;
+.gallery {
   position: relative; }
-.gallery .lSSlideOuter .lSPager.lSGallery {
-  margin-top: 55px !important;
-  width: 100% !important;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between; }
-  .gallery .lSSlideOuter .lSPager.lSGallery li {
-    flex-grow: 1;
-    flex-basis: 20%;
-    max-width: 20%; }
+  .gallery .lSSlideOuter {
+    position: relative; }
+  .gallery .lSSlideOuter .lSPager.lSGallery {
+    margin-top: 55px !important; }
     .gallery .lSSlideOuter .lSPager.lSGallery li img {
       height: 100%; }
-.gallery .image-gallery {
-  min-height: 380px; }
-  .gallery .image-gallery li {
-    height: 100%; }
-    .gallery .image-gallery li img {
+  .gallery .image-gallery {
+    min-height: 380px; }
+    .gallery .image-gallery li {
       height: 100%; }
-.gallery .lSAction > a {
-  top: 480px;
-  z-index: 9999;
-  width: 40px;
-  height: 40px;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat; }
-  .gallery .lSAction > a.lSPrev {
-    background-image: url("/static/image/arrow-left.png");
-    left: -50px; }
-  .gallery .lSAction > a.lSNext {
-    background-image: url("/static/image/arrow-right.png");
-    right: -50px; }
+      .gallery .image-gallery li img {
+        height: 100%; }
+  .gallery .lSAction > a {
+    top: 480px;
+    z-index: 9999;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat; }
+    .gallery .lSAction > a.lSPrev {
+      background-image: url("/static/image/arrow-left.png");
+      left: -50px; }
+    .gallery .lSAction > a.lSNext {
+      background-image: url("/static/image/arrow-right.png");
+      right: -50px; }
 
 .soc-block {
   display: flex;

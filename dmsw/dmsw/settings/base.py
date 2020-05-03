@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'home',
     'search',
     'slider',
+    'dop_slider',
     'blog',
 
     'wagtail.contrib.forms',

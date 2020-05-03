@@ -1,22 +1,8 @@
 from django.db import models
 
 # Create your models here.
-from modelcluster.fields import ParentalKey
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.core.models import Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
-from modelcluster.models import ClusterableModel
-
-
-# class Gallery(ClusterableModel):
-#     name = models.CharField(max_length=128)
-#     panels = [
-#         InlinePanel('photo')
-#     ]
-#
-#     class Meta:
-#         verbose_name = 'Слайдер'
-#         verbose_name_plural = 'Слайдеры'
 
 class Photo(models.Model):
     #gallery = ParentalKey(Gallery, on_delete=models.CASCADE, related_name='photo')

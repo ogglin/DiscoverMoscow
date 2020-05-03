@@ -1,0 +1,56 @@
+{% load static wagtailimages_tags %}
+<div class="slider-right">
+    <div id="block-for-slider-right">
+        <div id="viewport-right">
+            <ul id="slidewrapper-right">
+                {% for slide in dop_slider %}
+                    {% if slide.slider_type == 'standart' %}
+                        <li class="slide" style="background-color: {{ slide.color }};">
+                            <div class="slide-{{ slide.slider_type }}">
+                                <a href="{{ slide.standart_link }}" class="">{{ slide.title }}</a>
+                                {% image slide.image width-1000 as img %}
+                                <img src="{{ img.url }}">
+                                <p class="">
+                                    {{ slide.subtitle }}
+                                </p>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="slide" style="background-color: {{ slide.color }}">
+                            <div class="slide-{{ slide.slider_type }}">
+                                <div class="block_first">
+                                    <div class="date">
+                                        <span>{{ slide.title }}</span>
+                                        <small>{{ slide.subtitle }}</small>
+                                    </div>
+                                </div>
+                                <div class="block_second">
+                                    <a href="{{ slide.tag_link_one }}" class="tag_link">{{ slide.title_one|safe }}</a>
+                                    <a href="{{ slide.tag_link_two }}" class="tag_link">{{ slide.title_two|safe }}</a>
+                                    <a href="{{ slide.tag_link_three }}" class="tag_link">{{ slide.title_three|safe }}</a>
+                                </div>
+                                <div class="block_third">
+                                    <a href="#" class="btn">Подборка на утро</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <ul id="nav-btns-right">
+                {% for slide in dop_slider %}
+                    <li class="slide-nav-btn-right"></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dop_slider.css' %}">
+{% endblock %}
+{% block extra_js %}
+
+{% endblock %}

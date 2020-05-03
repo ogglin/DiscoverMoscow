@@ -4,7 +4,7 @@ from django.template.loader import get_template
 Photo = apps.get_model('slider', 'Photo')
 
 register = template.Library()
-#t = get_template('slider/slider.html')
+#t = get_template('dop_slider/dop_slider.html')
 
 @register.simple_tag()
 def get_slides():

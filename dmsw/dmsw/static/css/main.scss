@@ -527,6 +527,7 @@ hr {
     img {
         width: 100%;
         max-width: 100%;
+        height: auto;
     }
     .intro {
         font-weight: 500;
@@ -750,20 +751,13 @@ h2 {
     padding-bottom: 10px;
 }
 .gallery {
+    position: relative;
     .lSSlideOuter  {
-        overflow: visible;
         position: relative;
     }
     .lSSlideOuter .lSPager.lSGallery {
         margin-top: 55px !important;
-        width: 100% !important;
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
         li {
-            flex-grow: 1;
-            flex-basis: 20%;
-            max-width: 20%;
             img {
                 height: 100%;
             }

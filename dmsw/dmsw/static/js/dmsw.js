@@ -136,11 +136,15 @@ $('header #more').click(function () {
 
 // Inits
 $(document).ready(function(){
-  $(".owl-carousel").owlCarousel({
+    $(".owl-carousel").owlCarousel({
       loop: true,
       margin: 80,
       nav: true,
-  });
-  main_menu_collapse()
+    });
+    main_menu_collapse()
     $('.ytp-chrome-top').css('display','none')
+    yt_videos = $('.video-block div iframe')
+    yt_videos.each(function () {
+        $(this).height($(this).width()*0.5625)
+    })
 });

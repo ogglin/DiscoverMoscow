@@ -134,11 +134,11 @@ body {
     .slider_block.sticky .text-block {
       bottom: 20px !important; }
   .slider_block .left {
-    -webkit-flex-basis: calc(100% / (var(--columns)) * 3);
-    flex-basis: calc(100% / (var(--columns)) * 3); }
+    -webkit-flex-basis: 75%;
+    flex-basis: 75%; }
   .slider_block .right {
-    -webkit-flex-basis: calc(100% / (var(--columns)) * 1);
-    flex-basis: calc(100% / (var(--columns)) * 1); }
+    -webkit-flex-basis: 25%;
+    flex-basis: 25%; }
 
 .slider {
   position: relative;

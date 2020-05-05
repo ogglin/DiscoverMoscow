@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogindexpage{% endblock %}
+
+{% block content %}
+    <div class="card-wrap">
+        {% for post in blogpages %}
+            {% with post=post.specific %}
+                <div class="card-item {{ post.page_color }}">
+                    <a href="{% pageurl post %}">
+                        <div class="card-front {{ post.page_type }}">
+                            <div class="background"
+                                {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            ></div>
+                            <div class="card-item-inner">
+                                {% if post.main_image %}
+                                    {% image post.main_image scale-100 as img %}
+                                    <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-back {{ post.page_type_hover }}">
+                            <div class="background"
+                                 {% for ctag in post.color_tags %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
+                                {% endfor %}
+                            ></div>
+                            <div class="card-item-inner">
+                                {% if post.animate_image %}
+                                    <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                                {% endif %}
+                                <p class="intro">{{ post.intro }}</p>
+                            </div>
+                        </div>
+                        <div class="card-meta {{ post.page_type_hover }}">
+                            <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                            <div class="tags">
+                                <span>#{{ post.main_tag }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% block extra_js %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slide.css' %}">
+{% endblock %}
+{% block slider-block %}
+    <div></div>
+{% endblock %}
+{% block slider_right %}
+{% endblock %}
+

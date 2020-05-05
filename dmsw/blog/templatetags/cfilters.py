@@ -17,3 +17,8 @@ def clear_image_url(value):
     val = '.original' + str(re.search('[.]\w.*$', stv).group())
     v2 = v.replace(rep, val)
     return v2
+
+
+@register.filter
+def clear_val(value):
+    return str(value)

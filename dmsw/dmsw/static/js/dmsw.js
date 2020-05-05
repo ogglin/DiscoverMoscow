@@ -141,10 +141,17 @@ $(document).ready(function(){
       margin: 80,
       nav: true,
     });
+
     main_menu_collapse()
+
     $('.ytp-chrome-top').css('display','none')
     yt_videos = $('.video-block div iframe')
     yt_videos.each(function () {
         $(this).height($(this).width()*0.5625)
+    })
+
+
+    $('#btn_search').click(function () {
+        $('.form-search').toggleClass('active')
     })
 });

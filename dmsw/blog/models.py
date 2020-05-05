@@ -7,6 +7,7 @@ from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
 from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.api import APIField
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.blocks import RawHTMLBlock, BooleanBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.snippets.models import register_snippet
@@ -49,7 +50,7 @@ class AllTag():
 
     def GetAllTag(self):
         cursor = connection.cursor()
-        cursor.execute('SELECT tt.id, bc.parent_id_id, bc."order", tt.name, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY tt.id')
+        cursor.execute('SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
         desc = cursor.description
         nt_result = namedtuple('Result', [col[0] for col in desc])
         rows = [nt_result(*row) for row in cursor.fetchall()]
@@ -67,6 +68,7 @@ class CustomTagSerializer(Field):
                 "order": tag.order,
                 "tag_id": tag.tag_id,
                 "name": tag.name,
+                "order_num": tag.order_num,
             }
             for tag in value.all()
         ]
@@ -79,16 +81,21 @@ class BlogPageTag(TaggedItemBase):
     )
 
 class ColoredTag(ClusterableModel):
+    orders_list = [
+
+    ]
     tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False, default='Введите название')
     color = ColorField(default='#FFFFFF')
     order = models.CharField(max_length=250, verbose_name="Уровень", null=True, blank=True, )
+    order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
     parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Родительский тег")
 
     panels = [
         MultiFieldPanel([
             FieldPanel('parent_id'),
             FieldPanel('order'),
+            FieldPanel('order_num'),
             FieldPanel('name'),
             FieldPanel('tag'),
             FieldPanel('color'),
@@ -106,21 +113,95 @@ class ColoredTag(ClusterableModel):
         verbose_name_plural = 'Теги'
 
 
-class BlogIndexPage(Page):
+class BlogIndexPage(RoutablePageMixin, Page):
     intro = RichTextField(blank=True)
+
+    # @route(r'^search/$')
+    # def post_search(self, request, *args, **kwargs):
+    #     search_query = request.GET.get('q', None)
+    #     context = super().get_context(request)
+    #     print(search_query)
+    #     blogpages = BlogPage.objects.live().order_by('-last_published_at')
+    #     if search_query:
+    #         blogpages = BlogPage.objects.all().search(search_query)
+    #         # self.posts = BlogPage.objects.live().order_by('-last_published_at').search(search_query)
+    #         # self.search_term = search_query
+    #         # self.search_type = 'search'
+    #     print(blogpages)
+    #     context['blogpages'] = blogpages
+    #         #Page.serve(self, request, *args, **kwargs)
+    #     return context
+
 
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
         # blogpages = self.get_children().live().order_by('-last_published_at')
-        blogpages = BlogPage.objects.all()
+        cards = []
+        temp_cards = []
+        primary = []
         all_tags = AllTag().GetAllTag()
-        print(all_tags)
         for tag in all_tags:
-            print(tag)
+            if tag.order == '0':
+                primary.append(tag.id)
+        card_tags = dict.fromkeys(primary)
+        for el in card_tags:
+            arr = []
+            for tag in all_tags:
+                if tag.order != '0' and el == tag.parent_id_id:
+                    arr.append(tag.id)
+            card_tags[el] = arr
+        print(card_tags)
+        # for page in blogpages:
+        #     if page.main_color_id:
+        #         print(page.main_color_id)
+        #     else:
+        #         print(page.main_tag)
+        blogpages = BlogPage.objects.all().order_by('-last_published_at')
+        search_query = request.GET.get('q', None)
+        if search_query == '':
+            search_query = None
+        if search_query:
+            blogpages = BlogPage.objects.all().order_by('-last_published_at').search(search_query)
         for page in blogpages:
-            print(page.main_tag_id)
-        context['blogpages'] = blogpages
+            temp_cards.append(page)
+        idx = 1
+        def append(i):
+            for page in temp_cards:
+                if page.main_tag.id == i:
+                    return page
+        for i in range(len(temp_cards)):
+            for item in card_tags:
+                if idx == 4:
+                    p = append(14)
+                    idx += 1
+                else:
+                    p = append(item)
+                if p:
+                    cards.append(p)
+                    temp_cards.remove(p)
+                    idx += 1
+            for item in card_tags:
+                for el in card_tags[item]:
+                    if idx == 4:
+                        p = append(14)
+                        idx += 1
+                    else:
+                        p = append(el)
+                    if p:
+                        cards.append(p)
+                        temp_cards.remove(p)
+                        idx += 1
+        for page in cards:
+            for item in card_tags:
+                if page.main_tag.id == item:
+                    pass
+                for el in card_tags[item]:
+                    if page.main_tag.id == el:
+                        pass
+        context['blogpages'] = cards
+        context['search_query'] = search_query
+        context['primary'] = primary
         return context
     # content_panels = Page.content_panels + [
     #     FieldPanel('intro', classname="full")
@@ -216,8 +297,9 @@ class BlogPage(Page):
     ontop = BooleanBlock(required=False)
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, verbose_name="Подзаголовок карточки")
+    adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
-    text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)
+    card_title = models.CharField(max_length=16, verbose_name="Заголовок карточки", blank=True)
     hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
     content_body = StreamField([
         ('container', ContainerBlock()),
@@ -243,11 +325,6 @@ class BlogPage(Page):
     page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart', verbose_name="Тип карточки при наведении")
     page_color = models.CharField(max_length=250, choices=page_colors, default='black', verbose_name="Цвет заголовков карточки")
 
-    search_fields = Page.search_fields + [
-        index.SearchField('intro'),
-        index.SearchField('body'),
-        index.SearchField('tags'),
-    ]
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -276,15 +353,24 @@ class BlogPage(Page):
         APIField("color_tags", serializer=CustomTagSerializer()),
     ]
 
+    search_fields = Page.search_fields + [
+        index.SearchField('intro'),
+        index.SearchField('artical_title'),
+        # index.SearchField('tags'),
+        index.SearchField('content_body'),
+    ]
+
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
+            FieldPanel('card_title'),
             FieldPanel('main_tag'),
             FieldPanel('tags'),
             FieldPanel('main_color'),
             FieldPanel('page_type'),
             FieldPanel('page_type_hover'),
             FieldPanel('page_color'),
+            FieldPanel('adv_link'),
             # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Данные карточки"),
         MultiFieldPanel([
@@ -343,6 +429,17 @@ class BlogTagIndexPage(Page):
 
         return context
 
+
+class SearchPage(Page):
+    def get_context(self, request):
+        # Update context to include only published posts, ordered by reverse-chron
+        context = super().get_context(request)
+        # blogpages = self.get_children().live().order_by('-last_published_at')
+        blogpages = BlogPage.objects.all()
+        all_tags = AllTag().GetAllTag()
+
+        context['blogpages'] = blogpages
+        return context
 
 class TypedPage(Page):
     # tags = RawSQL('SELECT * FROM blog_coloredtag WHERE "order" = %s', (0,))

@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ ALLOWED_HOSTS = [
     '.moscow.vp4.ru',
     'www.moscow.vp4.ru'
 ]
-
 
 # Application definition
 
@@ -51,6 +49,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.routable_page',
     'wagtailmenus',
     'modelcluster',
     'taggit',
@@ -101,7 +100,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dmsw.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -112,6 +110,16 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'dmsh',
+#         'USER': 'dmsh',
+#         'PASSWORD': '!232Wew()$@',
+#         'HOST': '176.122.27.37',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -131,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -144,7 +151,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -170,7 +176,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "DiscoverMoscow"
@@ -187,3 +192,24 @@ WAGTAILMENUS_FLAT_MENUS_HANDLE_CHOICES = (
     ('menu_tags', 'Tags'),
     ('menu_footer', 'Footer'),
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'WARNING'),
+            'propagate': False,
+        },
+    },
+}

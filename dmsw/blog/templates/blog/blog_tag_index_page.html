@@ -9,8 +9,11 @@
         {% for post in blogpages %}
             {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">
-                    <a href="{% pageurl post %}">
-{#                    <a href="/blog/дома-с-союзмультфильмом/">#}
+                    {% if post.main_tag.id == 14 %}
+                        <a href="{{ post.adv_link|safe }}" target="_blank">
+                    {% else %}
+                        <a href="{% pageurl post %}">
+                    {% endif %}
                         <div class="card-front {{ post.page_type }}">
                             <div class="background"
                                 {% for ctag in post.color_tags %}
@@ -42,9 +45,17 @@
                             </div>
                         </div>
                         <div class="card-meta {{ post.page_type_hover }}">
-                            <h2 class="title">#{{ post.tags.all.0.name }} <small>{{ post.title }}</small></h2>
+                            <h2 class="title">{% if post.card_title %}{{ post.card_title }}{% else %}#{{ post.main_tag }}{% endif %}
+                                <br><small>{{ post.title }}</small></h2>
                             <div class="tags">
-                                <span>#{{ post.main_tag }}</span>
+                                <span>
+                                    {% if post.main_tag %}
+                                        #{{ post.main_tag }}
+                                    {% endif %}
+                                    {% if post.tags.all.0.name and post.main_tag != post.tags.all.0.name %}
+                                        #{{ post.tags.all.0.name }}
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
                     </a>

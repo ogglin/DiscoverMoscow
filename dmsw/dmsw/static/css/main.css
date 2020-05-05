@@ -71,7 +71,7 @@ body {
   padding-top: 70px;
   box-sizing: content-box;
   --columns: 4;
-  --card_item_height: calc(100vw * 0.30);
+  --card_item_height: calc(100vw * 0.37);
   --slider_height: 60vh;
   --big_font_size: calc(100vw * 0.034); }
 

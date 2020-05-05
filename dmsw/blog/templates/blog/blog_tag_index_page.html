@@ -52,7 +52,7 @@
                                     {% if post.main_tag %}
                                         #{{ post.main_tag }}
                                     {% endif %}
-                                    {% if post.tags.all.0.name and post.main_tag != post.tags.all.0.name %}
+                                    {% if post.tags.all.0.name and post.main_tag|clear_val != post.tags.all.0.name|clear_val %}
                                         #{{ post.tags.all.0.name }}
                                     {% endif %}
                                 </span>

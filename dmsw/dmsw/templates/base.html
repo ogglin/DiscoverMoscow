@@ -1,4 +1,4 @@
-{% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras %}
+{% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras cfilters %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
@@ -44,56 +44,51 @@
                 <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}" alt="menu"></a>
                 <nav class="navbar">
                   <div class="main_menu">
-                      {% main_menu %}
+                      {% block main_menu %}
+{#                        {% main_menu %}#}
+                          {% c_tags as main_menu %}
+                          {% a_tags as ar_tags%}
+                          <ul class="nav navbar-nav">
+                            {% for item in main_menu %}
+                            <li class="">
+                                {% for tag in ar_tags %}
+                                    {% if tag.id == item %}
+                                        <a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            {% endfor %}
+                          </ul>
+                      {% endblock %}
                       <div id="more">...</div>
                   </div>
                 </nav>
                 <div class="navbar-tags">
                     {#                    {% flat_menu 'menu_tags' %}#}
                     <div class="flex-container-inline">
-                        <ul>
-                            <li class="first"><a href="#">#культура</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                        </ul>
-                        <ul>
-                            <li class="first"><a href="#">#гастрономия</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                        </ul>
-                        <ul>
-                            <li class="first"><a href="#">#образование</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                        </ul>
-                        <ul>
-                            <li class="first"><a href="#">#образ жизни</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                        </ul>
-                        <ul>
-                            <li class="first"><a href="#">#дом</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                        </ul>
-                        <ul>
-                            <li class="first"><a href="#">#путешествия</a></li>
-                            <li><a href="#">#музыка</a></li>
-                            <li><a href="#">#музей</a></li>
-                            <li><a href="#">#театр</a></li>
-                            <li><a href="#">#лекторий</a></li>
-                            {#                              <li class="more">...</li>#}
-                        </ul>
+                        {% c_tags as main_menu %}
+                        {% a_tags as ar_tags %}
+                        {% for idx, el in main_menu.items %}
+                            <ul>
+                                {% for tag in ar_tags %}
+                                    {% if tag.id == idx %}
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                        {% if el %}
+                                            {% for item in el %}
+                                                {% for tag in ar_tags %}
+                                                    {% if tag.id == item %}
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% if el|length > 5 %}
+                                                <li class="more">...</li>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
                     </div>
                     <div class="w-100 bottom">
                         <a href="/about/">О проекте</a>
@@ -134,45 +129,30 @@
                     <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
                     <div class="navbar-footer">
 {#                        {% flat_menu 'menu_footer' %}#}
-                        <ul class="col">
-                              <li class="first"><a href="#">#культура</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul class="col">
-                              <li class="first"><a href="#">#гастрономия</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul class="col">
-                              <li class="first"><a href="#">#образование</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                          </ul>
-                          <ul class="col">
-                              <li class="first"><a href="#">#образ жизни</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul class="col">
-                              <li class="first"><a href="#">#дом</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                           </ul>
-                          <ul class="col">
-                              <li class="first"><a href="#">#путешествия</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
+                        {% c_tags as main_menu %}
+                        {% a_tags as ar_tags %}
+                        {% for idx, el in main_menu.items %}
+                            <ul class="col">
+                                {% for tag in ar_tags %}
+                                    {% if tag.id == idx %}
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                        {% if el %}
+                                            {% for item in el %}
+                                                {% for tag in ar_tags %}
+                                                    {% if tag.id == item %}
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                            {% if el|length > 5 %}
+                                                <li class="more">...</li>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+
                     </div>
                     <div class="socblock">
                         <a href=""><i class="fa fa-facebook"></i></a>

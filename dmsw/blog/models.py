@@ -50,7 +50,7 @@ class AllTag():
 
     def GetAllTag(self):
         cursor = connection.cursor()
-        cursor.execute('SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
+        cursor.execute('SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
         desc = cursor.description
         nt_result = namedtuple('Result', [col[0] for col in desc])
         rows = [nt_result(*row) for row in cursor.fetchall()]
@@ -206,6 +206,8 @@ class BlogIndexPage(RoutablePageMixin, Page):
         context['blogpages'] = cards
         context['search_query'] = search_query
         context['primary'] = primary
+        context['all_tags'] = all_tags
+        context['card_tags'] = card_tags
         return context
     # content_panels = Page.content_panels + [
     #     FieldPanel('intro', classname="full")

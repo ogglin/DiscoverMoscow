@@ -158,6 +158,10 @@ $(document).ready(function(){
     main_menu_collapse()
 
     $('.ytp-chrome-top').css('display','none')
+    yt_elements = $('iframe')
+    yt_elements.each(function () {
+        $(this).height($(this).width()*0.5625)
+    })
     yt_videos = $('.video-block div iframe')
     yt_videos.each(function () {
         $(this).height($(this).width()*0.5625)

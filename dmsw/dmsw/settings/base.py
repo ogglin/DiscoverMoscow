@@ -213,3 +213,5 @@ LOGGING = {
         },
     },
 }
+
+SITE_URL = 'https://discover.moscow/'

@@ -209,7 +209,17 @@
     bottom: 0;
     top: 90px;
     padding: 0 80px 0 0;
-    text-align: left; } }
+    text-align: left; }
+  body .slider-right .slide-calendar .block_first {
+    display: none; }
+  body .slider-right .slide-calendar .block_second {
+    flex-flow: row; }
+    body .slider-right .slide-calendar .block_second .tag_link {
+      font-size: 18px;
+      text-align: left; }
+  body .slider-right .slide-calendar .block_third .btn {
+    font-size: 20px;
+    margin: 20px auto 0; } }
 @media (max-width: 600px) {
   body .slider-right .slide-standart img {
     left: calc(100%/16); } }

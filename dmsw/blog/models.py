@@ -174,6 +174,10 @@ class BlogIndexPage(RoutablePageMixin, Page):
             for item in card_tags:
                 if idx == 4:
                     p = append(14)
+                    if p:
+                        cards.append(p)
+                        temp_cards.remove(p)
+                    p = append(item)
                     idx += 1
                 else:
                     p = append(item)

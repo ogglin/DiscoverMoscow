@@ -288,6 +288,24 @@
           text-align: left;
         }
       }
+      .slide-calendar {
+        .block_first {
+          display: none;
+        }
+        .block_second {
+          flex-flow: row;
+          .tag_link {
+            font-size: 18px;
+            text-align: left;
+          }
+        }
+        .block_third {
+          .btn {
+            font-size: 20px;
+            margin: 20px auto 0;
+          }
+        }
+      }
     }
   }
 }

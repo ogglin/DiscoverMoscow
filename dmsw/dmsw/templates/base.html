@@ -1,7 +1,7 @@
 {% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
     <head>
         <meta charset="utf-8" />
         <title>
@@ -15,6 +15,10 @@
             {% endblock %}
 
         </title>
+
+        {% block sharing_block %}
+        {% endblock %}
+
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">

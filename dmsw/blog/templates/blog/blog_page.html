@@ -4,6 +4,29 @@
 
 {% block body_class %}template-blogpage{% endblock %}
 
+{% block sharing_block %}
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="DiscoverMoscow">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.intro }}">
+    <meta property="og:url" content="{{ self.url }}">
+    <meta property="og:locale" content="ru_RU">
+    {% image page.artical_image scale-100 as img %}
+    <meta property="og:image" content="http://moscow.vp4.ru{{ img.url }}">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.intro }}">
+    {% image page.artical_image scale-100 as img %}
+    <meta name="twitter:image:src" content="http://moscow.vp4.ru{{ img.url }}">
+    <meta name="twitter:url" content="http://mysite.com/post">
+    <meta name="twitter:domain" content="https://discover.moscow/">
+    <meta name="twitter:site" content="@discovermoscow">
+    <meta name="twitter:creator" content="@discovermoscow">
+{% endblock %}
+
 {% block content %}
     <div class="header-block"
         {% for ctag in page.color_tags %}

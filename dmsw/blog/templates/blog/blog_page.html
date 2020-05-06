@@ -27,15 +27,14 @@
             </div>
         </div>
     </div>
-{#    <p class="meta">{{ page.date }}</p>#}
-{#    <div class="intro">{{ page.intro }}</div>#}
+    <div class="addthis_inline_share_toolbox"></div>
     {{ page.content_body }}
-
+    <div class="addthis_inline_share_toolbox"></div>
     <div class="container">
         <h2>Вам наверняка будет интересно</h2>
         <hr>
     </div>
-    <div class="card-wrap">
+    <div class="card-wrap tagged">
         {% for post in blogpages %}
             {% if post.main_tag == page.main_tag %}
                 {% with post=post.specific %}

@@ -43,59 +43,59 @@
                       {% main_menu %}
                       <div id="more">...</div>
                   </div>
-                  <div class="navbar-tags">
-{#                    {% flat_menu 'menu_tags' %}#}
-                      <div class="flex-container-inline">
-                          <ul>
-                              <li class="first"><a href="#">#культура</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul>
-                              <li class="first"><a href="#">#гастрономия</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul>
-                              <li class="first"><a href="#">#образование</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul>
-                              <li class="first"><a href="#">#образ жизни</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul>
-                              <li class="first"><a href="#">#дом</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-                          </ul>
-                          <ul>
-                              <li class="first"><a href="#">#путешествия</a></li>
-                              <li><a href="#">#музыка</a></li>
-                              <li><a href="#">#музей</a></li>
-                              <li><a href="#">#театр</a></li>
-                              <li><a href="#">#лекторий</a></li>
-{#                              <li class="more">...</li>#}
-                          </ul>
-                      </div>
-                      <div class="w-100 bottom">
-                          <a href="/about/">О проекте</a>
-                          <a href="/partners/">Партнёры</a>
-                      </div>
-                  </div>
                 </nav>
+                <div class="navbar-tags">
+                    {#                    {% flat_menu 'menu_tags' %}#}
+                    <div class="flex-container-inline">
+                        <ul>
+                            <li class="first"><a href="#">#культура</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                        </ul>
+                        <ul>
+                            <li class="first"><a href="#">#гастрономия</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                        </ul>
+                        <ul>
+                            <li class="first"><a href="#">#образование</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                        </ul>
+                        <ul>
+                            <li class="first"><a href="#">#образ жизни</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                        </ul>
+                        <ul>
+                            <li class="first"><a href="#">#дом</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                        </ul>
+                        <ul>
+                            <li class="first"><a href="#">#путешествия</a></li>
+                            <li><a href="#">#музыка</a></li>
+                            <li><a href="#">#музей</a></li>
+                            <li><a href="#">#театр</a></li>
+                            <li><a href="#">#лекторий</a></li>
+                            {#                              <li class="more">...</li>#}
+                        </ul>
+                    </div>
+                    <div class="w-100 bottom">
+                        <a href="/about/">О проекте</a>
+                        <a href="/partners/">Партнёры</a>
+                    </div>
+                </div>
                 <a href="#" id="btn_search"><i class="fas fa-search"></i></a>
                 <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
                 <form role="search" method="get" class="form-search" action="/blog/" method="get">
@@ -174,7 +174,7 @@
                         <a href=""><i class="fa fa-facebook"></i></a>
                         <a href=""><i class="fa fa-twitter"></i></a>
                         <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-google-plus"></i></a>
+                        <a href=""><i class="fa fa-vk"></i></a>
                     </div>
                     <div class="newsletter">
                         <a class="btn">присоединиться к проекту</a>
@@ -207,6 +207,6 @@
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
-
+    <div class="full_image"></div>
     </body>
 </html>

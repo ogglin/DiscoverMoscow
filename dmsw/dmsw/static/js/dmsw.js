@@ -134,6 +134,19 @@ $('header #more').click(function () {
     $('header .main_menu').toggleClass('open')
 })
 
+pop_image = function(e){
+    image = e.attr('src')
+    html = "<img src='"+ image +"' class='pop_image'>"
+    $('.full_image').addClass('active')
+    $('.full_image').append(html)
+}
+
+pop_image_remove = function(){
+    console.log('remove')
+    $('.full_image').removeClass('active')
+    $('.pop_image').remove()
+}
+
 // Inits
 $(document).ready(function(){
     $(".owl-carousel").owlCarousel({
@@ -153,5 +166,13 @@ $(document).ready(function(){
 
     $('#btn_search').click(function () {
         $('.form-search').toggleClass('active')
+    })
+
+    $('.container img').click(function () {
+        pop_image($(this));
+    })
+    $('.full_image').click(function () {
+        console.log('remove')
+        pop_image_remove()
     })
 });

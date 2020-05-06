@@ -294,7 +294,6 @@ class BlogPage(Page):
         ('white', 'Белый'),
         ('black', 'Черный'),
     ]
-    ontop = BooleanBlock(required=False)
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, verbose_name="Подзаголовок карточки")
     adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
@@ -334,7 +333,7 @@ class BlogPage(Page):
         verbose_name="Основное изображение"
     )
     animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
-    ontop = models.BooleanField(null=True)
+    ontop = models.BooleanField(null=True, blank=True, default=False)
     artical_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -344,7 +343,7 @@ class BlogPage(Page):
         verbose_name="Изображение для статьи"
     )
 
-    artical_title = models.TextField(max_length=200, null=True, verbose_name="Заголовок для статьи")
+    artical_title = models.TextField(max_length=200, null=True, blank=True, verbose_name="Заголовок для статьи")
 
     api_fields = [
         APIField("title"),

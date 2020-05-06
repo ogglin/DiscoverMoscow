@@ -134,7 +134,7 @@
   padding: 0; }
 
 .slide-right {
-  width: calc(100%/4);
+  width: calc(100% / 4);
   list-style: none;
   display: inline;
   float: left; }
@@ -184,5 +184,34 @@
   .slide-nav-btn-right.active {
     width: 14px;
     height: 14px; }
+
+@media (max-width: 800px) {
+  body .slider-right .slide-standart img {
+    width: auto;
+    height: auto;
+    max-width: 50%;
+    max-height: 100%;
+    position: absolute;
+    left: calc(100%/8);
+    top: 0;
+    padding: 10px; }
+  body .slider-right .slide-standart a {
+    width: 50%;
+    margin: 50px 0 0 50%;
+    padding: 0 80px 0 0;
+    text-align: left;
+    line-height: 25px;
+    height: 25px;
+    overflow: hidden; }
+  body .slider-right .slide-standart p {
+    width: 50%;
+    margin: 0 0 40px 50%;
+    bottom: 0;
+    top: 90px;
+    padding: 0 80px 0 0;
+    text-align: left; } }
+@media (max-width: 600px) {
+  body .slider-right .slide-standart img {
+    left: calc(100%/16); } }
 
 /*# sourceMappingURL=dop_slider.css.map */

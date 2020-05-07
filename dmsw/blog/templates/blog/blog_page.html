@@ -30,10 +30,15 @@
 {% block content %}
     <div class="header-block"
         {% for ctag in page.color_tags %}
-            {{ page.main_tag.id }}
-            {{ ctag.tag_id }}{{ ctag.color }}
-            {% if ctag.tag_id == page.main_tag.id %}
-                style="background-color: {{ ctag.color }}"
+            {{ page.main_color.tag_id }}
+            {% if page.main_color.tag_id %}
+                {% if ctag.tag_id == page.main_color.tag_id %}
+                    style="background-color: {{ ctag.color }}"
+                {% endif %}
+            {% else %}
+                {% if ctag.tag_id == page.main_tag.id %}
+                    style="background-color: {{ ctag.color }}"
+                {% endif %}
             {% endif %}
         {% endfor %}
     >
@@ -81,6 +86,7 @@
                                             {% endif %}
                                         {% endif %}
                                     {% endfor %}
+
                                 ></div>
                                 <div class="card-item-inner">
                                     {% if post.main_image %}

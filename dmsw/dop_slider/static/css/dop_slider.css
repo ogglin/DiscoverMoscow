@@ -42,7 +42,7 @@
     color: #000000; }
     .slider-right .slide-calendar .block_first {
       width: 100%;
-      height: 30%;
+      height: 33%;
       display: flex;
       align-items: flex-end; }
     .slider-right .slide-calendar .block_second {
@@ -54,7 +54,7 @@
       align-content: center; }
     .slider-right .slide-calendar .block_third {
       width: 100%;
-      height: 21%;
+      height: 18%;
       display: flex;
       align-items: flex-start; }
     .slider-right .slide-calendar .date {
@@ -91,7 +91,7 @@
       .slider-right .slide-calendar a:hover {
         text-decoration: underline; }
     .slider-right .slide-calendar .btn {
-      margin: 5% auto 0; }
+      margin: 0 auto; }
 
 .sticky .slide-standart, .sticky .slide-calendar {
   padding: 360px 60px 60px !important; }
@@ -185,7 +185,7 @@
     width: 14px;
     height: 14px; }
 
-@media (max-width: 800px) {
+@media (min-width: 640px) and (max-width: 800px) {
   body .slider-right .slide-standart img {
     width: auto;
     height: auto;
@@ -220,8 +220,31 @@
   body .slider-right .slide-calendar .block_third .btn {
     font-size: 20px;
     margin: 20px auto 0; } }
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   body .slider-right .slide-standart img {
     left: calc(100%/16); } }
+@media (max-width: 480px) {
+  body .slider_block {
+    height: 1200px; }
+    body .slider_block .left, body .slider_block .right {
+      height: 600px; }
+    body .slider_block .slider-right .slide-standart img {
+      left: calc(100%/16); }
+    body .slider_block .slider-right .slide-calendar .block_first .date {
+      width: 140px;
+      height: 140px; }
+      body .slider_block .slider-right .slide-calendar .block_first .date span {
+        font-size: 70px;
+        line-height: 80px; }
+      body .slider_block .slider-right .slide-calendar .block_first .date small {
+        font-size: 20px; }
+    body .slider_block .slider-right .slide-calendar .block_second {
+      flex-flow: column;
+      padding-top: 40px; }
+      body .slider_block .slider-right .slide-calendar .block_second .tag_link {
+        font-size: 20px; }
+    body .slider_block .slider-right .slide-calendar .block_third .btn {
+      font-size: 20px;
+      margin: 5px auto 0; } }
 
 /*# sourceMappingURL=dop_slider.css.map */

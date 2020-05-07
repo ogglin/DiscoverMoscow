@@ -180,3 +180,16 @@ $(document).ready(function(){
         pop_image_remove()
     })
 });
+
+$(document).ready(function() {
+    const frames = $('iframe')
+    frames.each(function (i) {
+        html = '<div id="player'+i+'"></div>'
+        $(this).parent().prepend(html)
+        $(this).remove()
+    })
+    frames.each(function (i) {
+        const vfile = $(this).attr('src')
+        var player = new Playerjs({id:"player"+i, file: vfile});
+    })
+})

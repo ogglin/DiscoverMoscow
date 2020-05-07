@@ -45,7 +45,6 @@
                 <nav class="navbar">
                   <div class="main_menu">
                       {% block main_menu %}
-{#                        {% main_menu %}#}
                           {% c_tags as main_menu %}
                           {% a_tags as ar_tags%}
                           <ul class="nav navbar-nav">
@@ -64,7 +63,6 @@
                   </div>
                 </nav>
                 <div class="navbar-tags">
-                    {#                    {% flat_menu 'menu_tags' %}#}
                     <div class="flex-container-inline">
                         {% c_tags as main_menu %}
                         {% a_tags as ar_tags %}
@@ -95,7 +93,7 @@
                         <a href="/partners/">Партнёры</a>
                     </div>
                 </div>
-                <a href="#" id="btn_search"><i class="fas fa-search"></i></a>
+                <span id="btn_search"><i class="fas fa-search"></i></span>
                 <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
                 <form role="search" method="get" class="form-search" action="/blog/" method="get">
                     <input type="text" class="form-control search-query" name="q" placeholder="Поиск" title="Search for:" />
@@ -186,6 +184,7 @@
         <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/lightslider.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/playerjs.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/dmsw.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
         {% block extra_js %}

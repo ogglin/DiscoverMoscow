@@ -116,27 +116,9 @@ class ColoredTag(ClusterableModel):
 class BlogIndexPage(RoutablePageMixin, Page):
     intro = RichTextField(blank=True)
 
-    # @route(r'^search/$')
-    # def post_search(self, request, *args, **kwargs):
-    #     search_query = request.GET.get('q', None)
-    #     context = super().get_context(request)
-    #     print(search_query)
-    #     blogpages = BlogPage.objects.live().order_by('-last_published_at')
-    #     if search_query:
-    #         blogpages = BlogPage.objects.all().search(search_query)
-    #         # self.posts = BlogPage.objects.live().order_by('-last_published_at').search(search_query)
-    #         # self.search_term = search_query
-    #         # self.search_type = 'search'
-    #     print(blogpages)
-    #     context['blogpages'] = blogpages
-    #         #Page.serve(self, request, *args, **kwargs)
-    #     return context
-
-
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        # blogpages = self.get_children().live().order_by('-last_published_at')
         cards = []
         temp_cards = []
         primary = []
@@ -151,13 +133,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
                 if tag.order != '0' and el == tag.parent_id_id:
                     arr.append(tag.id)
             card_tags[el] = arr
-        print(card_tags)
-        # for page in blogpages:
-        #     if page.main_color_id:
-        #         print(page.main_color_id)
-        #     else:
-        #         print(page.main_tag)
-        blogpages = BlogPage.objects.all().order_by('-last_published_at')
+        blogpages = BlogPage.objects.live().order_by('-last_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
@@ -209,9 +185,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
         context['all_tags'] = all_tags
         context['card_tags'] = card_tags
         return context
-    # content_panels = Page.content_panels + [
-    #     FieldPanel('intro', classname="full")
-    # ]
+
 
 class GalleryBlock(blocks.StreamBlock):
     image = ImageChooserBlock()

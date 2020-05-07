@@ -1094,7 +1094,6 @@ h2 {
 
 .gallery {
   position: relative;
-
   .lSSlideOuter {
     position: relative;
   }
@@ -1796,13 +1795,28 @@ h2 {
   align-items: center;
   justify-content: center;
   z-index: 999999;
-  padding: 40px;
+  padding: 70px 40px;
   &.active {
     display: flex;
   }
   img {
     max-width: 100%;
     height: auto;
+  }
+  .close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 36px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: 'Druk Wide';
+  }
+  .gallery_pop {
+    padding: 70px 40px;
   }
 }
 

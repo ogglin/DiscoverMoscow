@@ -137,14 +137,50 @@ $('header #more').click(function () {
 pop_image = function(e){
     image = e.attr('src')
     html = "<img src='"+ image +"' class='pop_image'>"
-    $('.full_image').addClass('active')
-    $('.full_image').append(html)
+    $('.full_image').addClass('active').append(html)
+}
+
+pop_gallery = function(e) {
+    lis = e.children()
+    imgs = []
+    lis.each(function () {
+        imgs.push($(this).children().attr('src'))
+    })
+    html = '<div class="gallery gallery_pop"><ul class="image-gallery gallery list-unstyled cS-hidden">'
+    for (let i = 0; i < imgs.length; i++) {
+        html += '<li data-thumb="'+ imgs[i] +'"><img src="'+ imgs[i] + '"></li>'
+    }
+    html += '</ul></div>'
+    $('.full_image').addClass('active').append(html)
+
+    var slider = $('.full_image .image-gallery').lightSlider({
+        gallery:true,
+        item:1,
+        thumbItem:4,
+        slideMargin: 10,
+        thumbMargin: 20,
+        speed:2500,
+        loop:true,
+        onSliderLoad: function(el) {
+            $('.full_image .image-gallery').removeClass('cS-hidden');
+            el.lightGallery({
+                selector: '.full_image .image-gallery .lslide'
+            });
+        }
+   });
+   $('.lSPrev').click(function () {
+        slider.goToPrevSlide();
+    })
+   $('.lSNext').click( function () {
+        slider.goToNextSlide();
+   })
+
 }
 
 pop_image_remove = function(){
-    console.log('remove')
     $('.full_image').removeClass('active')
     $('.pop_image').remove()
+    $('.full_image .gallery').remove()
 }
 
 // Inits
@@ -167,14 +203,22 @@ $(document).ready(function(){
         $(this).height($(this).width()*0.5625)
     })
 
-
     $('#btn_search').click(function () {
         $('.form-search').toggleClass('active')
     })
 
-    $('.container img').click(function () {
+    $('.gallery ul').click(function () {
+        pop_gallery($(this));
+    })
+
+    $('.container .two-column img').click(function () {
         pop_image($(this));
     })
+
+    $('.container > img').click(function () {
+        pop_image($(this));
+    })
+
     $('.full_image').click(function () {
         console.log('remove')
         pop_image_remove()
@@ -182,7 +226,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function() {
-    const frames = $('iframe')
+    let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
     frames.each(function (i) {
         html = '<div id="player'+i+'"></div>'
         $(this).parent().prepend(html)

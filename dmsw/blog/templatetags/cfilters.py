@@ -19,6 +19,7 @@ def GetAllTag():
     rows = [nt_result(*row) for row in cursor.fetchall()]
     return rows
 
+
 @register.filter
 def clear_url(value):
     return value.replace("/", "")
@@ -38,10 +39,17 @@ def clear_image_url(value):
 def clear_val(value):
     return str(value)
 
+
+@register.filter
+def label_with_classes(value, arg):
+    return value(attrs={'class': arg})
+
+
 @register.simple_tag
 def a_tags():
     all_tags = GetAllTag()
     return all_tags
+
 
 @register.simple_tag
 def c_tags():

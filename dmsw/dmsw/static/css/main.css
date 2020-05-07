@@ -1222,12 +1222,25 @@ h2 {
   align-items: center;
   justify-content: center;
   z-index: 999999;
-  padding: 40px; }
+  padding: 70px 40px; }
   .full_image.active {
     display: flex; }
   .full_image img {
     max-width: 100%;
     height: auto; }
+  .full_image .close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 36px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: 'Druk Wide'; }
+  .full_image .gallery_pop {
+    padding: 70px 40px; }
 
 @media (max-width: 370px) {
   header .logotype {

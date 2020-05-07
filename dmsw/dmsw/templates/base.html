@@ -70,12 +70,12 @@
                             <ul>
                                 {% for tag in ar_tags %}
                                     {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
                                         {% if el %}
                                             {% for item in el %}
                                                 {% for tag in ar_tags %}
                                                     {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
@@ -133,12 +133,12 @@
                             <ul class="col">
                                 {% for tag in ar_tags %}
                                     {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
                                         {% if el %}
                                             {% for item in el %}
                                                 {% for tag in ar_tags %}
                                                     {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
@@ -190,6 +190,8 @@
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}
-    <div class="full_image"></div>
+    <div class="full_image">
+        <span class="close">X</span>
+    </div>
     </body>
 </html>

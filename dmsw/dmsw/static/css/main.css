@@ -433,6 +433,12 @@ footer {
 .card-wrap.tagged .card-item:nth-child(21) .background, .card-wrap.tagged .card-item:nth-child(23) .background {
   opacity: 0.7; }
 
+.card-item .card-meta > a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999; }
+
 .card-item {
   width: calc(100% / var(--columns));
   height: var(--card_item_height);
@@ -498,7 +504,14 @@ footer {
       left: 20px;
       font-size: 14.5px;
       font-family: "PT Mono";
-      font-weight: 400; }
+      font-weight: 400;
+      z-index: 99991; }
+      .card-item .card-meta .tags a {
+        color: #000000;
+        text-decoration: none; }
+        .card-item .card-meta .tags a:hover {
+          color: #000000;
+          text-decoration: underline; }
     .card-item .card-meta.rekcard .title, .card-item .card-meta.rekcard .intro, .card-item .card-meta.rekcard .tags {
       display: none; }
     .card-item .card-meta:hover .title small {
@@ -755,9 +768,7 @@ hr {
   display: block !important;
   position: absolute;
   left: calc(33% - 20px);
-  width: calc(50vw + 10px);
-  top: 30%;
-  z-index: -1; }
+  top: 30%; }
   .owl-nav button {
     position: relative; }
     .owl-nav button span {
@@ -770,7 +781,8 @@ hr {
         top: 0;
         content: url("../image/arrow-left.png"); }
     .owl-nav button.owl-next {
-      float: right; }
+      float: right;
+      left: calc(50vw + 10px); }
       .owl-nav button.owl-next:after {
         position: absolute;
         left: 0;

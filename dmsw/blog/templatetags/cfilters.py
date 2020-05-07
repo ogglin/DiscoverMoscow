@@ -56,13 +56,13 @@ def c_tags():
     all_tags = GetAllTag()
     primary = []
     for tag in all_tags:
-        if tag.order == '0':
+        if tag.order == 0:
             primary.append(tag.id)
     card_tags = dict.fromkeys(primary)
     for el in card_tags:
         arr = []
         for tag in all_tags:
-            if tag.order != '0' and el == tag.parent_id_id:
+            if tag.order != 0 and el == tag.parent_id_id:
                 arr.append(tag.id)
         card_tags[el] = arr
     return card_tags

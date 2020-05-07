@@ -7,7 +7,7 @@ class PageTagInline(ModelAdmin):
     menu_label = 'Теги'
     menu_icon = 'folder-open-inverse'
     menu_order = 200
-    list_display = ('tag', 'color', 'order', 'order_num')
+    list_display = ('id', 'parent_id', 'tag', 'order', 'order_num')
     list_filter = ('tag',)
 
 modeladmin_register(PageTagInline)

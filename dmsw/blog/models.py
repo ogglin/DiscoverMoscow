@@ -82,14 +82,15 @@ class BlogPageTag(TaggedItemBase):
 
 class ColoredTag(ClusterableModel):
     orders_list = [
-
+        (0, 'Главное меню'),
+        (1, 'под меню'),
     ]
     tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False, default='Введите название')
     color = ColorField(default='#FFFFFF')
-    order = models.CharField(max_length=250, verbose_name="Уровень", null=True, blank=True, )
+    order = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
-    parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Родительский тег")
+    parent_id = models.ForeignKey('tag', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Родительский тег")
 
     panels = [
         MultiFieldPanel([
@@ -124,15 +125,16 @@ class BlogIndexPage(RoutablePageMixin, Page):
         primary = []
         all_tags = AllTag().GetAllTag()
         for tag in all_tags:
-            if tag.order == '0':
+            if tag.order == 0:
                 primary.append(tag.id)
         card_tags = dict.fromkeys(primary)
         for el in card_tags:
             arr = []
             for tag in all_tags:
-                if tag.order != '0' and el == tag.parent_id_id:
+                if tag.order != 0 and el == tag.parent_id_id:
                     arr.append(tag.id)
             card_tags[el] = arr
+        print(card_tags)
         blogpages = BlogPage.objects.live().order_by('-last_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
@@ -275,10 +277,11 @@ class BlogPage(Page):
         ('black', 'Черный'),
     ]
     date = models.DateField("Post date")
-    intro = models.CharField(max_length=250, verbose_name="Подзаголовок карточки")
+    intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
     adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
     card_title = models.CharField(max_length=16, verbose_name="Заголовок карточки", blank=True)
+    card_sub_title = models.CharField(max_length=16, verbose_name="Подголовок карточки", blank=True)
     hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
     content_body = StreamField([
         ('container', ContainerBlock()),
@@ -343,6 +346,7 @@ class BlogPage(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('card_title'),
+            FieldPanel('card_sub_title'),
             FieldPanel('main_tag'),
             FieldPanel('tags'),
             FieldPanel('main_color'),

@@ -9,68 +9,74 @@
         {% for post in blogpages %}
             {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">
-                    {% if post.main_tag.id == 14 %}
-                        <a href="{{ post.adv_link|safe }}" target="_blank">
-                    {% else %}
-                        <a href="{% pageurl post %}">
-                    {% endif %}
-                        <div class="card-front {{ post.page_type }}">
-                            <div class="background"
-                                {% for ctag in post.color_tags %}
-                                    {% if post.main_color.tag_id %}
-                                        {% if ctag.tag_id == post.main_color.tag_id %}
-                                            style="background-color: {{ ctag.color }}"
-                                        {% endif %}
-                                    {% else %}
-                                        {% if ctag.tag_id == post.main_tag.id %}
-                                            style="background-color: {{ ctag.color }}"
-                                        {% endif %}
+                    <div class="card-front {{ post.page_type }}">
+                        <div class="background"
+                            {% for ctag in post.color_tags %}
+                                {% if post.main_color.tag_id %}
+                                    {% if ctag.tag_id == post.main_color.tag_id %}
+                                        style="background-color: {{ ctag.color }}"
                                     {% endif %}
-                                {% endfor %}
-                            ></div>
-                            <div class="card-item-inner">
-                                {% if post.main_image %}
-                                    {% image post.main_image scale-100 as img %}
-                                    <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                {% else %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
                                 {% endif %}
-                            </div>
+                            {% endfor %}
+                        ></div>
+                        <div class="card-item-inner">
+                            {% if post.main_image %}
+                                {% image post.main_image scale-100 as img %}
+                                <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                            {% endif %}
                         </div>
-                        <div class="card-back {{ post.page_type_hover }}">
-                            <div class="background"
-                                 {% for ctag in post.color_tags %}
-                                    {% if post.main_color.tag_id %}
-                                        {% if ctag.tag_id == post.main_color.tag_id %}
-                                            style="background-color: {{ ctag.color }}"
-                                        {% endif %}
-                                    {% else %}
-                                        {% if ctag.tag_id == post.main_tag.id %}
-                                            style="background-color: {{ ctag.color }}"
-                                        {% endif %}
+                    </div>
+                    <div class="card-back {{ post.page_type_hover }}">
+                        <div class="background"
+                             {% for ctag in post.color_tags %}
+                                {% if post.main_color.tag_id %}
+                                    {% if ctag.tag_id == post.main_color.tag_id %}
+                                        style="background-color: {{ ctag.color }}"
                                     {% endif %}
-                                {% endfor %}
-                            ></div>
-                            <div class="card-item-inner">
-                                {% if post.animate_image %}
-                                    <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                                {% else %}
+                                    {% if ctag.tag_id == post.main_tag.id %}
+                                        style="background-color: {{ ctag.color }}"
+                                    {% endif %}
                                 {% endif %}
-                                <p class="intro">{{ post.intro }}</p>
-                            </div>
+                            {% endfor %}
+                        ></div>
+                        <div class="card-item-inner">
+                            {% if post.animate_image %}
+                                <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                            {% endif %}
+                            <p class="intro">{{ post.intro }}</p>
                         </div>
-                        <div class="card-meta {{ post.page_type_hover }}">
-                            <h2 class="title">{% if post.card_title %}{{ post.card_title }}{% else %}#{{ post.main_tag }}{% endif %}
-                                <br><small>{{ post.title }}</small></h2>
-                            <div class="tags">
-                                <span>
-                                    {% if post.main_tag %}
-                                        #{{ post.main_tag }}
-                                    {% endif %}
-                                    {% if post.tags.all.0.name and post.main_tag|clear_val != post.tags.all.0.name|clear_val %}
-                                        #{{ post.tags.all.0.name }}
-                                    {% endif %}
-                                </span>
-                            </div>
+                    </div>
+                    <div class="card-meta {{ post.page_type_hover }}">
+                        {% if post.main_tag.id == 14 %}
+                            <a href="{{ post.adv_link|safe }}" target="_blank">
+                        {% else %}
+                            <a href="{% pageurl post %}">
+                        {% endif %}
+                            </a>
+                        <h2 class="title">{% if post.card_title %}
+                                {{ post.card_title }}
+                            {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
+                            {% else %}#{{ post.main_tag }}{% endif %}
+                            <br><small>
+                                {% if post.card_sub_title %}{{ post.card_sub_title }}{% else %}
+                                {{ post.title }}{% endif %}</small>
+                        </h2>
+                        <div class="tags">
+                            <span>
+                                {% if post.main_tag %}
+                                    <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
+                                {% endif %}
+                                {% if post.tags.all.0.name and post.main_tag|clear_val != post.tags.all.0.name|clear_val %}
+                                    <a href="/tags/?tag={{ post.tags.all.0.name }}">#{{ post.tags.all.0.name }}</a>
+                                {% endif %}
+                            </span>
                         </div>
-                    </a>
+                    </div>
                 </div>
             {% endwith %}
         {% endfor %}

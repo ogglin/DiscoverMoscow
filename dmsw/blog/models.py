@@ -328,11 +328,11 @@ class BlogPage(Page):
                                  related_name='+',
                                  verbose_name="Основной тег")
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
-    stags = models.ForeignKey('Tag', null=True,
-                                 blank=True,
-                                 on_delete=models.SET_NULL,
-                                 related_name='+',
-                                 verbose_name="Дополнительный тег")
+    # stags = models.ForeignKey('Tag', null=True,
+    #                              blank=True,
+    #                              on_delete=models.SET_NULL,
+    #                              related_name='+',
+    #                              verbose_name="Дополнительный тег")
     main_color = models.ForeignKey('TagColors', null=True,
                                    blank=True,
                                    on_delete=models.SET_NULL,

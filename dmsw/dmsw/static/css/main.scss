@@ -1473,7 +1473,7 @@ h2 {
 
 
 // Adaptive media queryes
-@media (max-width: 1600px) {
+@media only screen and (max-width: 1600px) {
   body {
     --columns: 4;
     --card_item_height: calc(100vw * 0.37);
@@ -1488,7 +1488,7 @@ h2 {
   }
 }
 
-@media (max-width: 1200px) {
+@media only screen and (max-width: 1200px) {
   footer .navbar-footer .col {
     width: 50%;
   }
@@ -1509,7 +1509,7 @@ h2 {
   }
 }
 
-@media (max-width: 1000px) {
+@media only screen and (max-width: 1000px) {
   body {
     --columns: 3;
     --card_item_height: calc(100vw * 0.5);
@@ -1579,7 +1579,7 @@ h2 {
   }
 }
 
-@media (max-width: 800px) {
+@media only screen and (max-width: 800px) {
   body {
     --columns: 2;
     --card_item_height: calc(100vw * 0.75);
@@ -1674,7 +1674,7 @@ h2 {
   }
 }
 
-@media (max-width: 640px) {
+@media only screen and (max-width: 640px) {
   body{
     .container {
       padding: 0 20px;
@@ -1741,7 +1741,7 @@ h2 {
   }
 }
 
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   body {
     --columns: 1;
     --card_item_height: 600px;
@@ -1843,7 +1843,7 @@ h2 {
   }
 }
 
-@media (max-width: 370px) {
+@media only screen and (max-width: 370px) {
   header .logotype {
     margin: 15px 20px 0 0;
   }

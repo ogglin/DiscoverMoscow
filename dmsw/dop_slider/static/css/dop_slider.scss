@@ -254,7 +254,7 @@
   }
 }
 
-@media (min-width: 640px) and (max-width: 800px) {
+@media only screen and  (min-width: 640px) and (max-width: 800px) {
   body {
     .slider-right {
       .slide-standart {
@@ -309,7 +309,7 @@
     }
   }
 }
-@media (max-width: 640px) {
+@media only screen and (max-width: 640px) {
   body {
     .slider-right {
       .slide-standart {
@@ -320,7 +320,7 @@
     }
   }
 }
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   body {
     .slider_block {
       height: 1200px;

@@ -185,7 +185,7 @@
     width: 14px;
     height: 14px; }
 
-@media (min-width: 640px) and (max-width: 800px) {
+@media only screen and (min-width: 640px) and (max-width: 800px) {
   body .slider-right .slide-standart img {
     width: auto;
     height: auto;
@@ -220,10 +220,10 @@
   body .slider-right .slide-calendar .block_third .btn {
     font-size: 20px;
     margin: 20px auto 0; } }
-@media (max-width: 640px) {
+@media only screen and (max-width: 640px) {
   body .slider-right .slide-standart img {
     left: calc(100%/16); } }
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   body .slider_block {
     height: 1200px; }
     body .slider_block .left, body .slider_block .right {

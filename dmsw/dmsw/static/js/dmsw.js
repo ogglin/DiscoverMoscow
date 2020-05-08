@@ -183,6 +183,12 @@ pop_image_remove = function(){
     $('.full_image .gallery').remove()
 }
 
+yt_play = function(e) {
+    console.log(e.find('iframe')[0])
+    e.find('iframe')[0].contentWindow.postMessage({"api":"play"}, "*");
+
+}
+
 // Inits
 $(document).ready(function(){
     $(".owl-carousel").owlCarousel({
@@ -220,20 +226,23 @@ $(document).ready(function(){
     })
 
     $('.full_image').click(function () {
-        console.log('remove')
         pop_image_remove()
     })
-});
 
-$(document).ready(function() {
     let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
     frames.each(function (i) {
-        html = '<div id="player'+i+'"></div>'
+        let html = '<div id="player'+i+'"></div>'
+        // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
         $(this).parent().prepend(html)
+        // $(this).parent().append(img)
         $(this).remove()
     })
     frames.each(function (i) {
         const vfile = $(this).attr('src')
         var player = new Playerjs({id:"player"+i, file: vfile});
     })
-})
+
+    $('.yt_play_btn').click(function () {
+        yt_play($(this).parent())
+    })
+});

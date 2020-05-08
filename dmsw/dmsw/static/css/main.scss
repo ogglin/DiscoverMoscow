@@ -967,7 +967,13 @@ hr {
     }
   }
 }
-
+.yt_play_btn {
+  position: absolute;
+  width: calc(100% / 5) !important;
+  height: auto !important;;
+  top: calc(100% / 5);
+  left: calc(100% / 5 * 2);
+}
 .video-element {
   div {
     iframe {
@@ -976,8 +982,11 @@ hr {
     }
   }
 }
-
+.video-block > div,.video-element > div {
+  border: 1px solid #000000 !important;
+}
 .video-block, .video-element {
+  position: relative;
   width: 100%;
   flex-wrap: nowrap;
   text-align: left;
@@ -998,6 +1007,7 @@ hr {
 
     iframe {
       width: 100%;
+      border: 1px solid #000000 !important;
 
       .ytp-title-channel, .ytp-chrome-top-buttons {
         display: none !important;

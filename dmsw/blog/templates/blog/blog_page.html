@@ -30,13 +30,12 @@
 {% block content %}
     <div class="header-block"
         {% for ctag in page.color_tags %}
-            {{ page.main_color.tag_id }}
-            {% if page.main_color.tag_id %}
-                {% if ctag.tag_id == page.main_color.tag_id %}
+            {% if post.main_color_id %}
+                {% if ctag.id == page.main_color_id %}
                     style="background-color: {{ ctag.color }}"
                 {% endif %}
             {% else %}
-                {% if ctag.tag_id == page.main_tag.id %}
+                {% if ctag.tag_id.tag_id == page.main_tag_id %}
                     style="background-color: {{ ctag.color }}"
                 {% endif %}
             {% endif %}

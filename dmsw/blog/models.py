@@ -21,10 +21,12 @@ from wagtail.search import index
 from django.db import connection
 from collections import namedtuple
 
+
 @register_snippet
 class Tag(TaggitTag):
     class Meta:
         proxy = True
+
 
 @register_snippet
 class BlogCategory(models.Model):
@@ -50,7 +52,8 @@ class AllTag():
 
     def GetAllTag(self):
         cursor = connection.cursor()
-        cursor.execute('SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
+        cursor.execute(
+            'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
         desc = cursor.description
         nt_result = namedtuple('Result', [col[0] for col in desc])
         rows = [nt_result(*row) for row in cursor.fetchall()]
@@ -73,6 +76,7 @@ class CustomTagSerializer(Field):
             for tag in value.all()
         ]
 
+
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
         'BlogPage',
@@ -80,17 +84,19 @@ class BlogPageTag(TaggedItemBase):
         on_delete=models.CASCADE
     )
 
+
 class ColoredTag(ClusterableModel):
     orders_list = [
         (0, 'Главное меню'),
         (1, 'под меню'),
     ]
-    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True)
-    name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False, default='Введите название')
+    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True,)
+    name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False)
     color = ColorField(default='#FFFFFF')
     order = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
-    parent_id = models.ForeignKey('tag', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Родительский тег")
+    parent_id = models.ForeignKey('tag', blank=True, null=True, on_delete=models.CASCADE,
+                                  verbose_name="Родительский TAG", )
 
     panels = [
         MultiFieldPanel([
@@ -112,6 +118,27 @@ class ColoredTag(ClusterableModel):
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+
+
+class TagColors(models.Model):
+    tag_id = models.ForeignKey(ColoredTag, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True,
+                               blank=True, verbose_name='Тег', limit_choices_to={'order': 0})
+    color_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Название цвета')
+    color = ColorField(default='#FFFFFF', verbose_name='Цвет')
+
+    panels = [
+        MultiFieldPanel([
+            FieldPanel('tag_id'),
+            FieldPanel('color_title'),
+            FieldPanel('color')
+        ])]
+
+    def __str__(self):
+        return str(self.color_title) if self.color_title else ''
+
+    class Meta:
+        verbose_name = 'Цвет тега'
+        verbose_name_plural = 'Цвета тегов'
 
 
 class BlogIndexPage(RoutablePageMixin, Page):
@@ -144,10 +171,12 @@ class BlogIndexPage(RoutablePageMixin, Page):
         for page in blogpages:
             temp_cards.append(page)
         idx = 1
+
         def append(i):
             for page in temp_cards:
                 if page.main_tag.id == i:
                     return page
+
         for i in range(len(temp_cards)):
             for item in card_tags:
                 if idx == 4:
@@ -195,17 +224,20 @@ class GalleryBlock(blocks.StreamBlock):
     class Meta:
         template = 'blog/blocks/gallery_block.html'
 
+
 class VideoBlock(blocks.StreamBlock):
     video = EmbedBlock()
 
     class Meta:
         template = 'blog/blocks/video_block.html'
 
+
 class VideoItem(blocks.StreamBlock):
     add_video = RawHTMLBlock()
 
     class Meta:
         template = 'blog/blocks/video_item.html'
+
 
 class ColumnBlock(blocks.StreamBlock):
     paragraph = blocks.RichTextBlock()
@@ -218,8 +250,8 @@ class ColumnBlock(blocks.StreamBlock):
     class Meta:
         template = 'blog/blocks/column_block.html'
 
-class TwoColumnBlock(blocks.StructBlock):
 
+class TwoColumnBlock(blocks.StructBlock):
     left_column = ColumnBlock(icon='arrow-right', label='Left column content', null=True, blank=True, required=False)
     right_column = ColumnBlock(icon='arrow-right', label='Right column content', null=True, blank=True, required=False)
 
@@ -291,21 +323,23 @@ class BlogPage(Page):
     # main_tag = BlogPageTag.objects.raw('SELECT tt.id, tt.name, bc.color FROM blog_coloredtag bc '
     #                                   'LEFT JOIN taggit_tag tt ON tt.id = bc.tag_id WHERE bc."order" = 0')
     main_tag = models.ForeignKey('Tag', null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Основной тег")
+                                 blank=True,
+                                 on_delete=models.SET_NULL,
+                                 related_name='+',
+                                 verbose_name="Основной тег")
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
-    main_color = models.ForeignKey('ColoredTag', null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Основной цвет")
-    color_tags = ColoredTag.objects.all()
+    main_color = models.ForeignKey('TagColors', null=True,
+                                   blank=True,
+                                   on_delete=models.SET_NULL,
+                                   related_name='+',
+                                   verbose_name="Основной цвет")
+    color_tags = TagColors.objects.all()
     categories = ParentalManyToManyField('blog.BlogCategory', blank=True, verbose_name="Категории")
     page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
-    page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart', verbose_name="Тип карточки при наведении")
-    page_color = models.CharField(max_length=250, choices=page_colors, default='black', verbose_name="Цвет заголовков карточки")
+    page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
+                                       verbose_name="Тип карточки при наведении")
+    page_color = models.CharField(max_length=250, choices=page_colors, default='black',
+                                  verbose_name="Цвет заголовков карточки")
 
     main_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -383,6 +417,7 @@ class BlogPage(Page):
     class Meta:
         ordering = ('date',)
 
+
 class BlogPageGalleryImage(Orderable):
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey(
@@ -398,6 +433,7 @@ class BlogPageGalleryImage(Orderable):
     class Meta:
         verbose_name = 'Галерея изображений'
         verbose_name_plural = 'Галерея изображений'
+
 
 class BlogTagIndexPage(Page):
 
@@ -423,6 +459,7 @@ class SearchPage(Page):
 
         context['blogpages'] = blogpages
         return context
+
 
 class TypedPage(Page):
     # tags = RawSQL('SELECT * FROM blog_coloredtag WHERE "order" = %s', (0,))
@@ -463,6 +500,7 @@ class TypedPage(Page):
         StreamFieldPanel('content_body'),
         InlinePanel('typed_gallery_images', label="Партнеры"),
     ]
+
 
 class TypedPageGalleryImage(Orderable):
     page = ParentalKey(TypedPage, on_delete=models.CASCADE, related_name='typed_gallery_images')

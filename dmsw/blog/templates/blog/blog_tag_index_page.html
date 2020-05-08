@@ -12,12 +12,12 @@
                     <div class="card-front {{ post.page_type }}">
                         <div class="background"
                             {% for ctag in post.color_tags %}
-                                {% if post.main_color.tag_id %}
-                                    {% if ctag.tag_id == post.main_color.tag_id %}
+                                {% if post.main_color_id %}
+                                    {% if ctag.id == post.main_color_id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% else %}
-                                    {% if ctag.tag_id == post.main_tag.id %}
+                                    {% if ctag.tag_id.tag_id == post.main_tag_id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% endif %}
@@ -33,12 +33,12 @@
                     <div class="card-back {{ post.page_type_hover }}">
                         <div class="background"
                              {% for ctag in post.color_tags %}
-                                {% if post.main_color.tag_id %}
-                                    {% if ctag.tag_id == post.main_color.tag_id %}
+                                {% if post.main_color_id %}
+                                    {% if ctag.id == post.main_color_id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% else %}
-                                    {% if ctag.tag_id == post.main_tag.id %}
+                                    {% if ctag.tag_id.tag_id == post.main_tag_id %}
                                         style="background-color: {{ ctag.color }}"
                                     {% endif %}
                                 {% endif %}

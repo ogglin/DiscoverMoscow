@@ -591,13 +591,13 @@ footer {
   position: relative;
 
   &.white {
-    .title, .tags, .intro {
+    .title, .tags, .intro, .subtitle {
       color: $white !important;
     }
   }
 
   &.black {
-    .title, .tags, .intro {
+    .title, .tags, .intro, .subtitle {
       color: $black !important;
     }
   }
@@ -619,15 +619,19 @@ footer {
     position: absolute;
     z-index: 2;
     line-height: 24px;
+    height: 24px;
     overflow: hidden;
     top: 60%;
     left: 20px;
     text-transform: capitalize;
-
-    small {
+  }
+  .subtitle {
+      position: absolute;
+      z-index: 2;
       font-size: 15.5px;
-      left: 0;
-      width: 100%;
+      top: calc(60% + 24px);
+      left: 20px;
+      width: calc(100% - 40px);
       font-weight: 400;
       text-transform: none;
       height: 70px;
@@ -635,7 +639,7 @@ footer {
       overflow: hidden;
       display: inline-block;
       padding-top: 10px;
-    }
+      text-align: center;
   }
 
   .intro {
@@ -663,12 +667,15 @@ footer {
     .tags {
       color: $black;
       position: absolute;
-      bottom: 20px;
+      top: calc(100% - 30px);
       left: 20px;
       font-size: 14.5px;
       font-family: "PT Mono";
       font-weight: 400;
       z-index: 99991;
+      line-height: 16px;
+      height: 16px;
+      overflow: hidden;
       a {
         color: #000000;
         text-decoration: none;
@@ -686,7 +693,7 @@ footer {
     }
 
     &:hover {
-      .title small {
+      .subtitle {
         display: none;
       }
 

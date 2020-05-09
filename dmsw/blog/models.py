@@ -1,6 +1,7 @@
 from django import forms
 from django.db import models
 from colorfield.fields import ColorField
+from django.db.models import Q
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
@@ -53,7 +54,7 @@ class AllTag():
     def GetAllTag(self):
         cursor = connection.cursor()
         cursor.execute(
-            'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title, bc.color FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
+            'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
         desc = cursor.description
         nt_result = namedtuple('Result', [col[0] for col in desc])
         rows = [nt_result(*row) for row in cursor.fetchall()]
@@ -92,7 +93,6 @@ class ColoredTag(ClusterableModel):
     ]
     tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True,)
     name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False)
-    color = ColorField(default='#FFFFFF')
     order = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
     parent_id = models.ForeignKey('tag', blank=True, null=True, on_delete=models.CASCADE,
@@ -105,7 +105,6 @@ class ColoredTag(ClusterableModel):
             FieldPanel('order_num'),
             FieldPanel('name'),
             FieldPanel('tag'),
-            FieldPanel('color'),
         ]),
     ]
 
@@ -167,7 +166,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.all().order_by('-last_published_at').search(search_query)
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query)
         for page in blogpages:
             temp_cards.append(page)
         idx = 1
@@ -217,6 +216,80 @@ class BlogIndexPage(RoutablePageMixin, Page):
         context['card_tags'] = card_tags
         return context
 
+
+class BlogPreviewPage(Page):
+
+    def get_context(self, request):
+        # Update context to include only published posts, ordered by reverse-chron
+        context = super().get_context(request)
+        cards = []
+        temp_cards = []
+        primary = []
+        all_tags = AllTag().GetAllTag()
+        for tag in all_tags:
+            if tag.order == 0:
+                primary.append(tag.id)
+        card_tags = dict.fromkeys(primary)
+        for el in card_tags:
+            arr = []
+            for tag in all_tags:
+                if tag.order != 0 and el == tag.parent_id_id:
+                    arr.append(tag.id)
+            card_tags[el] = arr
+        blogpages = BlogPage.objects.all().order_by('-last_published_at')
+        search_query = request.GET.get('q', None)
+        if search_query == '':
+            search_query = None
+        if search_query:
+            blogpages = BlogPage.objects.all().order_by('-last_published_at').search(search_query)
+        for page in blogpages:
+            temp_cards.append(page)
+        idx = 1
+
+        def append(i):
+            for page in temp_cards:
+                if page.main_tag.id == i:
+                    return page
+
+        for i in range(len(temp_cards)):
+            for item in card_tags:
+                if idx == 4:
+                    p = append(14)
+                    if p:
+                        cards.append(p)
+                        temp_cards.remove(p)
+                    p = append(item)
+                    idx += 1
+                else:
+                    p = append(item)
+                if p:
+                    cards.append(p)
+                    temp_cards.remove(p)
+                    idx += 1
+            for item in card_tags:
+                for el in card_tags[item]:
+                    if idx == 4:
+                        p = append(14)
+                        idx += 1
+                    else:
+                        p = append(el)
+                    if p:
+                        cards.append(p)
+                        temp_cards.remove(p)
+                        idx += 1
+        for page in cards:
+            for item in card_tags:
+                if page.main_tag.id == item:
+                    pass
+                for el in card_tags[item]:
+                    if page.main_tag.id == el:
+                        pass
+        context['blogpages'] = cards
+        context['search_query'] = search_query
+        context['primary'] = primary
+        context['all_tags'] = all_tags
+        context['card_tags'] = card_tags
+        return context
 
 class GalleryBlock(blocks.StreamBlock):
     image = ImageChooserBlock()
@@ -445,7 +518,9 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        blogpages = BlogPage.objects.filter(tags__name=tag)
+        tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
+        # blogpages = BlogPage.objects.filter(tags__name=tag)
+        blogpages = BlogPage.objects.filter(Q(tags__name=tag) | Q(main_tag_id=tag_id))
 
         # Update template context
         context = super().get_context(request)

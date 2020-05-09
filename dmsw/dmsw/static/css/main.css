@@ -444,9 +444,9 @@ footer {
   height: var(--card_item_height);
   min-height: 390px;
   position: relative; }
-  .card-item.white .title, .card-item.white .tags, .card-item.white .intro {
+  .card-item.white .title, .card-item.white .tags, .card-item.white .intro, .card-item.white .subtitle {
     color: #ffffff !important; }
-  .card-item.black .title, .card-item.black .tags, .card-item.black .intro {
+  .card-item.black .title, .card-item.black .tags, .card-item.black .intro, .card-item.black .subtitle {
     color: #000000 !important; }
   .card-item .image {
     background-size: contain;
@@ -463,21 +463,26 @@ footer {
     position: absolute;
     z-index: 2;
     line-height: 24px;
+    height: 24px;
     overflow: hidden;
     top: 60%;
     left: 20px;
     text-transform: capitalize; }
-    .card-item .title small {
-      font-size: 15.5px;
-      left: 0;
-      width: 100%;
-      font-weight: 400;
-      text-transform: none;
-      height: 70px;
-      line-height: 20px;
-      overflow: hidden;
-      display: inline-block;
-      padding-top: 10px; }
+  .card-item .subtitle {
+    position: absolute;
+    z-index: 2;
+    font-size: 15.5px;
+    top: calc(60% + 24px);
+    left: 20px;
+    width: calc(100% - 40px);
+    font-weight: 400;
+    text-transform: none;
+    height: 70px;
+    line-height: 20px;
+    overflow: hidden;
+    display: inline-block;
+    padding-top: 10px;
+    text-align: center; }
   .card-item .intro {
     color: #000000;
     max-height: 60px;
@@ -500,12 +505,15 @@ footer {
     .card-item .card-meta .tags {
       color: #000000;
       position: absolute;
-      bottom: 20px;
+      top: calc(100% - 30px);
       left: 20px;
       font-size: 14.5px;
       font-family: "PT Mono";
       font-weight: 400;
-      z-index: 99991; }
+      z-index: 99991;
+      line-height: 16px;
+      height: 16px;
+      overflow: hidden; }
       .card-item .card-meta .tags a {
         color: #000000;
         text-decoration: none; }
@@ -514,7 +522,7 @@ footer {
           text-decoration: underline; }
     .card-item .card-meta.rekcard .title, .card-item .card-meta.rekcard .intro, .card-item .card-meta.rekcard .tags {
       display: none; }
-    .card-item .card-meta:hover .title small {
+    .card-item .card-meta:hover .subtitle {
       display: none; }
     .card-item .card-meta:hover.video .title, .card-item .card-meta:hover.video .intro, .card-item .card-meta:hover.fullimage .title, .card-item .card-meta:hover.fullimage .intro, .card-item .card-meta:hover.rekcard .title, .card-item .card-meta:hover.rekcard .intro {
       display: none; }

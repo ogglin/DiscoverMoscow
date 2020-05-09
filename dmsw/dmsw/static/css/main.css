@@ -910,7 +910,7 @@ h2 {
   padding: 0 110px; }
 .partners .navigate {
   background-color: #418dc1;
-  padding: 100px 220px 0;
+  padding: 100px 200px 0;
   color: #ffffff; }
   .partners .navigate .btn {
     border-color: #ffffff;
@@ -953,7 +953,7 @@ h2 {
   background-size: auto;
   background-position: center;
   float: left;
-  width: calc(100vw / 4);
+  width: calc(100% / 4);
   height: calc(100vw / 4);
   display: flex;
   align-items: flex-end;
@@ -1080,7 +1080,12 @@ h2 {
       .container .two-column .right {
         padding: 0; }
     .container .video-block {
-      flex-wrap: wrap; } }
+      flex-wrap: wrap; }
+
+  .partners .navigate .right .btn {
+    padding: calc(100vw * 0.006); }
+  .partners .partner_img {
+    background-size: 90%; } }
 @media only screen and (max-width: 1000px) {
   body {
     --columns: 3;
@@ -1115,6 +1120,29 @@ h2 {
       body .slider_block .slider_image .text-block .slider_subtitle {
         font-size: calc(100vw * 0.026);
         max-width: calc(100vw * 0.6 - 120px); }
+    body .about .header {
+      line-height: 200px;
+      font-size: 20px;
+      padding: 0 40px; }
+    body .about .content {
+      padding: 50px 40px; }
+      body .about .content h2 {
+        font-size: 18px; }
+      body .about .content .btn-block .btn {
+        width: calc(100% * 0.48);
+        font-size: 17px; }
+    body .partners .navigate {
+      padding: 50px 40px; }
+      body .partners .navigate .left h2 {
+        font-size: 17px; }
+      body .partners .navigate .right .btn {
+        padding: calc(100vw * 0.006);
+        font-size: 16px; }
+      body .partners .navigate .filter_btns .btn {
+        width: calc(100% * 0.28);
+        font-size: 14px; }
+        body .partners .navigate .filter_btns .btn:nth-child(1), body .partners .navigate .filter_btns .btn:nth-child(4n) {
+          margin: 0 calc(100% * 0.01) 30px; }
     body footer .logotype {
       display: none; } }
 @media only screen and (max-width: 800px) {
@@ -1149,6 +1177,27 @@ h2 {
       body .slider_block .slider_image .text-block .slider_subtitle {
         font-size: calc(100vw * 0.026);
         max-width: calc(100vw * 0.9 - 120px); }
+    body .about .content h2 {
+      margin-bottom: 40px; }
+    body .about .content .btn-block {
+      flex-direction: column;
+      margin-bottom: 80px;
+      align-items: center; }
+      body .about .content .btn-block .btn {
+        margin: 15px 0;
+        width: calc(100% * 0.8); }
+    body .partners .header {
+      font-size: 20px; }
+    body .partners .partner_img {
+      width: calc(100% / 3);
+      height: calc(100vw / 3); }
+      body .partners .partner_img .meta {
+        font-size: 14px; }
+    body .partners .navigate .left {
+      padding-right: 10px;
+      width: 45%; }
+    body .partners .navigate .right {
+      width: 55%; }
     body footer .flex-container-inline {
       flex-direction: column-reverse; }
     body footer .navbar-footer {
@@ -1201,6 +1250,30 @@ h2 {
     body .slider_block .slider_image .text-block .slider_subtitle {
       font-size: 15.5px;
       max-width: calc(100vw * 0.9 - 120px); }
+  body .about .header {
+    line-height: 40px;
+    padding: 60px 40px 0;
+    height: 160px; }
+  body .about .content .info-block {
+    flex-direction: column; }
+    body .about .content .info-block .items {
+      margin: 0 0 40px 0; }
+      body .about .content .info-block .items:last-child {
+        margin: 0; }
+  body .partners .header {
+    line-height: 40px;
+    padding: 60px 40px 0;
+    height: 160px; }
+  body .partners .navigate .left {
+    padding: 0 0 30px 0;
+    width: 100%; }
+  body .partners .navigate .right {
+    width: 100%; }
+  body .partners .navigate .filter_btns .btn {
+    width: calc(100% * 0.46); }
+  body .partners .partner_img {
+    width: calc(100% / 2);
+    height: calc(100vw / 2); }
   body footer .navbar-footer .col {
     width: 50%; } }
 @media only screen and (max-width: 480px) {
@@ -1217,6 +1290,16 @@ h2 {
       display: none; }
     body .header-block .head-image {
       width: calc(40% - 20px); }
+    body .about .content .btn-block .btn {
+      width: 100%;
+      font-size: 15px;
+      white-space: pre-wrap; }
+    body .partners .navigate .filter_btns .btn {
+      width: 100%;
+      margin: 0 0 15px 0 !important; }
+    body .partners .partner_img {
+      width: 100%;
+      height: 100vw; }
     body footer {
       padding: 40px 20px; }
       body footer .navbar-footer .col {

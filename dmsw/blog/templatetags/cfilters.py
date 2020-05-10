@@ -13,10 +13,11 @@ register = template.Library()
 def ToProject():
     cursor = connection.cursor()
     cursor.execute(f'SELECT * FROM blog_addtoproject WHERE id = 1')
-    if len(cursor.fetchall()) > 0:
-        rows = cursor.fetchall()[0]
-    else:
-        rows = []
+    # if len(cursor.fetchall()) > 0:
+    #     rows = cursor.fetchall()[0]
+    # else:
+    #     rows = []
+    rows = cursor.fetchall()[0]
     return rows
 
 
@@ -24,10 +25,11 @@ def ToProject():
 def MediaKit():
     cursor = connection.cursor()
     cursor.execute(f'SELECT mediakit FROM blog_mediakit WHERE id = 1')
-    if len(cursor.fetchall()) > 0:
-        rows = cursor.fetchall()[0]
-    else:
-        rows = []
+    # if len(cursor.fetchall()) > 0:
+    #     rows = cursor.fetchall()[0]
+    # else:
+    #     rows = []
+    rows = cursor.fetchall()[0]
     return rows
 
 

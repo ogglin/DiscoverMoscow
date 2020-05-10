@@ -58,14 +58,15 @@
                             <a href="{% pageurl post %}">
                         {% endif %}
                             </a>
-                        <h2 class="title">{% if post.card_title %}
-                                {{ post.card_title }}
-                            {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
-                            {% else %}#{{ post.main_tag }}{% endif %}
-                            <br><small>
+                            <h2 class="title">{% if post.card_title %}
+                                    {{ post.card_title }}
+                                {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
+                                {% else %}#{{ post.main_tag }}{% endif %}
+                            </h2>
+                            <p class="subtitle">
                                 {% if post.card_sub_title %}{{ post.card_sub_title }}{% else %}
-                                {{ post.title }}{% endif %}</small>
-                        </h2>
+                                {{ post.title }}{% endif %}
+                            </p>
                         <div class="tags">
                             <span>
                                 {% if post.main_tag %}

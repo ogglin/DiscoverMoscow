@@ -1,6 +1,4 @@
 {% load wagtailcore_tags wagtailimages_tags cfilters %}
-<div class="flex-container video-block">
-    {% for item in self %}
-        {{ item }}
-    {% endfor %}
-</div>
+{% for item in self %}
+    {{ item }}
+{% endfor %}

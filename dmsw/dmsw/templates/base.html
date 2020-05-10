@@ -153,13 +153,14 @@
 
                     </div>
                     <div class="socblock">
-                        <a href=""><i class="fa fa-facebook"></i></a>
-                        <a href=""><i class="fa fa-twitter"></i></a>
-                        <a href=""><i class="fa fa-instagram"></i></a>
-                        <a href=""><i class="fa fa-vk"></i></a>
+                        <a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+                        <a href="http://twitter.com"><i class="fa fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
+                        <a href="https://vk.com"><i class="fa fa-vk"></i></a>
                     </div>
                     <div class="newsletter">
-                        <a class="btn">присоединиться к проекту</a>
+                        {% ToProject as params %}
+                        <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
                     </div>
                 </div>
                 <div class="dop_links">

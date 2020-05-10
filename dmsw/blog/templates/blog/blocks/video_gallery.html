@@ -1,0 +1,12 @@
+{% load wagtailcore_tags wagtailimages_tags cfilters %}
+
+<div class="owl-carousel">
+    {% with self|length as len %}
+        {% for item in self %}
+            <div class="slide-element text-center">
+                {{ item }}
+                <span class="counter">{{ forloop.counter }} / {{ len }}</span>
+            </div>
+        {% endfor %}
+    {% endwith %}
+</div>

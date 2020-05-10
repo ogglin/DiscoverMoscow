@@ -1,13 +1,15 @@
+import os
 from colorfield.fields import ColorField
 from django.db import models
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+
+path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+from blog.models import Tag
+
 
 # Create your models here.
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.core import blocks
-from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.core.models import Page
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.core.fields import RichTextField, StreamField
 
 class Sliders(models.Model):
     slider_types = [
@@ -28,7 +30,10 @@ class Sliders(models.Model):
     tag_link_two = models.CharField(blank=True, max_length=255, verbose_name="ссылка 2")
     title_three = models.CharField(max_length=250, blank=True, verbose_name="подзаголовок 3")
     tag_link_three = models.CharField(blank=True, max_length=255, verbose_name="ссылка 3")
-    content_panels = Page.content_panels + [
+    collect = models.CharField(blank=True, max_length=255, verbose_name="название подборки")
+    collect_tag = models.ForeignKey(Tag, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True, blank=True,
+                                    verbose_name='Tag подборки')
+    panels = [
         MultiFieldPanel([
             FieldPanel('slider_type'),
             FieldPanel('title'),
@@ -44,6 +49,8 @@ class Sliders(models.Model):
             FieldPanel('tag_link_two'),
             FieldPanel('title_three'),
             FieldPanel('tag_link_three'),
+            FieldPanel('collect'),
+            FieldPanel('collect_tag'),
         ], heading="Данные календаря"),
     ]
 

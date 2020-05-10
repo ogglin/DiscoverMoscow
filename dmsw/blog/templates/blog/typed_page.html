@@ -17,7 +17,8 @@
                     <h2>Наши партнеры делают Москву лучше. Мы тоже. Поэтому всегда готовы к сотрудничеству.</h2>
                 </div>
                 <div class="right">
-                    <a class="btn">присоединиться к проекту</a>
+                    {% ToProject as params %}
+                    <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
                 </div>
             </div>
             <div class="filter_btns">
@@ -44,8 +45,10 @@
     <div class="content abouts">
         <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>
         <div class="btn-block">
-            <a class="btn">скачать медиакит</a>
-            <a class="btn">присоединиться к проекту</a>
+            {% MediaKit as meidakit %}
+            <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>
+            {% ToProject as params %}
+            <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
         </div>
         <div class="info-block">
             <div class="items">
@@ -63,12 +66,7 @@
                 <a href="mailto:olya@discovermoscow.com">olya@discovermoscow.com</a>
             </div>
         </div>
-        <div class="soc-block">
-            <a href=""><i class="fa fa-facebook"></i></a>
-            <a href=""><i class="fa fa-twitter"></i></a>
-            <a href=""><i class="fa fa-instagram"></i></a>
-            <a href=""><i class="fa fa-google-plus"></i></a>
-        </div>
+        <div class="addthis_inline_share_toolbox"></div>
     </div>
 {#    About end #}
 

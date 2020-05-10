@@ -591,7 +591,9 @@ footer {
   height: var(--card_item_height);
   min-height: 390px;
   position: relative;
-
+  &:hover {
+    z-index: 19;
+  }
   &.white {
     .title, .tags, .intro, .subtitle {
       color: $white !important;
@@ -679,10 +681,12 @@ footer {
       line-height: 16px;
       height: 16px;
       overflow: hidden;
+      max-width: calc(100% - 40px);
 
       a {
         color: #000000;
         text-decoration: none;
+        white-space: nowrap;
 
         &:hover {
           color: #000000;
@@ -941,7 +945,6 @@ hr {
     text-align: left;
     color: $black;
     font-family: Helvetica, Arial, sans-serif;
-
     .meta {
       display: block;
       padding: 25px 0 15px;
@@ -971,9 +974,39 @@ hr {
       font-weight: 700;
       padding: 5px 0 5px;
     }
-
+    span.counter {
+      padding-right: 10px;
+      margin-right: 10px;
+      position: absolute;
+      bottom: 85px;
+      font-family: 'PT Serif', Serif;
+      font-style: italic;
+      font-size: 13px;
+    }
+    .rich-text {
+      h4 {
+        position: relative;
+        display: block;
+        padding: 25px 0 0 50px;
+        font-weight: 600;
+        font-size: 13px;
+        text-align: left;
+        width: 100%;
+        &:before {
+          position: absolute;
+          content: '|';
+          left: 40px;
+        }
+      }
+      h3 {
+        width: 100%;
+      }
+      p {
+        width: 100%;
+      }
+    }
     p {
-      height: 45px;
+      height: 46px;
       overflow: hidden;
       width: 150%;
       line-height: 15px;
@@ -1001,7 +1034,7 @@ hr {
   }
 }
 
-.video-block > div, .video-element > div {
+.video-block > div frame, .video-element > div frame {
   border: 1px solid #000000 !important;
 }
 
@@ -1098,6 +1131,8 @@ hr {
 
   button {
     position: relative;
+    width: 40px;
+    height: 40px;
 
     span {
       font-size: 1pt;
@@ -1116,7 +1151,7 @@ hr {
 
     &.owl-next {
       float: right;
-      left: calc(50vw + 10px);
+      left: calc(50vw - 30px);
 
       &:after {
         position: absolute;
@@ -1284,7 +1319,7 @@ h2 {
       border-color: $white;
       color: $white;
 
-      &:hover, &.active {
+      &:hover, &.active, &:focus  {
         color: #418dc1;
         background-color: $white;
       }
@@ -1421,7 +1456,7 @@ h2 {
         padding: calc(100vw * 0.004);
         font-size: calc(100vw * 0.013);
 
-        &:hover, &.active {
+        &:hover, &.active, &:focus {
           color: #418dc1;
           background-color: $white;
         }
@@ -1580,6 +1615,7 @@ h2 {
         margin-left: -100vw;
 
         .slide-element {
+          width: calc(66% - 10px);
           padding-left: 40px;
         }
 
@@ -1589,11 +1625,14 @@ h2 {
 
         .owl-nav {
           left: calc(33% + 30px);
-          width: calc(100vw - 80px);
+          width: calc(100vw - 40px);
+          button.owl-next {
+            left: 0;
+            width: 40px;
+          }
         }
       }
     }
-
     .owl-stage-outer {
       iframe {
 
@@ -1897,7 +1936,9 @@ h2 {
         }
       }
     }
-
+    .container.wide .slide-element span.counter {
+      bottom: 77px;
+    }
     .about {
       .header {
         line-height: 40px;
@@ -2123,4 +2164,42 @@ h2 {
 .addthis_inline_share_toolbox {
   text-align: center;
   padding: 40px 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  pjsdiv pjsdiv:nth-child(15) > pjsdiv {
+    &:nth-child(2) {
+      width: 18px !important;
+      height: 18px !important;
+    }
+
+    pjsdiv {
+      transform: scale(5) !important;
+    }
+  }
+}
+@media only screen and (max-width: 800px) {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv {
+    &:nth-child(2) {
+      width: 17px !important;
+      height: 17px !important;
+    }
+
+    pjsdiv {
+      transform: scale(5) !important;
+    }
+  }
+}
+@media only screen and (max-width: 6400px) {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv {
+    &:nth-child(2) {
+      width: 16px !important;
+      height: 16px !important;
+      transform: scale(4) !important;
+    }
+
+    pjsdiv {
+      transform: scale(4) !important;
+    }
+  }
 }

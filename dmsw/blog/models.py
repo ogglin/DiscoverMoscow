@@ -49,6 +49,35 @@ class BlogCategory(models.Model):
         verbose_name_plural = 'категории'
 
 
+@register_snippet
+class MediaKit(models.Model):
+    mediakit = models.FileField(verbose_name='mediakit', null=True, blank=True)
+
+    panels = [
+        FieldPanel('mediakit'),
+    ]
+
+    class Meta:
+        verbose_name_plural = 'Медиакит'
+
+
+@register_snippet
+class AddToProject(models.Model):
+    email = models.CharField(max_length=255, null=True, blank=True)
+    subject = models.CharField(max_length=255, null=True, blank=True, verbose_name='Тема письма')
+
+    panels = [
+        FieldPanel('email'),
+        FieldPanel('subject'),
+    ]
+
+    def GetAll(self):
+        return self.email, self.subject
+
+    class Meta:
+        verbose_name_plural = 'Присоединиться к проекту'
+
+
 class AllTag():
 
     def GetAllTag(self):
@@ -91,7 +120,7 @@ class ColoredTag(ClusterableModel):
         (0, 'Главное меню'),
         (1, 'под меню'),
     ]
-    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True,)
+    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True, )
     name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False)
     order = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
@@ -160,7 +189,6 @@ class BlogIndexPage(RoutablePageMixin, Page):
                 if tag.order != 0 and el == tag.parent_id_id:
                     arr.append(tag.id)
             card_tags[el] = arr
-        print(card_tags)
         blogpages = BlogPage.objects.live().order_by('-last_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
@@ -291,6 +319,7 @@ class BlogPreviewPage(Page):
         context['card_tags'] = card_tags
         return context
 
+
 class GalleryBlock(blocks.StreamBlock):
     image = ImageChooserBlock()
 
@@ -306,17 +335,28 @@ class VideoBlock(blocks.StreamBlock):
 
 
 class VideoItem(blocks.StreamBlock):
-    add_video = RawHTMLBlock()
+    embed = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на видео')
+    title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Заголовок')
+    sub_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Подзаголовок')
+    meta = models.CharField(max_length=255, blank=True, null=True, verbose_name='Мета информация')
 
     class Meta:
         template = 'blog/blocks/video_item.html'
 
 
+class VideoGallery(blocks.StreamBlock):
+    video = blocks.RichTextBlock()
+    element = VideoItem(icon='video', label='Добавить видео', null=True, blank=True, required=False)
+
+    class Meta:
+        template = 'blog/blocks/video_gallery.html'
+
+
 class ColumnBlock(blocks.StreamBlock):
     paragraph = blocks.RichTextBlock()
     image = ImageChooserBlock()
-    video = VideoBlock(icon='placeholder', label='Видер блок', null=True, blank=True, required=False)
-    yt_video = VideoItem(icon='placeholder', label='Видер по id', null=True, blank=True, required=False)
+    video = VideoBlock(icon='placeholder', label='Видео блок', null=True, blank=True, required=False)
+    yt_video = VideoGallery(icon='placeholder', label='Видео галерея', null=True, blank=True, required=False)
     html = blocks.RawHTMLBlock()
     gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
 
@@ -385,27 +425,20 @@ class BlogPage(Page):
     intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
     adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
-    card_title = models.CharField(max_length=16, verbose_name="Заголовок карточки", blank=True)
-    card_sub_title = models.CharField(max_length=16, verbose_name="Подголовок карточки", blank=True)
+    card_title = models.CharField(max_length=250, verbose_name="Заголовок карточки", blank=True)
+    card_sub_title = models.CharField(max_length=250, verbose_name="Подголовок карточки", blank=True)
     hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
     content_body = StreamField([
         ('container', ContainerBlock()),
         ('container_narrow', ContainerNarrowBlock()),
         ('container_wide', ContainerWideBlock()),
     ], null=True, blank=True, verbose_name="Статья")
-    # main_tag = BlogPageTag.objects.raw('SELECT tt.id, tt.name, bc.color FROM blog_coloredtag bc '
-    #                                   'LEFT JOIN taggit_tag tt ON tt.id = bc.tag_id WHERE bc."order" = 0')
     main_tag = models.ForeignKey('Tag', null=True,
                                  blank=True,
                                  on_delete=models.SET_NULL,
                                  related_name='+',
                                  verbose_name="Основной тег")
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
-    # stags = models.ForeignKey('Tag', null=True,
-    #                              blank=True,
-    #                              on_delete=models.SET_NULL,
-    #                              related_name='+',
-    #                              verbose_name="Дополнительный тег")
     main_color = models.ForeignKey('TagColors', null=True,
                                    blank=True,
                                    on_delete=models.SET_NULL,
@@ -474,7 +507,7 @@ class BlogPage(Page):
             FieldPanel('animate_image'),
         ]),
         FieldPanel('artical_title'),
-        FieldPanel('ontop', widget=forms.CheckboxInput),
+        # FieldPanel('ontop', widget=forms.CheckboxInput),
         ImageChooserPanel('artical_image'),
         StreamFieldPanel('content_body'),
         # FieldPanel('body', classname="full"),
@@ -518,9 +551,13 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
-        # blogpages = BlogPage.objects.filter(tags__name=tag)
-        blogpages = BlogPage.objects.filter(Q(tags__name=tag) | Q(main_tag_id=tag_id))
+        print(Tag.objects.all())
+        print(tag, Tag.objects.filter(tag__name=tag))
+        if len(Tag.objects.filter(tag__name=tag)) > 0:
+            tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
+            blogpages = BlogPage.objects.filter(Q(tags__name=tag) | Q(main_tag_id=tag_id))
+        else:
+            blogpages = BlogPage.objects.filter(tags__name=tag)
 
         # Update template context
         context = super().get_context(request)

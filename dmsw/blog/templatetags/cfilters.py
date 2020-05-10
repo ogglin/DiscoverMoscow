@@ -5,15 +5,31 @@ import re
 
 from django.db import connection
 
-from ..models import AllTag, BlogIndexPage
+from ..models import AddToProject
 
 register = template.Library()
+
+@register.simple_tag
+def ToProject():
+    cursor = connection.cursor()
+    cursor.execute(f'SELECT * FROM blog_addtoproject WHERE id = 1')
+    rows = cursor.fetchall()[0]
+    return rows
+
+
+@register.simple_tag
+def MediaKit():
+    cursor = connection.cursor()
+    cursor.execute(f'SELECT mediakit FROM blog_mediakit WHERE id = 1')
+    rows = cursor.fetchall()[0]
+    return rows
 
 
 def GetAllTag():
     cursor = connection.cursor()
-    cursor.execute(
-        'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
+    cursor.execute(f'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title '
+                   f'FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id '
+                   f'GROUP BY tt.id ORDER BY bc.order_num')
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     rows = [nt_result(*row) for row in cursor.fetchall()]

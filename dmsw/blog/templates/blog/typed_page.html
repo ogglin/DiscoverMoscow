@@ -18,7 +18,9 @@
                 </div>
                 <div class="right">
                     {% ToProject as params %}
-                    <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+                    {% if params|length > 0 %}
+                        <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="filter_btns">
@@ -46,9 +48,13 @@
         <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>
         <div class="btn-block">
             {% MediaKit as meidakit %}
-            <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>
+            {% if meidakit|length > 0 %}
+                <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>
+            {% endif %}
             {% ToProject as params %}
-            <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+            {% if params|length > 0 %}
+                <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+            {% endif %}
         </div>
         <div class="info-block">
             <div class="items">

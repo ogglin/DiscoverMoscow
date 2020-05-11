@@ -161,7 +161,7 @@
                     <div class="newsletter">
                         {% ToProject as params %}
                         {% if params|length > 0 %}
-                            <a href="mailto:{{ params.2 }}&subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+                            <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
                         {% endif %}
                     </div>
                 </div>

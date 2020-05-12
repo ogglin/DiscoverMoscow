@@ -1461,4 +1461,7 @@ h2 {
   .card-meta .subscribe-ajax-form .result_form {
     color: #000000; }
 
+.ajax_load_more form {
+  height: 0px; }
+
 /*# sourceMappingURL=main.css.map */

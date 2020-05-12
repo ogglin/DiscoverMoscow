@@ -7,7 +7,8 @@
 {% block content %}
     <div class="card-wrap tagged">
         {% for post in blogpages %}
-            {% with post=post.specific %}
+            {% if forloop.counter != 9 %}
+                {% with post=post.specific %}
                 <div class="card-item {{ post.page_color }}">
                     <div class="card-front {{ post.page_type }}">
                         <div class="background"
@@ -80,6 +81,9 @@
                     </div>
                 </div>
             {% endwith %}
+             {% else %}
+                {% include "forms/ajax_card.html" %}
+            {% endif %}
         {% endfor %}
     </div>
 

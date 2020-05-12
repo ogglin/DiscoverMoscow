@@ -548,6 +548,25 @@ class BlogPage(Page):
         # InlinePanel('gallery_images', label="Галерея изображений"),
     ]
 
+    def serve(self, request):
+        if "email" in request.POST:
+
+            email = request.POST['email']
+            to_form = '{"email": "' + email + '"}'
+            save_mail(to_form)
+            data = {
+                'message': "Спасибо за подписку"
+            }
+            return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
+
     def get_context(self, request):
         # Filter by tag
         blogpages = BlogPage.objects.order_by('-last_published_at').all()
@@ -581,6 +600,25 @@ class BlogPageGalleryImage(Orderable):
 
 class BlogTagIndexPage(Page):
 
+    def serve(self, request):
+        if "email" in request.POST:
+
+            email = request.POST['email']
+            to_form = '{"email": "' + email + '"}'
+            save_mail(to_form)
+            data = {
+                'message': "Спасибо за подписку"
+            }
+            return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
+
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
@@ -611,6 +649,26 @@ class SearchPage(Page):
 
 
 class TypedPage(Page):
+
+    def serve(self, request):
+        if "email" in request.POST:
+
+            email = request.POST['email']
+            to_form = '{"email": "' + email + '"}'
+            save_mail(to_form)
+            data = {
+                'message': "Спасибо за подписку"
+            }
+            return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
+
     # tags = RawSQL('SELECT * FROM blog_coloredtag WHERE "order" = %s', (0,))
     tags = Page.objects.raw('SELECT * FROM blog_coloredtag WHERE "order" = 0')
     date = models.DateField("Post date")

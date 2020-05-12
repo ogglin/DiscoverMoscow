@@ -61,11 +61,12 @@
         <h2>Вам наверняка будет интересно</h2>
         <hr>
     </div>
+    </div>
     <div class="card-wrap tagged">
         {% for post in blogpages %}
             {% if post.main_tag == page.main_tag %}
                 {% with post=post.specific %}
-                    {% if forloop.counter < 5 %}
+                    {% if forloop.counter < 7 %}
                         <div class="card-item {{ post.page_color }}">
                             <div class="card-front {{ post.page_type }}">
                                 <div {{ post.main_tag.id }} class="background"

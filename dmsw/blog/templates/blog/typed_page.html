@@ -51,7 +51,6 @@
             {% if meidakit|length > 0 %}
                 <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>
             {% endif %}
-            {% ToProject as params %}
             {% if params|length > 0 %}
                 <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
             {% endif %}
@@ -109,4 +108,7 @@
             })
         });
     </script>
+{% endblock %}
+{% block subscribe %}
+    {% include "forms/ajax.html" %}
 {% endblock %}

@@ -1,4 +1,4 @@
-{% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras cfilters %}
+{% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras cfilters widget_tweaks %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
@@ -159,6 +159,8 @@
                         <a href="https://vk.com"><i class="fa fa-vk"></i></a>
                     </div>
                     <div class="newsletter">
+                        {% block subscribe %}
+                        {% endblock %}
                         {% ToProject as params %}
                         {% if params|length > 0 %}
                             <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
@@ -189,6 +191,7 @@
         <script type="text/javascript" src="{% static 'js/lightslider.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/playerjs.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/dmsw.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}

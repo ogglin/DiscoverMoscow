@@ -24,6 +24,8 @@
 
 html {
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -33,12 +35,15 @@ body {
   overflow-x: hidden;
   padding-top: 70px;
   box-sizing: content-box;
+  font-size: 14px;
   --columns: 6;
   --card_item_height: calc(100vw * 0.25);
   --slider_height: 60vh;
   --big_font_size: calc(100vw * 0.034);
   --slider_left_width: calc(100% / 6 * 4);
   --slider_right_width: calc(100% / 6 * 2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .flex-container {
@@ -633,7 +638,7 @@ footer {
   .subtitle {
     position: absolute;
     z-index: 2;
-    font-size: 15.5px;
+    font-size: 15px;
     top: calc(60% + 24px);
     left: 20px;
     width: calc(100% - 40px);
@@ -674,7 +679,7 @@ footer {
       position: absolute;
       top: calc(100% - 30px);
       left: 20px;
-      font-size: 14.5px;
+      font-size: 14px;
       font-family: "PT Mono";
       font-weight: 400;
       z-index: 99991;
@@ -1930,7 +1935,7 @@ h2 {
           }
 
           .slider_subtitle {
-            font-size: 15.5px;
+            font-size: 15px;
             max-width: calc(100vw * 0.9 - 120px);
           }
         }
@@ -2201,5 +2206,48 @@ h2 {
     pjsdiv {
       transform: scale(4) !important;
     }
+  }
+}
+
+
+.subscribe-ajax-form {
+  h5 {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+  input[type='text'] {
+    width: 100%;
+    line-height: 40px;
+    font-size: 12px;
+    padding: 0 15px;
+  }
+  .result_form {
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 0;
+  }
+}
+.card-meta .subscribe-ajax-form {
+  top: calc(60%);
+  position: absolute;
+  left: 20px;
+  width: calc(100% - 40px);
+  text-align: center;
+  button {
+    cursor: pointer;
+    border: 0;
+    font-size: 24px;
+    text-decoration: underline;
+    background-color: transparent;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .result_form {
+    color: #000000;
   }
 }

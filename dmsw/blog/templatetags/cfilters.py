@@ -9,28 +9,32 @@ from ..models import AddToProject
 
 register = template.Library()
 
+
 @register.simple_tag
 def ToProject():
     cursor = connection.cursor()
-    cursor.execute(f'SELECT * FROM blog_addtoproject WHERE id = 1')
-    # if len(cursor.fetchall()) > 0:
-    #     rows = cursor.fetchall()[0]
-    # else:
-    #     rows = []
-    rows = cursor.fetchall()[0]
-    return rows
+    cursor.execute(f'SELECT * FROM blog_addtoproject')
+    rows = cursor.fetchall()
+    row = []
+    if len(rows) > 0:
+        row = rows[0]
+    cursor.close()
+
+    return row
 
 
 @register.simple_tag
 def MediaKit():
     cursor = connection.cursor()
-    cursor.execute(f'SELECT mediakit FROM blog_mediakit WHERE id = 1')
-    # if len(cursor.fetchall()) > 0:
-    #     rows = cursor.fetchall()[0]
-    # else:
-    #     rows = []
-    rows = cursor.fetchall()[0]
-    return rows
+    cursor.execute(f'SELECT mediakit FROM blog_mediakit')
+    rows = cursor.fetchall()
+    row = []
+    if len(rows) > 0:
+        row = rows[0]
+    print(row)
+    cursor.close()
+
+    return row
 
 
 def GetAllTag():

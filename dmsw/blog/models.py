@@ -2,12 +2,15 @@ from django import forms
 from django.db import models
 from colorfield.fields import ColorField
 from django.db.models import Q
+from django.http import JsonResponse, HttpResponse
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
 from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.api import APIField
+from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
+from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.blocks import RawHTMLBlock, BooleanBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -16,11 +19,13 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel, FieldRowPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from django.db import connection
 from collections import namedtuple
+
+import datetime
 
 
 @register_snippet
@@ -78,7 +83,16 @@ class AddToProject(models.Model):
         verbose_name_plural = 'Присоединиться к проекту'
 
 
-class AllTag():
+def save_mail(to_form):
+    date_time = datetime.datetime.now()
+    cursor = connection.cursor()
+    cursor.execute(f'INSERT INTO wagtailforms_formsubmission (form_data, page_id, submit_time) '
+                   f'VALUES (\'{to_form}\', 94,\'{date_time}\')')
+    rows = cursor.fetchall()
+    print(rows)
+
+
+class AllTag:
 
     def GetAllTag(self):
         cursor = connection.cursor()
@@ -169,8 +183,27 @@ class TagColors(models.Model):
         verbose_name_plural = 'Цвета тегов'
 
 
-class BlogIndexPage(RoutablePageMixin, Page):
+class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
+
+    def serve(self, request):
+        if "email" in request.POST:
+
+            email = request.POST['email']
+            to_form = '{"email": "' + email + '"}'
+            save_mail(to_form)
+            data = {
+                'message': "Спасибо за подписку"
+            }
+            return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
 
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
@@ -242,6 +275,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
         context['primary'] = primary
         context['all_tags'] = all_tags
         context['card_tags'] = card_tags
+
         return context
 
 
@@ -516,8 +550,7 @@ class BlogPage(Page):
 
     def get_context(self, request):
         # Filter by tag
-        tag = self.main_tag
-        blogpages = BlogPage.objects.filter(tags__name=tag)
+        blogpages = BlogPage.objects.order_by('-last_published_at').all()
 
         # Update template context
         context = super().get_context(request)
@@ -551,13 +584,12 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        print(Tag.objects.all())
-        print(tag, Tag.objects.filter(tag__name=tag))
         if len(Tag.objects.filter(tag__name=tag)) > 0:
             tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.filter(Q(tags__name=tag) | Q(main_tag_id=tag_id))
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                Q(tags__name=tag) | Q(main_tag_id=tag_id))
         else:
-            blogpages = BlogPage.objects.filter(tags__name=tag)
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(tags__name=tag)
 
         # Update template context
         context = super().get_context(request)
@@ -642,3 +674,26 @@ class TypedPageGalleryImage(Orderable):
     class Meta:
         verbose_name = 'Партнер'
         verbose_name_plural = 'Партнера'
+
+
+class FormField(AbstractFormField):
+    page = ParentalKey('FormPage', on_delete=models.CASCADE, related_name='form_fields')
+
+
+class FormPage(AbstractEmailForm):
+    intro = RichTextField(blank=True)
+    thank_you_text = RichTextField(blank=True)
+
+    content_panels = AbstractEmailForm.content_panels + [
+        FormSubmissionsPanel(),
+        FieldPanel('intro', classname="full"),
+        InlinePanel('form_fields', label="Form fields"),
+        FieldPanel('thank_you_text', classname="full"),
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('from_address', classname="col6"),
+                FieldPanel('to_address', classname="col6"),
+            ]),
+            FieldPanel('subject'),
+        ], "Email"),
+    ]

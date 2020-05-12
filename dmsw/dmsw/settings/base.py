@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'slider',
     'dop_slider',
     'blog',
+    'subscriber',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -55,6 +56,9 @@ INSTALLED_APPS = [
     'taggit',
     'compressor',
     'colorfield',
+    'widget_tweaks',
+    'newsletter',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

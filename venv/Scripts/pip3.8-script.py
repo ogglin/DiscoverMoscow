@@ -1,4 +1,4 @@
-#!D:\pythonProject\DiscoverMoscow\venv\Scripts\python.exe
+#!d:\pythonproject\discovermoscow\venv\scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3.8'
 __requires__ = 'pip==19.0.3'
 import re

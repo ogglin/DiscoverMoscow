@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="card-item black">
+    <div class="card-front standart">
+        <div class="card-item-inner">
+            <div class="image" style="background-image: url('{% static 'image/newsletter_card.png' %}')"></div>
+        </div>
+    </div>
+    <div class="card-back standart">
+        <div class="card-item-inner">
+            <div class="image" style="background-image: url('{% static 'image/newsletter_card.png' %}')"></div>
+        </div>
+    </div>
+    <div class="card-meta standart">
+        <form method="post" class="ajax_form subscribe-ajax-form" action="" data-url='{{ request.build_absolute_uri|safe }}'>
+            {% csrf_token %}
+            <div class="data_form">
+                <input type="text" name="email" placeholder="Оставьте ваш e-mail" />
+            </div>
+            <div class="result_form"></div>
+            <button type="submit" class="" value="Подписаться">Подписаться</button>
+        </form>
+        <div class="tags">
+            <span>
+                <a>Подпишись на новости</a>
+            </span>
+        </div>
+    </div>
+</div>

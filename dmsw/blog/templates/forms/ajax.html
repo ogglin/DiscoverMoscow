@@ -1,0 +1,9 @@
+<form method="post" class="ajax_form subscribe-ajax-form" action="" data-url='{{ request.build_absolute_uri|safe }}'>
+    {% csrf_token %}
+    <div class="data_form">
+        <h5>подписаться на новости</h5>
+        <input type="text" name="email" placeholder="Оставьте ваш e-mail" />
+    </div>
+    <div class="result_form"></div>
+    <input type="button" class="hidden" value="Подписаться" />
+</form>

@@ -231,7 +231,7 @@ $(document).ready(function(){
 
     let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
     frames.each(function (i) {
-        let html = '<div id="player'+i+'"></div>'
+        let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
         // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
         $(this).parent().prepend(html)
         // $(this).parent().append(img)

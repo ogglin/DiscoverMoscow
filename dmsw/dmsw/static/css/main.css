@@ -629,6 +629,8 @@ hr {
     width: 100%;
     max-width: 840px;
     margin: 0 auto; }
+    .container.narrow .flex-container-inline div:first-child {
+      justify-content: flex-start !important; }
   .container img {
     width: 100%;
     max-width: 100%;
@@ -1281,10 +1283,16 @@ h2 {
 @media only screen and (max-width: 640px) {
   body .container {
     padding: 0 20px; }
+    body .container.narrow .flex-container-inline {
+      flex-direction: column; }
+      body .container.narrow .flex-container-inline div {
+        width: 100% !important; }
     body .container h2 {
       font-size: 26px; }
     body .container h3 {
       font-size: 20px; }
+    body .container hr {
+      padding: 20px; }
     body .container.wide .slide-element .video-block h3, body .container.wide .slide-element .video-element h3, body .container.wide .slide-element h3 {
       font-size: 20px; }
   body .header-block {
@@ -1345,7 +1353,16 @@ h2 {
     body .header-block .breadcrumbs {
       display: none; }
     body .header-block .head-image {
+      display: none;
       width: calc(40% - 20px); }
+    body .header-block .head-block {
+      width: 100%;
+      padding: 0 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column; }
+      body .header-block .head-block .head-title {
+        position: relative; }
     body .about .content .btn-block .btn {
       width: 100%;
       font-size: 15px;
@@ -1425,23 +1442,19 @@ h2 {
 
 @media only screen and (max-width: 1000px) {
   pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    width: 18px !important;
-    height: 18px !important; }
+    transform: scale(5) !important; }
   pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(5) !important; } }
 @media only screen and (max-width: 800px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2) {
-    width: 17px !important;
-    height: 17px !important; }
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv {
-    transform: scale(5) !important; } }
-@media only screen and (max-width: 6400px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2) {
-    width: 16px !important;
-    height: 16px !important;
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2), pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
     transform: scale(4) !important; }
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(4) !important; } }
+@media only screen and (max-width: 640px) {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2), pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+    transform: scale(2) !important; }
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+    transform: scale(2) !important; } }
 .subscribe-ajax-form h5 {
   text-transform: uppercase;
   font-size: 12px;

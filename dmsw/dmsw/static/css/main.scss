@@ -854,6 +854,11 @@ hr {
     width: 100%;
     max-width: 840px;
     margin: 0 auto;
+    .flex-container-inline {
+      div:first-child {
+        justify-content: flex-start!important;
+      }
+    }
   }
 
   img {
@@ -1904,7 +1909,14 @@ h2 {
   body {
     .container {
       padding: 0 20px;
-
+      &.narrow {
+        .flex-container-inline {
+          flex-direction: column;
+          div {
+            width: 100%!important;
+          }
+        }
+      }
       h2 {
         font-size: 26px;
       }
@@ -1912,7 +1924,9 @@ h2 {
       h3 {
         font-size: 20px;
       }
-
+      hr {
+        padding: 20px;
+      }
       &.wide {
         .slide-element {
           .video-block h3, .video-element h3, h3 {
@@ -2062,9 +2076,19 @@ h2 {
       .breadcrumbs {
         display: none;
       }
-
       .head-image {
+        display: none;
         width: calc(40% - 20px);
+      }
+      .head-block {
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .head-title {
+          position: relative;
+        }
       }
     }
 
@@ -2189,8 +2213,7 @@ h2 {
 @media only screen and (max-width: 1000px) {
   pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
-      width: 18px !important;
-      height: 18px !important;
+      transform: scale(5) !important;
     }
 
     pjsdiv {
@@ -2199,27 +2222,24 @@ h2 {
   }
 }
 @media only screen and (max-width: 800px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
-      width: 17px !important;
-      height: 17px !important;
+      transform: scale(4) !important;
     }
 
     pjsdiv {
-      transform: scale(5) !important;
+      transform: scale(4) !important;
     }
   }
 }
-@media only screen and (max-width: 6400px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv {
+@media only screen and (max-width: 640px) {
+  pjsdiv pjsdiv:nth-child(14) > pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
-      width: 16px !important;
-      height: 16px !important;
-      transform: scale(4) !important;
+      transform: scale(2) !important;
     }
 
     pjsdiv {
-      transform: scale(4) !important;
+      transform: scale(2) !important;
     }
   }
 }

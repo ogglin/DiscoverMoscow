@@ -41,7 +41,7 @@
             {% endif %}
         {% endfor %}
     >
-        {% image page.artical_image scale-100 as img %}
+        {% image page.article_image scale-100 as img %}
         <div class="head-image" style='background-image: url("{{ img.url }}")'>
         </div>
         <div class="head-block">
@@ -50,7 +50,7 @@
                     <a href="{{ page.get_parent.url }}">Главная</a>
                     <a href="/tags/?tag={{ page.main_tag }}" class="active">{{ page.main_tag }}</a>
                 </div>
-                <h1 class="title">{{ page.artical_title|safe }}</h1>
+                <h1 class="title">{{ page.article_title|safe }}</h1>
             </div>
         </div>
     </div>

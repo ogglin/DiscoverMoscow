@@ -1120,7 +1120,22 @@ h2 {
   .partners .navigate .right .btn {
     padding: calc(100vw * 0.006); }
   .partners .partner_img {
-    background-size: 90%; } }
+    background-size: 90%; }
+
+  header .nav li {
+    padding: 0 30px 0 0; }
+
+  .card-item .subtitle {
+    font-size: 14px; }
+
+  .card-item .card-meta .tags {
+    font-size: 13px; }
+
+  header .navbar-tags ul li a {
+    font-size: 18px; }
+
+  header .navbar-tags ul li.first a {
+    font-size: 22px; } }
 @media only screen and (max-width: 1000px) {
   body {
     --columns: 3;

@@ -1455,6 +1455,10 @@ h2 {
     transform: scale(2) !important; }
   pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(2) !important; } }
+.one_row {
+  height: var(--card_item_height);
+  overflow: hidden; }
+
 .subscribe-ajax-form h5 {
   text-transform: uppercase;
   font-size: 12px;
@@ -1492,8 +1496,19 @@ h2 {
 .ajax_load_more form {
   height: 0px; }
 
-.endless_more {
-  height: 0px;
-  display: block; }
+.endless_container {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9); }
+  .endless_container .endless_more, .endless_container .endless_loading {
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: block;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; }
+    .endless_container .endless_more:hover, .endless_container .endless_loading:hover {
+      text-decoration: none; }
 
 /*# sourceMappingURL=main.css.map */

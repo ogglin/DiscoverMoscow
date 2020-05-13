@@ -26,6 +26,7 @@ from django.db import connection
 from collections import namedtuple
 from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
+import random
 
 
 @register_snippet
@@ -278,6 +279,7 @@ class BlogIndexPage(Page):
         context['all_tags'] = all_tags
         context['card_tags'] = card_tags
         context['entry_list'] = cards
+        context['subscribe_count'] = random.randint(7, 11)
         context['page_template'] = 'blog/ajax_blog_index_page.html'
 
         return context
@@ -567,14 +569,16 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         if len(Tag.objects.filter(tag__name=tag)) > 0:
             tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(
-                Q(tags__name=tag) | Q(main_tag_id=tag_id))
-        else:
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(tags__name=tag)
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id))
+            if len(blogpages) > 0:
+                pass
+            else:
+                blogpages = BlogPage.objects.order_by('-last_published_at').filter(tags__name=tag)
 
         # Update template context
         context = super().get_context(request)
         context['blogpages'] = blogpages
+
 
         return context
 

@@ -3,7 +3,7 @@
 {% block content %}
     {% lazy_paginate blogpages %}
         {% for post in blogpages %}
-            {% if forloop.counter != 9 %}
+            {% if forloop.counter != subscribe_count %}
                 {% with post=post.specific %}
                     <div class="card-item {{ post.page_color }}">
                         <div class="card-front {{ post.page_type }}">

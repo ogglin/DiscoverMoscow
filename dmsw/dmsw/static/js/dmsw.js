@@ -191,6 +191,8 @@ yt_play = function(e) {
 
 // Inits
 $(document).ready(function(){
+
+
     $(".owl-carousel").owlCarousel({
       loop: true,
       margin: 80,
@@ -245,4 +247,5 @@ $(document).ready(function(){
     $('.yt_play_btn').click(function () {
         yt_play($(this).parent())
     })
+
 });

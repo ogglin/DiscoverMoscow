@@ -2243,7 +2243,10 @@ h2 {
     }
   }
 }
-
+.one_row {
+  height: var(--card_item_height);
+  overflow: hidden;
+}
 
 .subscribe-ajax-form {
   h5 {
@@ -2291,7 +2294,20 @@ h2 {
     height: 0px;
   }
 }
-.endless_more {
-  height: 0px;
-  display: block;
+.endless_container {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  .endless_more, .endless_loading {
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: block;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }

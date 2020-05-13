@@ -8,7 +8,7 @@
     <div class="card-wrap">
         {% lazy_paginate blogpages %}
         {% for post in blogpages %}
-            {% if forloop.counter != 9 %}
+            {% if forloop.counter != subscribe_count %}
                 {% with post=post.specific %}
                     <div class="card-item {{ post.page_color }}">
                         <div class="card-front {{ post.page_type }}">
@@ -86,7 +86,7 @@
                 {% include "forms/ajax_card.html" %}
             {% endif %}
         {% endfor %}
-        {% show_more %}
+        {% show_more "Здесь еще много интересного" "Загрузка ..." %}
     </div>
     <div class="ajax_load_more">
         <form method="post" action="" data-url='{{ request.build_absolute_uri|safe }}'>
@@ -103,7 +103,13 @@
     <script type="text/javascript" src="{% static 'js/el-pagination.js' %}"></script>
     <script>
         $(document).ready(function(){
-            $.endlessPaginate({paginateOnScroll: true});
+            $.endlessPaginate({paginateOnScroll: false});
+            $('.endless_more').text('Здесь еще много интересного')
+            $('.endless_loading').text('Загрузка ...')
+            $(window).scroll(function(){
+                $('.endless_more').text('Здесь еще много интересного')
+                $('.endless_loading').text('Загрузка ...')
+            })
         })
     </script>
 {% endblock %}

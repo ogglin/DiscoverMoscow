@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags wagtailimages_tags cfilters widget_tweaks %}
+{% load static wagtailcore_tags wagtailimages_tags cfilters widget_tweaks el_pagination_tags %}
 
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
     <div class="card-wrap">
+        {% lazy_paginate blogpages %}
         {% for post in blogpages %}
             {% if forloop.counter != 9 %}
                 {% with post=post.specific %}
@@ -85,6 +86,7 @@
                 {% include "forms/ajax_card.html" %}
             {% endif %}
         {% endfor %}
+        {% show_more %}
     </div>
     <div class="ajax_load_more">
         <form method="post" action="" data-url='{{ request.build_absolute_uri|safe }}'>
@@ -96,8 +98,14 @@
 {% block extra_js %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/slide.css' %}">
-{% endblock %}
-{% block slider_right %}
+    {{ block.super }}
+{#    <script src="http://code.jquery.com/jquery-latest.js"></script>#}
+    <script type="text/javascript" src="{% static 'js/el-pagination.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $.endlessPaginate({paginateOnScroll: true});
+        })
+    </script>
 {% endblock %}
 
 {% block subscribe %}

@@ -19,6 +19,7 @@ urlpatterns = [
     # url(r'^search/$', search_views.search, name='search'),
     url(r'^join/$', JoinFormView.as_view()),
     url(r'^newsletter/', include('newsletter.urls')),
+    url(r'^chaining/', include('smart_selects.urls')),
 ]
 
 

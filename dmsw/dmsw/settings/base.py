@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'colorfield',
     'widget_tweaks',
     'newsletter',
+    'smart_selects',
+    'el_pagination',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -219,3 +221,5 @@ LOGGING = {
 }
 
 SITE_URL = 'https://discover.moscow/'
+EL_PAGINATION_PER_PAGE = 24
+JQUERY_URL = True

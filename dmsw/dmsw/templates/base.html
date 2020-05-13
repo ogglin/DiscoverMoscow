@@ -161,7 +161,7 @@
                     <div class="newsletter">
                         {% block subscribe %}
                         {% endblock %}
-                        {% ToProject as params %}
+                        {% to_project as params %}
                         {% if params|length > 0 %}
                             <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
                         {% endif %}

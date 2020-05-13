@@ -5,13 +5,11 @@ import re
 
 from django.db import connection
 
-from ..models import AddToProject
-
 register = template.Library()
 
 
 @register.simple_tag
-def ToProject():
+def to_project():
     cursor = connection.cursor()
     cursor.execute(f'SELECT * FROM blog_addtoproject')
     rows = cursor.fetchall()
@@ -24,7 +22,7 @@ def ToProject():
 
 
 @register.simple_tag
-def MediaKit():
+def media_kit():
     cursor = connection.cursor()
     cursor.execute(f'SELECT mediakit FROM blog_mediakit')
     rows = cursor.fetchall()

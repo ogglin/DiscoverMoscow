@@ -7,12 +7,12 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
+from smart_selects.db_fields import ChainedManyToManyField
 from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.api import APIField
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
-from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core.blocks import RawHTMLBlock, BooleanBlock
+from wagtail.core.blocks import RawHTMLBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.snippets.models import register_snippet
 from wagtail.core.models import Page, Orderable
@@ -24,7 +24,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from django.db import connection
 from collections import namedtuple
-
+from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
 
 
@@ -76,7 +76,7 @@ class AddToProject(models.Model):
         FieldPanel('subject'),
     ]
 
-    def GetAll(self):
+    def get_all(self):
         return self.email, self.subject
 
     class Meta:
@@ -227,7 +227,9 @@ class BlogIndexPage(Page):
         if search_query == '':
             search_query = None
         if search_query:
+            print(search_query)
             blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query)
+            print(blogpages)
         for page in blogpages:
             temp_cards.append(page)
         idx = 1
@@ -275,8 +277,18 @@ class BlogIndexPage(Page):
         context['primary'] = primary
         context['all_tags'] = all_tags
         context['card_tags'] = card_tags
+        context['entry_list'] = cards
+        context['page_template'] = 'blog/ajax_blog_index_page.html'
 
         return context
+
+    def get_template(self, request):
+        if request.is_ajax():
+            # Template to render objects retrieved via Ajax
+            return 'blog/ajax_blog_index_page.html'
+        else:
+            # Original template
+            return 'blog/blog_index_page.html'
 
 
 class BlogPreviewPage(Page):
@@ -354,90 +366,6 @@ class BlogPreviewPage(Page):
         return context
 
 
-class GalleryBlock(blocks.StreamBlock):
-    image = ImageChooserBlock()
-
-    class Meta:
-        template = 'blog/blocks/gallery_block.html'
-
-
-class VideoBlock(blocks.StreamBlock):
-    video = EmbedBlock()
-
-    class Meta:
-        template = 'blog/blocks/video_block.html'
-
-
-class VideoItem(blocks.StreamBlock):
-    embed = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на видео')
-    title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Заголовок')
-    sub_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Подзаголовок')
-    meta = models.CharField(max_length=255, blank=True, null=True, verbose_name='Мета информация')
-
-    class Meta:
-        template = 'blog/blocks/video_item.html'
-
-
-class VideoGallery(blocks.StreamBlock):
-    video = blocks.RichTextBlock()
-    element = VideoItem(icon='video', label='Добавить видео', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/video_gallery.html'
-
-
-class ColumnBlock(blocks.StreamBlock):
-    paragraph = blocks.RichTextBlock()
-    image = ImageChooserBlock()
-    video = VideoBlock(icon='placeholder', label='Видео блок', null=True, blank=True, required=False)
-    yt_video = VideoGallery(icon='placeholder', label='Видео галерея', null=True, blank=True, required=False)
-    html = blocks.RawHTMLBlock()
-    gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/column_block.html'
-
-
-class TwoColumnBlock(blocks.StructBlock):
-    left_column = ColumnBlock(icon='arrow-right', label='Left column content', null=True, blank=True, required=False)
-    right_column = ColumnBlock(icon='arrow-right', label='Right column content', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/two_column_block.html'
-        icon = 'placeholder'
-        label = 'Two Columns'
-
-
-class ContainerBlock(blocks.StructBlock):
-    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
-    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/container_block.html'
-        icon = 'placeholder'
-        label = 'Стандартный блок'
-
-
-class ContainerNarrowBlock(blocks.StructBlock):
-    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
-    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/container_narrow_block.html'
-        icon = 'placeholder'
-        label = 'Узкий блок'
-
-
-class ContainerWideBlock(blocks.StructBlock):
-    onecol = ColumnBlock(icon='cog', label='Одна колонка', null=True, blank=True, required=False)
-    twocol = TwoColumnBlock(icon='cog', label='Две колонки', null=True, blank=True, required=False)
-
-    class Meta:
-        template = 'blog/blocks/container_wide_block.html'
-        icon = 'placeholder'
-        label = 'Широкий блок'
-
-
 class BlogPage(Page):
     page_types = [
         ('standart', 'Стандарт'),
@@ -467,11 +395,8 @@ class BlogPage(Page):
         ('container_narrow', ContainerNarrowBlock()),
         ('container_wide', ContainerWideBlock()),
     ], null=True, blank=True, verbose_name="Статья")
-    main_tag = models.ForeignKey('Tag', null=True,
-                                 blank=True,
-                                 on_delete=models.SET_NULL,
-                                 related_name='+',
-                                 verbose_name="Основной тег")
+    main_tag = models.ForeignKey('Tag', null=True, blank=True, on_delete=models.SET_NULL,
+                                 related_name='+', verbose_name="Основной тег")
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
     main_color = models.ForeignKey('TagColors', null=True,
                                    blank=True,
@@ -496,7 +421,7 @@ class BlogPage(Page):
     )
     animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
     ontop = models.BooleanField(null=True, blank=True, default=False)
-    artical_image = models.ForeignKey(
+    article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
@@ -504,21 +429,28 @@ class BlogPage(Page):
         related_name='+',
         verbose_name="Изображение для статьи"
     )
-
-    artical_title = models.TextField(max_length=200, null=True, blank=True, verbose_name="Заголовок для статьи")
+    article_title = models.TextField(max_length=200, null=True, blank=True, verbose_name="Заголовок для статьи")
+    search_body = models.TextField(null=True, blank=True)
 
     api_fields = [
         APIField("title"),
-        APIField("artical_title"),
+        APIField("article_title"),
         # ... other fields to turn into JSON
         APIField("color_tags", serializer=CustomTagSerializer()),
     ]
 
     search_fields = Page.search_fields + [
+        index.SearchField('title'),
+        index.SearchField('card_title'),
+        index.SearchField('card_sub_title'),
         index.SearchField('intro'),
-        index.SearchField('artical_title'),
+        index.SearchField('article_title'),
         # index.SearchField('tags'),
-        index.SearchField('content_body'),
+        # index.RelatedFields('tags', [
+        #     index.SearchField('name'),
+        # ]),
+        index.SearchField('search_body'),
+        # index.SearchField('main_tag'),
     ]
 
     content_panels = Page.content_panels + [
@@ -540,13 +472,24 @@ class BlogPage(Page):
             ImageChooserPanel('main_image'),
             FieldPanel('animate_image'),
         ]),
-        FieldPanel('artical_title'),
+        FieldPanel('article_title'),
         # FieldPanel('ontop', widget=forms.CheckboxInput),
-        ImageChooserPanel('artical_image'),
+        ImageChooserPanel('article_image'),
         StreamFieldPanel('content_body'),
         # FieldPanel('body', classname="full"),
         # InlinePanel('gallery_images', label="Галерея изображений"),
     ]
+
+    def save(self, *args, **kwargs):
+        print(self.content_body.stream_data)
+        if self.content_body.stream_data:
+            self.search_body = self.content_body.stream_data
+            # for block in self.content_body.stream_data:
+            #     if len(block) >= 2:
+            #         self.search_body += str(block[1])
+            print(self.search_body)
+        # self.search_body = self.search_body
+        return super().save(*args, **kwargs)
 
     def serve(self, request):
         if "email" in request.POST:
@@ -669,7 +612,6 @@ class TypedPage(Page):
             # Display event page as usual
             return super().serve(request)
 
-    # tags = RawSQL('SELECT * FROM blog_coloredtag WHERE "order" = %s', (0,))
     tags = Page.objects.raw('SELECT * FROM blog_coloredtag WHERE "order" = 0')
     date = models.DateField("Post date")
     text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)

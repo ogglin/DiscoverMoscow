@@ -639,7 +639,7 @@ footer {
     position: absolute;
     z-index: 2;
     font-size: 15px;
-    top: calc(60% + 24px);
+    top: calc(60% + 22px);
     left: 20px;
     width: calc(100% - 40px);
     font-weight: 400;
@@ -2255,4 +2255,8 @@ h2 {
   form {
     height: 0px;
   }
+}
+.endless_more {
+  height: 0px;
+  display: block;
 }

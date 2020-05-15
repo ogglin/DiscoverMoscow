@@ -232,18 +232,18 @@ $(document).ready(function(){
         pop_image_remove()
     })
 
-    // let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
-    // frames.each(function (i) {
-    //     let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
-    //     // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
-    //     $(this).parent().prepend(html)
-    //     // $(this).parent().append(img)
-    //     $(this).remove()
-    // })
-    // frames.each(function (i) {
-    //     const vfile = $(this).attr('src')
-    //     var player = new Playerjs({id:"player"+i, file: vfile});
-    // })
+    let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
+    frames.each(function (i) {
+        let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
+        // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
+        $(this).parent().prepend(html)
+        // $(this).parent().append(img)
+        $(this).remove()
+    })
+    frames.each(function (i) {
+        const vfile = $(this).attr('src')
+        var player = new Playerjs({id:"player"+i, file: vfile});
+    })
 
     $('.yt_play_btn').click(function () {
         yt_play($(this).parent())

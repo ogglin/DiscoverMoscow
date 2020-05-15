@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'dop_slider',
     'blog',
     'subscriber',
-
+    'dashboard',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.routable_page',
+    'wagtail.contrib.settings',
+    'wagtailtrans',
     'wagtailmenus',
     'modelcluster',
     'taggit',
@@ -79,6 +81,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
     'wagtail.core.middleware.SiteMiddleware',
+    'wagtailtrans.middleware.TranslationMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -149,6 +152,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'ru-RU'
+
+from django.utils.translation import gettext_lazy as _
+LANGUAGES = [
+    ('ru-RU', _('Русский')),
+    ('en', _('English')),
+]
+
 
 TIME_ZONE = 'UTC'
 

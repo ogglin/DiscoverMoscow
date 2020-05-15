@@ -11,6 +11,14 @@ class GalleryBlock(blocks.StreamBlock):
         template = 'blog/blocks/gallery_block.html'
 
 
+class PartnerBlock(blocks.StreamBlock):
+    image = ImageChooserBlock()
+    paragraph = blocks.RichTextBlock()
+
+    class Meta:
+        template = 'blog/blocks/partner_block.html'
+
+
 class VideoBlock(blocks.StreamBlock):
     video = EmbedBlock()
 
@@ -42,6 +50,7 @@ class ColumnBlock(blocks.StreamBlock):
     yt_video = VideoGallery(icon='placeholder', label='Видео галерея', null=True, blank=True, required=False)
     html = blocks.RawHTMLBlock()
     gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
+    partner = PartnerBlock(icon='placeholder', label='Блок партнера', null=True, blank=True, required=False)
 
     class Meta:
         template = 'blog/blocks/column_block.html'

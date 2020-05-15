@@ -1,0 +1,15 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="partner_block">
+    {% for item in self %}
+        {% if forloop.counter == 1 %}
+            <div class="partner_image">
+                {{ item }}
+            </div>
+        {% else %}
+            <div class="partner_text">
+                {{ item }}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

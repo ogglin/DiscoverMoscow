@@ -35,6 +35,13 @@
     list-style: none;
     display: inline;
     float: left;
+    &.black {
+        .slider_image .text-block {
+            .slider_subtitle, a {
+                color: #000000;
+            }
+        }
+    }
 }
 
 .slide-img {

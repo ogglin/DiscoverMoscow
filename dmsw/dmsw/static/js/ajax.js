@@ -42,8 +42,11 @@ $(document).ready(function(){
         console.log(data)
         console.log(textStatus)
         console.log(jqXHR)
+        $text_confirm = '<h4>Подтверждение на почте!</h4>'
         $('.data_form').remove()
+        $('.subscribe-ajax-form button').remove()
         $('.result_form').html(data['message']);
+        $('.result_form').prepend($text_confirm);
         $myForm[0].reset(); // reset form data
     }
 
@@ -51,7 +54,7 @@ $(document).ready(function(){
         console.log(jqXHR)
         console.log(textStatus)
         console.log(errorThrown)
-		$('.result_form').html('Ошибка. Данные не отправлены.');
+		$('.result_form').html('Вы уже подписаны.');
     }
 })
 

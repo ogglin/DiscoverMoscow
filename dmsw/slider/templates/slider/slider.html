@@ -5,7 +5,7 @@
                 <ul id="slidewrapper">
                     {% for slide in slides %}
                         {% image slide.image width-1000 as img %}
-                        <li class="slide">
+                        <li class="slide {{ slide.text_color }}">
                             <div style='background-image: url("{{ img.url }}")' class="slider_image">
                                 <div class="text-block">
                                     <a href="{{ slide.link }}" class="slider_tag">{{ slide.title }}</a>

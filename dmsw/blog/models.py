@@ -7,7 +7,6 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
-from smart_selects.db_fields import ChainedManyToManyField
 from taggit.models import TaggedItemBase, Tag as TaggitTag
 from wagtail.api import APIField
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
@@ -27,6 +26,7 @@ from collections import namedtuple
 from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
 import random
+import requests
 
 
 @register_snippet
@@ -155,9 +155,6 @@ class ColoredTag(ClusterableModel):
     def __str__(self):
         return str(self.name) if self.name else ''
 
-    def __unicode__(self):
-        return self.color
-
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
@@ -184,8 +181,128 @@ class TagColors(models.Model):
         verbose_name_plural = 'Цвета тегов'
 
 
-class BlogIndexPage(Page):
-    intro = RichTextField(blank=True)
+class BlogPage(Page):
+    page_types = [
+        ('standart', 'Стандарт'),
+        ('fullimage', 'Заливка картинкой'),
+        ('video', 'Заливка анимации'),
+        ('rekcard', 'Рекламный блок'),
+    ]
+    page_types_hover = [
+        ('standart', 'Стандарт'),
+        ('fullimage', 'Заливка картинкой'),
+        ('video', 'Заливка анимации'),
+        ('rekcard', 'Рекламный блок'),
+    ]
+    page_colors = [
+        ('white', 'Белый'),
+        ('black', 'Черный'),
+    ]
+    date = models.DateField("Post date")
+    intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
+    adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
+    body = RichTextField(blank=True, verbose_name="Вступление статьи")
+    card_title = models.CharField(max_length=250, verbose_name="Заголовок карточки", blank=True)
+    card_sub_title = models.CharField(max_length=250, verbose_name="Подголовок карточки", blank=True)
+    hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
+    content_body = StreamField([
+        ('container', ContainerBlock()),
+        ('container_narrow', ContainerNarrowBlock()),
+        ('container_wide', ContainerWideBlock()),
+    ], null=True, blank=True, verbose_name="Статья")
+    main_tag = models.ForeignKey('Tag', null=True, blank=True, on_delete=models.SET_NULL,
+                                 related_name='+', verbose_name="Основной тег")
+    sub_tag = models.ForeignKey('ColoredTag', null=True, blank=True, on_delete=models.SET_NULL,
+                                limit_choices_to={'parent_id_id__isnull': False}, related_name='+',
+                                verbose_name="Дополнительный тег")
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
+    main_color = models.ForeignKey('TagColors', null=True,
+                                   blank=True,
+                                   on_delete=models.SET_NULL,
+                                   related_name='+',
+                                   verbose_name="Основной цвет")
+    color_tags = TagColors.objects.all()
+    categories = ParentalManyToManyField('blog.BlogCategory', blank=True, verbose_name="Категории")
+    page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
+    page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
+                                       verbose_name="Тип карточки при наведении")
+    page_color = models.CharField(max_length=250, choices=page_colors, default='black',
+                                  verbose_name="Цвет заголовков карточки")
+
+    main_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Основное изображение"
+    )
+    animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
+    ontop = models.BooleanField(null=True, blank=True, default=False)
+    article_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="Изображение для статьи"
+    )
+    article_title = models.TextField(max_length=200, null=True, blank=True, verbose_name="Заголовок для статьи")
+    search_body = models.TextField(null=True, blank=True)
+
+    api_fields = [
+        APIField("title"),
+        APIField("article_title"),
+        # ... other fields to turn into JSON
+        APIField("color_tags", serializer=CustomTagSerializer()),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField('title'),
+        index.SearchField('card_title'),
+        index.SearchField('card_sub_title'),
+        index.SearchField('intro'),
+        index.SearchField('article_title'),
+        # index.SearchField('tags'),
+        # index.RelatedFields('tags', [
+        #     index.SearchField('name'),
+        # ]),
+        index.SearchField('search_body'),
+        # index.SearchField('main_tag'),
+    ]
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('date'),
+            FieldPanel('card_title'),
+            FieldPanel('card_sub_title'),
+            FieldPanel('main_tag'),
+            FieldPanel('sub_tag'),
+            FieldPanel('tags'),
+            FieldPanel('main_color'),
+            FieldPanel('page_type'),
+            FieldPanel('page_type_hover'),
+            FieldPanel('page_color'),
+            FieldPanel('adv_link'),
+            # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+        ], heading="Данные карточки"),
+        MultiFieldPanel([
+            FieldPanel('intro'),
+            ImageChooserPanel('main_image'),
+            FieldPanel('animate_image'),
+        ]),
+        FieldPanel('article_title'),
+        # FieldPanel('ontop', widget=forms.CheckboxInput),
+        ImageChooserPanel('article_image'),
+        StreamFieldPanel('content_body'),
+        # FieldPanel('body', classname="full"),
+        # InlinePanel('gallery_images', label="Галерея изображений"),
+    ]
+
+    def save(self, *args, **kwargs):
+        if self.content_body.stream_data:
+            self.search_body = str(self.content_body.stream_data).lower()
+        return super().save(*args, **kwargs)
 
     def serve(self, request):
         if "email" in request.POST:
@@ -194,9 +311,58 @@ class BlogIndexPage(Page):
             to_form = '{"email": "' + email + '"}'
             save_mail(to_form)
             data = {
-                'message': "Спасибо за подписку"
+                'message': "Спасибо!"
             }
             return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
+
+    def get_context(self, request):
+        # Filter by tag
+        blogpages = BlogPage.objects.order_by('-last_published_at').all()
+
+        # Update template context
+        context = super().get_context(request)
+        context['blogpages'] = blogpages
+
+        return context
+
+    class Meta:
+        ordering = ('date',)
+
+
+class BlogIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    def serve(self, request):
+        if "email" in request.POST:
+            email = request.POST['email']
+
+            list_id = '176059'
+            url = "https://api.notisend.ru/v1/email/lists/"+list_id+"/recipients"
+            payload = {'unconfirmed': '1',
+                       'email': ''+email+''}
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer fefb77c131fff95404fbf9537e4d6c8f'
+            }
+            response = requests.post(url, headers=headers, json=payload,)
+            if 'errors' in response.json():
+                print(response.json()['errors'][0]['detail'])
+            else:
+                print(response.json())
+                to_form = '{"email": "' + email + '"}'
+                save_mail(to_form)
+                data = {
+                    'message': "Спасибо!"
+                }
+                return JsonResponse(data)
         elif "ajax_load_more" in request.POST:
             more_data = {
                 'message': "Загрузка ..."
@@ -229,7 +395,7 @@ class BlogIndexPage(Page):
             search_query = None
         if search_query:
             print(search_query)
-            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query)
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
             print(blogpages)
         for page in blogpages:
             temp_cards.append(page)
@@ -368,164 +534,6 @@ class BlogPreviewPage(Page):
         return context
 
 
-class BlogPage(Page):
-    page_types = [
-        ('standart', 'Стандарт'),
-        ('fullimage', 'Заливка картинкой'),
-        ('video', 'Заливка анимации'),
-        ('rekcard', 'Рекламный блок'),
-    ]
-    page_types_hover = [
-        ('standart', 'Стандарт'),
-        ('fullimage', 'Заливка картинкой'),
-        ('video', 'Заливка анимации'),
-        ('rekcard', 'Рекламный блок'),
-    ]
-    page_colors = [
-        ('white', 'Белый'),
-        ('black', 'Черный'),
-    ]
-    date = models.DateField("Post date")
-    intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
-    adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
-    body = RichTextField(blank=True, verbose_name="Вступление статьи")
-    card_title = models.CharField(max_length=250, verbose_name="Заголовок карточки", blank=True)
-    card_sub_title = models.CharField(max_length=250, verbose_name="Подголовок карточки", blank=True)
-    hr = blocks.RichTextBlock(features=['hr'], classname='container', blank=True)
-    content_body = StreamField([
-        ('container', ContainerBlock()),
-        ('container_narrow', ContainerNarrowBlock()),
-        ('container_wide', ContainerWideBlock()),
-    ], null=True, blank=True, verbose_name="Статья")
-    main_tag = models.ForeignKey('Tag', null=True, blank=True, on_delete=models.SET_NULL,
-                                 related_name='+', verbose_name="Основной тег")
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
-    main_color = models.ForeignKey('TagColors', null=True,
-                                   blank=True,
-                                   on_delete=models.SET_NULL,
-                                   related_name='+',
-                                   verbose_name="Основной цвет")
-    color_tags = TagColors.objects.all()
-    categories = ParentalManyToManyField('blog.BlogCategory', blank=True, verbose_name="Категории")
-    page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
-    page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
-                                       verbose_name="Тип карточки при наведении")
-    page_color = models.CharField(max_length=250, choices=page_colors, default='black',
-                                  verbose_name="Цвет заголовков карточки")
-
-    main_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Основное изображение"
-    )
-    animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
-    ontop = models.BooleanField(null=True, blank=True, default=False)
-    article_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name="Изображение для статьи"
-    )
-    article_title = models.TextField(max_length=200, null=True, blank=True, verbose_name="Заголовок для статьи")
-    search_body = models.TextField(null=True, blank=True)
-
-    api_fields = [
-        APIField("title"),
-        APIField("article_title"),
-        # ... other fields to turn into JSON
-        APIField("color_tags", serializer=CustomTagSerializer()),
-    ]
-
-    search_fields = Page.search_fields + [
-        index.SearchField('title'),
-        index.SearchField('card_title'),
-        index.SearchField('card_sub_title'),
-        index.SearchField('intro'),
-        index.SearchField('article_title'),
-        # index.SearchField('tags'),
-        # index.RelatedFields('tags', [
-        #     index.SearchField('name'),
-        # ]),
-        index.SearchField('search_body'),
-        # index.SearchField('main_tag'),
-    ]
-
-    content_panels = Page.content_panels + [
-        MultiFieldPanel([
-            FieldPanel('date'),
-            FieldPanel('card_title'),
-            FieldPanel('card_sub_title'),
-            FieldPanel('main_tag'),
-            FieldPanel('tags'),
-            FieldPanel('main_color'),
-            FieldPanel('page_type'),
-            FieldPanel('page_type_hover'),
-            FieldPanel('page_color'),
-            FieldPanel('adv_link'),
-            # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
-        ], heading="Данные карточки"),
-        MultiFieldPanel([
-            FieldPanel('intro'),
-            ImageChooserPanel('main_image'),
-            FieldPanel('animate_image'),
-        ]),
-        FieldPanel('article_title'),
-        # FieldPanel('ontop', widget=forms.CheckboxInput),
-        ImageChooserPanel('article_image'),
-        StreamFieldPanel('content_body'),
-        # FieldPanel('body', classname="full"),
-        # InlinePanel('gallery_images', label="Галерея изображений"),
-    ]
-
-    def save(self, *args, **kwargs):
-        print(self.content_body.stream_data)
-        if self.content_body.stream_data:
-            self.search_body = self.content_body.stream_data
-            # for block in self.content_body.stream_data:
-            #     if len(block) >= 2:
-            #         self.search_body += str(block[1])
-            print(self.search_body)
-        # self.search_body = self.search_body
-        return super().save(*args, **kwargs)
-
-    def serve(self, request):
-        if "email" in request.POST:
-
-            email = request.POST['email']
-            to_form = '{"email": "' + email + '"}'
-            save_mail(to_form)
-            data = {
-                'message': "Спасибо за подписку"
-            }
-            return JsonResponse(data)
-        elif "ajax_load_more" in request.POST:
-            more_data = {
-                'message': "Загрузка ..."
-            }
-            return JsonResponse(more_data)
-        else:
-            # Display event page as usual
-            return super().serve(request)
-
-    def get_context(self, request):
-        # Filter by tag
-        blogpages = BlogPage.objects.order_by('-last_published_at').all()
-
-        # Update template context
-        context = super().get_context(request)
-        context['blogpages'] = blogpages
-
-        return context
-
-    class Meta:
-        ordering = ('date',)
-
-
 class BlogPageGalleryImage(Orderable):
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='gallery_images')
     image = models.ForeignKey(
@@ -552,7 +560,7 @@ class BlogTagIndexPage(Page):
             to_form = '{"email": "' + email + '"}'
             save_mail(to_form)
             data = {
-                'message': "Спасибо за подписку"
+                'message': "Спасибо!"
             }
             return JsonResponse(data)
         elif "ajax_load_more" in request.POST:
@@ -579,7 +587,6 @@ class BlogTagIndexPage(Page):
         context = super().get_context(request)
         context['blogpages'] = blogpages
 
-
         return context
 
 
@@ -604,7 +611,7 @@ class TypedPage(Page):
             to_form = '{"email": "' + email + '"}'
             save_mail(to_form)
             data = {
-                'message': "Спасибо за подписку"
+                'message': "Спасибо!"
             }
             return JsonResponse(data)
         elif "ajax_load_more" in request.POST:

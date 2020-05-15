@@ -31,6 +31,8 @@
   list-style: none;
   display: inline;
   float: left; }
+  .slide.black .slider_image .text-block .slider_subtitle, .slide.black .slider_image .text-block a {
+    color: #000000; }
 
 .slide-img {
   width: 100%; }
@@ -80,4 +82,4 @@
     width: 14px;
     height: 14px; }
 
-/*# sourceMappingURL=dop_slider.css.map */
+/*# sourceMappingURL=slider.css.map */

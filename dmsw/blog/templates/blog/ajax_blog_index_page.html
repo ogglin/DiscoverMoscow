@@ -81,6 +81,10 @@
                 {% include "forms/ajax_card.html" %}
             {% endif %}
         {% endfor %}
-    {% show_more "Здесь еще много интересного" "Загрузка ..." %}
+    {% if locale == 'ru' %}
+        {% show_more "Здесь еще много интересного" "Загрузка ..." %}
+    {% else %}
+        {% show_more "There are many more interesting things here" "Locading ..." %}
+    {% endif %}
 {% endblock %}
 

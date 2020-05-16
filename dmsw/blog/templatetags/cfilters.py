@@ -5,6 +5,8 @@ import re
 
 from django.db import connection
 
+from ..models import Tags
+
 register = template.Library()
 
 
@@ -35,17 +37,6 @@ def media_kit():
     return row
 
 
-def GetAllTag():
-    cursor = connection.cursor()
-    cursor.execute(f'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title '
-                   f'FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id '
-                   f'GROUP BY tt.id ORDER BY bc.order_num')
-    desc = cursor.description
-    nt_result = namedtuple('Result', [col[0] for col in desc])
-    rows = [nt_result(*row) for row in cursor.fetchall()]
-    return rows
-
-
 @register.filter
 def clear_url(value):
     return value.replace("/", "")
@@ -72,23 +63,27 @@ def label_with_classes(value, arg):
 
 
 @register.simple_tag
-def a_tags():
-    all_tags = GetAllTag()
-    return all_tags
+def all_tags(lang):
+    return Tags.objects.filter(locale=lang)
 
 
 @register.simple_tag
-def c_tags():
-    all_tags = GetAllTag()
+def a_tags(lang):
+    return Tags.objects.filter(locale=lang).order_by('order_num')
+
+
+@register.simple_tag
+def c_tags(lang):
+    all_tags = Tags.objects.filter(locale=lang).order_by('order_num')
     primary = []
     for tag in all_tags:
-        if tag.order == 0:
+        if tag.level == 0:
             primary.append(tag.id)
     card_tags = dict.fromkeys(primary)
     for el in card_tags:
         arr = []
         for tag in all_tags:
-            if tag.order != 0 and el == tag.parent_id_id:
+            if tag.level != 0 and el == tag.parent_id_id:
                 arr.append(tag.id)
         card_tags[el] = arr
     return card_tags

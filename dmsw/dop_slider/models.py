@@ -6,7 +6,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-from blog.models import Tag
+from blog.models import Tags
 
 
 # Create your models here.
@@ -16,6 +16,11 @@ class Sliders(models.Model):
         ('standart', 'Стандарт'),
         ('calendar', 'Календарь'),
     ]
+    locales = [
+        ('ru', 'ru'),
+        ('en', 'en'),
+    ]
+    locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
     color = ColorField(default='#FFFFFF', verbose_name="цвет")
     title = models.CharField(max_length=128, null=True, blank=True, verbose_name="заголовок")
     subtitle = models.CharField(blank=True, max_length=250, verbose_name="подзаголовок")
@@ -31,7 +36,7 @@ class Sliders(models.Model):
     title_three = models.CharField(max_length=250, blank=True, verbose_name="подзаголовок 3")
     tag_link_three = models.CharField(blank=True, max_length=255, verbose_name="ссылка 3")
     collect = models.CharField(blank=True, max_length=255, verbose_name="название подборки")
-    collect_tag = models.ForeignKey(Tag, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True, blank=True,
+    collect_tag = models.ForeignKey(Tags, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True, blank=True,
                                     verbose_name='Tag подборки')
     panels = [
         MultiFieldPanel([
@@ -57,3 +62,11 @@ class Sliders(models.Model):
     class Meta:
         verbose_name = 'Изображение слайдера'
         verbose_name_plural = 'Изображения слайдера'
+
+
+class SlidersEN(Sliders):
+    locale = 'en'
+
+    def save(self, *args, **kwargs):
+        self.locale = 'en'
+        return super().save(*args, **kwargs)

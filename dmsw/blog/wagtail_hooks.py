@@ -1,13 +1,22 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register, ModelAdminGroup)
-from .models import ColoredTag, TagColors
-from slider.models import Photo
-from dop_slider.models import Sliders
+from .models import Tags, TagColors, TagsEN, TagColorsEN
+from slider.models import Photo, PhotoEN
+from dop_slider.models import Sliders, SlidersEN
 
 
 class SlidersInline(ModelAdmin):
     model = Sliders
     menu_label = 'Доп. слайдер'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 100
+    list_display = ('title', 'image')
+    list_filter = ('title',)
+
+
+class SlidersInlineEN(ModelAdmin):
+    model = SlidersEN
+    menu_label = 'Functional slider'
     menu_icon = 'folder-open-inverse'
     menu_order = 100
     list_display = ('title', 'image')
@@ -23,18 +32,44 @@ class PhotoInline(ModelAdmin):
     list_filter = ('title',)
 
 
+class PhotoInlineEN(ModelAdmin):
+    model = PhotoEN
+    menu_label = 'Slider on the left'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 50
+    list_display = ('title', 'image')
+    list_filter = ('title',)
+
+
 class PageTagInline(ModelAdmin):
-    model = ColoredTag
+    model = Tags
     menu_label = 'Меню / Теги'
     menu_icon = 'folder-open-inverse'
     menu_order = 150
-    list_display = ('id', 'order', 'tag', 'parent_id', 'order_num')
-    list_filter = ('tag',)
+    list_display = ('id', 'name', 'level', 'parent_id', 'order_num')
+    list_filter = ('name',)
+
+
+class PageTagInlineEN(ModelAdmin):
+    model = TagsEN
+    menu_label = 'Menu / Tags'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 150
+    list_display = ('id', 'name', 'level', 'parent_id', 'order_num')
+    list_filter = ('name',)
 
 
 class PageTagColors(ModelAdmin):
     model = TagColors
     menu_label = 'Цвета тегов'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 200
+    list_display = ('color_title', 'color')
+
+
+class PageTagColorsEN(ModelAdmin):
+    model = TagColorsEN
+    menu_label = 'Tag colors'
     menu_icon = 'folder-open-inverse'
     menu_order = 200
     list_display = ('color_title', 'color')
@@ -51,7 +86,7 @@ class LocaleEN(ModelAdminGroup):
     menu_label = 'English'
     menu_icon = 'folder-open-inverse'
     menu_order = 200
-    items = (PageTagColors, PhotoInline, SlidersInline)
+    items = (PageTagInlineEN, PageTagColorsEN, PhotoInlineEN, SlidersInlineEN)
 
 
 # class Locales(ModelAdminGroup):

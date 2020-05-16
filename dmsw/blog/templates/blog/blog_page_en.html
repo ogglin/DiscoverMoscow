@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags cfilters %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block sharing_block %}
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="DiscoverMoscow">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.intro }}">
+    <meta property="og:url" content="{{ self.url }}">
+    <meta property="og:locale" content="ru_RU">
+    {% image page.article_image scale-100 as img %}
+    <meta property="og:image" content="http://moscow.vp4.ru{{ img.url }}">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.intro }}">
+    {% image page.article_image scale-100 as img %}
+    <meta name="twitter:image:src" content="http://moscow.vp4.ru{{ img.url }}">
+    <meta name="twitter:url" content="{{ self.url }}">
+    <meta name="twitter:domain" content="https://discover.moscow/">
+    <meta name="twitter:site" content="@discovermoscow">
+    <meta name="twitter:creator" content="@discovermoscow">
+{% endblock %}
+
+{% block content %}
+    <div class="header-block"
+        {% for ctag in page.color_tags %}
+            {% if page.main_color_id %}
+                {% if ctag.id == page.main_color_id %}
+                    style="background-color: {{ ctag.color }}"
+                {% endif %}
+            {% else %}
+                {% if ctag.tag_id.tag_id == page.main_tag_id %}
+                    style="background-color: {{ ctag.color }}"
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    >
+        {% image page.article_image scale-100 as img %}
+        <div class="head-image" style='background-image: url("{{ img.url }}")'>
+        </div>
+        <div class="head-block">
+            <div class="head-title">
+                <div class="breadcrumbs">
+                    <a href="{{ page.get_parent.url }}">Главная</a>
+                    <a href="/tags/?tag={{ page.main_tag }}" class="active">{{ page.main_tag }}</a>
+                </div>
+                <h1 class="title">{{ page.article_title|safe }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="addthis_inline_share_toolbox"></div>
+    {{ page.content_body }}
+    <div class="addthis_inline_share_toolbox"></div>
+    <div class="container">
+        <h2>Вам наверняка будет интересно</h2>
+        <hr>
+    </div>
+    </div>
+    <div class="card-wrap tagged one_row">
+        {% for post in blogpages %}
+            {% if post.main_tag == page.main_tag %}
+                {% with post=post.specific %}
+                    {% if forloop.counter < 7 %}
+                        <div class="card-item {{ post.page_color }}">
+                            <div class="card-front {{ post.page_type }}">
+                                <div {{ post.main_tag.id }} class="background"
+                                    {% for ctag in post.color_tags %}
+                                        {% if post.main_color_id %}
+                                            {% if ctag.id == post.main_color_id %}
+                                                style="background-color: {{ ctag.color }}"
+                                            {% endif %}
+                                        {% else %}
+                                            {% if ctag.tag_id.tag_id == post.main_tag_id %}
+                                                style="background-color: {{ ctag.color }}"
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                ></div>
+                                <div class="card-item-inner">
+                                    {% if post.main_image %}
+                                        {% image post.main_image scale-100 as img %}
+                                        <div class="image" style='background-image: url("{{ img.url }}")'></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-back {{ post.page_type_hover }}">
+                                <div class="background"
+                                     {% for ctag in post.color_tags %}
+                                        {% if post.main_color_id %}
+                                            {% if ctag.id == post.main_color_id %}
+                                                style="background-color: {{ ctag.color }}"
+                                            {% endif %}
+                                        {% else %}
+                                            {% if ctag.tag_id.tag_id == post.main_tag_id %}
+                                                style="background-color: {{ ctag.color }}"
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                ></div>
+                                <div class="card-item-inner">
+                                    {% if post.animate_image %}
+                                        <div class="image" style='background-image: url("/media/{{ post.animate_image }}")'></div>
+                                    {% endif %}
+                                    <p class="intro">{{ post.intro }}</p>
+                                </div>
+                            </div>
+                            <div class="card-meta {{ post.page_type_hover }}">
+                                {% if post.main_tag.id == 14 %}
+                                    <a href="{{ post.adv_link|safe }}" target="_blank">
+                                {% else %}
+                                    <a href="{% pageurl post %}">
+                                {% endif %}
+                                    </a>
+                                    <h2 class="title">{% if post.card_title %}
+                                            {{ post.card_title }}
+                                        {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
+                                        {% else %}#{{ post.main_tag }}{% endif %}
+                                    </h2>
+                                    <p class="subtitle">
+                                        {% if post.card_sub_title %}{{ post.card_sub_title }}{% else %}
+                                        {{ post.title }}{% endif %}
+                                    </p>
+                                <div class="tags">
+                                    <span>
+                                        {% if post.main_tag %}
+                                            <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
+                                        {% endif %}
+                                        {% if post.tags.all.0.name and post.main_tag|clear_val != post.tags.all.0.name|clear_val %}
+                                            <a href="/tags/?tag={{ post.tags.all.0.name }}">#{{ post.tags.all.0.name }}</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+      $(document).ready(function() {
+           var slider = $('.image-gallery').lightSlider({
+                gallery:true,
+                item:1,
+                thumbItem:4,
+                slideMargin: 10,
+                thumbMargin: 20,
+                speed:2500,
+                loop:true,
+                onSliderLoad: function(el) {
+                    $('.image-gallery').removeClass('cS-hidden');
+                    el.lightGallery({
+                        selector: '.image-gallery .lslide'
+                    });
+                }
+           });
+           $('.lSPrev').click(function () {
+                slider.goToPrevSlide();
+            })
+           $('.lSNext').click( function () {
+                slider.goToNextSlide();
+           })
+      })
+    </script>
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player
+      var players = $('.yt_video')
+      function onYouTubeIframeAPIReady() {
+          players.each(function () {
+            player = new YT.Player($( this )[0], {
+              height: '100%',
+              width: '100%',
+              videoId: $(this).attr('area-id'),
+              events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+              }
+            });
+          })
+      }
+
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.pauseVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    </script>
+
+{% endblock %}
+
+{% block slider-block %}
+{% endblock %}
+{% block subscribe %}
+    {% include "forms/ajax.html" %}
+{% endblock %}

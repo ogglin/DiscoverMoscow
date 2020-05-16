@@ -62,7 +62,7 @@
                                     </a>
                                     <h2 class="title">{% if post.card_title %}
                                             {{ post.card_title }}
-                                        {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
+                                        {% elif post.sub_tag.name %} #{{ post.sub_tag.name }}
                                         {% else %}#{{ post.main_tag }}{% endif %}
                                     </h2>
                                     <p class="subtitle">
@@ -74,8 +74,8 @@
                                         {% if post.main_tag %}
                                             <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
                                         {% endif %}
-                                        {% if post.tags.all.0.name and post.main_tag|clear_val != post.tags.all.0.name|clear_val %}
-                                            <a href="/tags/?tag={{ post.tags.all.0.name }}">#{{ post.tags.all.0.name }}</a>
+                                        {% if post.sub_tag.name and post.main_tag|clear_val != post.sub_tag.name|clear_val %}
+                                            <a href="/tags/?tag={{ post.sub_tag.name }}">#{{ post.sub_tag.name }}</a>
                                         {% endif %}
                                     </span>
                                 </div>
@@ -86,7 +86,11 @@
                     {% include "forms/ajax_card.html" %}
                 {% endif %}
             {% endfor %}
+    {% if locale == 'ru' %}
         {% show_more "Здесь еще много интересного" "Загрузка ..." %}
+    {% else %}
+        {% show_more "There are many more interesting things here" "Locading ..." %}
+    {% endif %}
     </div>
     <div class="ajax_load_more">
         <form method="post" action="" data-url='{{ request.build_absolute_uri|safe }}'>

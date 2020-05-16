@@ -1,4 +1,3 @@
-from django import forms
 from django.db import models
 from colorfield.fields import ColorField
 from django.db.models import Q
@@ -7,13 +6,12 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
-from taggit.models import TaggedItemBase, Tag as TaggitTag
+from taggit.models import TaggedItemBase
 from wagtail.api import APIField
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
 from wagtail.core.blocks import RawHTMLBlock
 from wagtail.embeds.blocks import EmbedBlock
-from wagtail.snippets.models import register_snippet
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
@@ -27,61 +25,7 @@ from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
 import random
 import requests
-
-
-@register_snippet
-class Tag(TaggitTag):
-    class Meta:
-        proxy = True
-
-
-@register_snippet
-class BlogCategory(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ForeignKey(
-        'wagtailimages.Image', null=True, blank=True,
-        on_delete=models.SET_NULL, related_name='+'
-    )
-
-    panels = [
-        FieldPanel('name'),
-        ImageChooserPanel('icon'),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = 'категории'
-
-
-@register_snippet
-class MediaKit(models.Model):
-    mediakit = models.FileField(verbose_name='mediakit', null=True, blank=True)
-
-    panels = [
-        FieldPanel('mediakit'),
-    ]
-
-    class Meta:
-        verbose_name_plural = 'Медиакит'
-
-
-@register_snippet
-class AddToProject(models.Model):
-    email = models.CharField(max_length=255, null=True, blank=True)
-    subject = models.CharField(max_length=255, null=True, blank=True, verbose_name='Тема письма')
-
-    panels = [
-        FieldPanel('email'),
-        FieldPanel('subject'),
-    ]
-
-    def get_all(self):
-        return self.email, self.subject
-
-    class Meta:
-        verbose_name_plural = 'Присоединиться к проекту'
+from .snipets import *
 
 
 def save_mail(to_form):
@@ -93,16 +37,60 @@ def save_mail(to_form):
     print(rows)
 
 
-class AllTag:
+def sort_cards(pages):
+    all_tags = Tags.objects.all()
+    temp_cards = []
+    primary = []
+    cards = []
+    for tag in all_tags:
+        if tag.level == 0:
+            primary.append(tag.id)
+    card_tags = dict.fromkeys(primary)
+    for el in card_tags:
+        arr = []
+        for tag in all_tags:
+            if tag.level != 0 and el == tag.parent_id_id:
+                arr.append(tag.id)
+        card_tags[el] = arr
+    for page in pages:
+        temp_cards.append(page)
+    idx = 1
 
-    def GetAllTag(self):
-        cursor = connection.cursor()
-        cursor.execute(
-            'SELECT tt.id, bc.order_num, bc.parent_id_id, bc."order", tt.name, bc.name title FROM taggit_tag tt LEFT JOIN blog_coloredtag bc ON tt.id = bc.tag_id GROUP BY tt.id ORDER BY bc.order_num')
-        desc = cursor.description
-        nt_result = namedtuple('Result', [col[0] for col in desc])
-        rows = [nt_result(*row) for row in cursor.fetchall()]
-        return rows
+    def append(i):
+        for page in temp_cards:
+            if page.main_tag:
+                if page.main_tag.id == i:
+                    return page
+            else:
+                return page
+
+    for i in range(len(temp_cards)):
+        for item in card_tags:
+            if idx == 4:
+                p = append(1)
+                if p:
+                    cards.append(p)
+                    temp_cards.remove(p)
+                p = append(item)
+                idx += 1
+            else:
+                p = append(item)
+            if p:
+                cards.append(p)
+                temp_cards.remove(p)
+                idx += 1
+        for item in card_tags:
+            for el in card_tags[item]:
+                if idx == 4:
+                    p = append(1)
+                    idx += 1
+                else:
+                    p = append(el)
+                if p:
+                    cards.append(p)
+                    temp_cards.remove(p)
+                    idx += 1
+    return cards
 
 
 class CustomTagSerializer(Field):
@@ -113,7 +101,7 @@ class CustomTagSerializer(Field):
         return [
             {
                 "color": tag.color,
-                "order": tag.order,
+                "level": tag.level,
                 "tag_id": tag.tag_id,
                 "name": tag.name,
                 "order_num": tag.order_num,
@@ -122,33 +110,37 @@ class CustomTagSerializer(Field):
         ]
 
 
-class BlogPageTag(TaggedItemBase):
-    content_object = ParentalKey(
-        'BlogPage',
-        related_name='tagged_items',
-        on_delete=models.CASCADE
-    )
-
-
-class ColoredTag(ClusterableModel):
+class Tags(ClusterableModel):
     orders_list = [
         (0, 'Главное меню'),
         (1, 'под меню'),
+        (2, 'тег'),
     ]
-    tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True, blank=True, )
+    locales = [
+        ('ru', 'ru'),
+        ('en', 'en'),
+    ]
+    lang = 'ru'
+    locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
     name = models.CharField(max_length=250, verbose_name="Название", null=False, blank=False)
-    order = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
+    level = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
-    parent_id = models.ForeignKey('tag', blank=True, null=True, on_delete=models.CASCADE,
+    parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE,
                                   verbose_name="Родительский TAG", )
+
+    # def __init__(self, *args, **kwargs):
+    #     super(Tags, self).__init__(*args, **kwargs)
+    #     if self.lang == 'ru':
+    #         self.parent_id.queryset = Tags.objects.filter(locale='ru')
+    #     elif self.lang == 'en':
+    #         self.parent_id.queryset = Tags.objects.filter(locale='en')
 
     panels = [
         MultiFieldPanel([
             FieldPanel('parent_id'),
-            FieldPanel('order'),
+            FieldPanel('level'),
             FieldPanel('order_num'),
             FieldPanel('name'),
-            FieldPanel('tag'),
         ]),
     ]
 
@@ -160,9 +152,22 @@ class ColoredTag(ClusterableModel):
         verbose_name_plural = 'Теги'
 
 
+class TagsEN(Tags):
+    locale = 'en'
+    lang = 'en'
+
+    def save(self, *args, **kwargs):
+        self.locale = 'en'
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+
+
 class TagColors(models.Model):
-    tag_id = models.ForeignKey(ColoredTag, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True,
-                               blank=True, verbose_name='Тег', limit_choices_to={'order': 0})
+    tag_id = models.ForeignKey(Tags, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True,
+                               blank=True, verbose_name='Тег', limit_choices_to={'level': 0})
     color_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Название цвета')
     color = ColorField(default='#FFFFFF', verbose_name='Цвет')
 
@@ -179,6 +184,18 @@ class TagColors(models.Model):
     class Meta:
         verbose_name = 'Цвет тега'
         verbose_name_plural = 'Цвета тегов'
+
+
+class TagColorsEN(TagColors):
+    locale = 'en'
+
+    def save(self, *args, **kwargs):
+        self.locale = 'en'
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Tag color'
+        verbose_name_plural = 'Tag colors'
 
 
 class BlogPage(Page):
@@ -198,6 +215,11 @@ class BlogPage(Page):
         ('white', 'Белый'),
         ('black', 'Черный'),
     ]
+    locales = [
+        ('ru', 'ru'),
+        ('en', 'en'),
+    ]
+    locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
     adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
@@ -210,19 +232,14 @@ class BlogPage(Page):
         ('container_narrow', ContainerNarrowBlock()),
         ('container_wide', ContainerWideBlock()),
     ], null=True, blank=True, verbose_name="Статья")
-    main_tag = models.ForeignKey('Tag', null=True, blank=True, on_delete=models.SET_NULL,
-                                 related_name='+', verbose_name="Основной тег")
-    sub_tag = models.ForeignKey('ColoredTag', null=True, blank=True, on_delete=models.SET_NULL,
+    main_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
+                                 limit_choices_to={'parent_id_id__isnull': True}, verbose_name="Основной тег")
+    sub_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL,
                                 limit_choices_to={'parent_id_id__isnull': False}, related_name='+',
                                 verbose_name="Дополнительный тег")
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True, verbose_name="Дополнительные теги")
-    main_color = models.ForeignKey('TagColors', null=True,
-                                   blank=True,
-                                   on_delete=models.SET_NULL,
-                                   related_name='+',
-                                   verbose_name="Основной цвет")
+    main_color = models.ForeignKey('TagColors', null=True, blank=True, on_delete=models.SET_NULL,
+                                   related_name='+', verbose_name="Основной цвет")
     color_tags = TagColors.objects.all()
-    categories = ParentalManyToManyField('blog.BlogCategory', blank=True, verbose_name="Категории")
     page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
     page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
                                        verbose_name="Тип карточки при наведении")
@@ -278,7 +295,6 @@ class BlogPage(Page):
             FieldPanel('card_sub_title'),
             FieldPanel('main_tag'),
             FieldPanel('sub_tag'),
-            FieldPanel('tags'),
             FieldPanel('main_color'),
             FieldPanel('page_type'),
             FieldPanel('page_type_hover'),
@@ -335,24 +351,35 @@ class BlogPage(Page):
 
     class Meta:
         ordering = ('date',)
+        verbose_name = 'Статья на Русском'
+
+
+class BlogPageEN(BlogPage):
+    locale = 'en'
+
+    def save(self, *args, **kwargs):
+        self.locale = 'en'
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Article in English'
 
 
 class BlogIndexPage(Page):
-    intro = RichTextField(blank=True)
 
     def serve(self, request):
         if "email" in request.POST:
             email = request.POST['email']
 
             list_id = '176059'
-            url = "https://api.notisend.ru/v1/email/lists/"+list_id+"/recipients"
+            url = "https://api.notisend.ru/v1/email/lists/" + list_id + "/recipients"
             payload = {'unconfirmed': '1',
-                       'email': ''+email+''}
+                       'email': '' + email + ''}
             headers = {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer fefb77c131fff95404fbf9537e4d6c8f'
             }
-            response = requests.post(url, headers=headers, json=payload,)
+            response = requests.post(url, headers=headers, json=payload, )
             if 'errors' in response.json():
                 print(response.json()['errors'][0]['detail'])
             else:
@@ -375,75 +402,17 @@ class BlogIndexPage(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        cards = []
-        temp_cards = []
-        primary = []
-        all_tags = AllTag().GetAllTag()
-        for tag in all_tags:
-            if tag.order == 0:
-                primary.append(tag.id)
-        card_tags = dict.fromkeys(primary)
-        for el in card_tags:
-            arr = []
-            for tag in all_tags:
-                if tag.order != 0 and el == tag.parent_id_id:
-                    arr.append(tag.id)
-            card_tags[el] = arr
-        blogpages = BlogPage.objects.live().order_by('-last_published_at')
+
+        blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-last_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            print(search_query)
-            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
-            print(blogpages)
-        for page in blogpages:
-            temp_cards.append(page)
-        idx = 1
-
-        def append(i):
-            for page in temp_cards:
-                if page.main_tag.id == i:
-                    return page
-
-        for i in range(len(temp_cards)):
-            for item in card_tags:
-                if idx == 4:
-                    p = append(14)
-                    if p:
-                        cards.append(p)
-                        temp_cards.remove(p)
-                    p = append(item)
-                    idx += 1
-                else:
-                    p = append(item)
-                if p:
-                    cards.append(p)
-                    temp_cards.remove(p)
-                    idx += 1
-            for item in card_tags:
-                for el in card_tags[item]:
-                    if idx == 4:
-                        p = append(14)
-                        idx += 1
-                    else:
-                        p = append(el)
-                    if p:
-                        cards.append(p)
-                        temp_cards.remove(p)
-                        idx += 1
-        for page in cards:
-            for item in card_tags:
-                if page.main_tag.id == item:
-                    pass
-                for el in card_tags[item]:
-                    if page.main_tag.id == el:
-                        pass
+            blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-last_published_at').search(search_query.lower())
+        cards = sort_cards(blogpages)
+        context['locale'] = 'ru'
         context['blogpages'] = cards
         context['search_query'] = search_query
-        context['primary'] = primary
-        context['all_tags'] = all_tags
-        context['card_tags'] = card_tags
         context['entry_list'] = cards
         context['subscribe_count'] = random.randint(7, 11)
         context['page_template'] = 'blog/ajax_blog_index_page.html'
@@ -458,80 +427,92 @@ class BlogIndexPage(Page):
             # Original template
             return 'blog/blog_index_page.html'
 
+    class Meta:
+        verbose_name = "Главная странице карточек (не используйте и не меняйте)"
+
+
+class BlogIndexPageEN(Page):
+    def serve(self, request):
+        if "email" in request.POST:
+            email = request.POST['email']
+
+            list_id = '176059'
+            url = "https://api.notisend.ru/v1/email/lists/" + list_id + "/recipients"
+            payload = {'unconfirmed': '1',
+                       'email': '' + email + ''}
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer fefb77c131fff95404fbf9537e4d6c8f'
+            }
+            response = requests.post(url, headers=headers, json=payload, )
+            if 'errors' in response.json():
+                print(response.json()['errors'][0]['detail'])
+            else:
+                print(response.json())
+                to_form = '{"email": "' + email + '"}'
+                save_mail(to_form)
+                data = {
+                    'message': "Спасибо!"
+                }
+                return JsonResponse(data)
+        elif "ajax_load_more" in request.POST:
+            more_data = {
+                'message': "Загрузка ..."
+            }
+            return JsonResponse(more_data)
+        else:
+            # Display event page as usual
+            return super().serve(request)
+
+    def get_context(self, request):
+        # Update context to include only published posts, ordered by reverse-chron
+        context = super().get_context(request)
+        blogpages = BlogPage.objects.live().filter(locale='en').order_by('-last_published_at')
+        search_query = request.GET.get('q', None)
+        if search_query == '':
+            search_query = None
+        if search_query:
+            blogpages = BlogPage.objects.live().filter(locale='en').order_by('-last_published_at').search(search_query.lower())
+        cards = sort_cards(blogpages)
+        context['locale'] = 'en'
+        context['blogpages'] = cards
+        context['search_query'] = search_query
+        context['entry_list'] = cards
+        context['subscribe_count'] = random.randint(7, 11)
+        context['page_template'] = 'blog/ajax_blog_index_page.html'
+
+        return context
+
+    def get_template(self, request):
+        if request.is_ajax():
+            # Template to render objects retrieved via Ajax
+            return 'blog/ajax_blog_index_page.html'
+        else:
+            # Original template
+            return 'blog/blog_index_page.html'
+
+    class Meta:
+        verbose_name = "Main cards page in English (don't use or modify)"
+
 
 class BlogPreviewPage(Page):
 
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        cards = []
-        temp_cards = []
-        primary = []
-        all_tags = AllTag().GetAllTag()
-        for tag in all_tags:
-            if tag.order == 0:
-                primary.append(tag.id)
-        card_tags = dict.fromkeys(primary)
-        for el in card_tags:
-            arr = []
-            for tag in all_tags:
-                if tag.order != 0 and el == tag.parent_id_id:
-                    arr.append(tag.id)
-            card_tags[el] = arr
         blogpages = BlogPage.objects.all().order_by('-last_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
             blogpages = BlogPage.objects.all().order_by('-last_published_at').search(search_query)
-        for page in blogpages:
-            temp_cards.append(page)
-        idx = 1
-
-        def append(i):
-            for page in temp_cards:
-                if page.main_tag.id == i:
-                    return page
-
-        for i in range(len(temp_cards)):
-            for item in card_tags:
-                if idx == 4:
-                    p = append(14)
-                    if p:
-                        cards.append(p)
-                        temp_cards.remove(p)
-                    p = append(item)
-                    idx += 1
-                else:
-                    p = append(item)
-                if p:
-                    cards.append(p)
-                    temp_cards.remove(p)
-                    idx += 1
-            for item in card_tags:
-                for el in card_tags[item]:
-                    if idx == 4:
-                        p = append(14)
-                        idx += 1
-                    else:
-                        p = append(el)
-                    if p:
-                        cards.append(p)
-                        temp_cards.remove(p)
-                        idx += 1
-        for page in cards:
-            for item in card_tags:
-                if page.main_tag.id == item:
-                    pass
-                for el in card_tags[item]:
-                    if page.main_tag.id == el:
-                        pass
+        cards = sort_cards(blogpages)
         context['blogpages'] = cards
         context['search_query'] = search_query
-        context['primary'] = primary
-        context['all_tags'] = all_tags
-        context['card_tags'] = card_tags
         return context
+
+    class Meta:
+        verbose_name = 'Старинца превью на русском'
 
 
 class BlogPageGalleryImage(Orderable):
@@ -575,13 +556,17 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        if len(Tag.objects.filter(tag__name=tag)) > 0:
-            tag_id = Tag.objects.filter(tag__name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id))
-            if len(blogpages) > 0:
-                pass
-            else:
-                blogpages = BlogPage.objects.order_by('-last_published_at').filter(tags__name=tag)
+        print(tag)
+        if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
+            tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
+        else:
+            tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
+            tags = []
+            for tag in Tags.objects.filter(parent_id_id=tag_id).values():
+                print(tag['id'])
+                tags.append(tag['id'])
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id__in=tags) | Q(sub_tag__in=tags))
 
         # Update template context
         context = super().get_context(request)
@@ -589,17 +574,20 @@ class BlogTagIndexPage(Page):
 
         return context
 
+    class Meta:
+        verbose_name = "Старница тегов (не используйте и не меняйте)"
+
 
 class SearchPage(Page):
     def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        # blogpages = self.get_children().live().order_by('-last_published_at')
         blogpages = BlogPage.objects.all()
-        all_tags = AllTag().GetAllTag()
 
         context['blogpages'] = blogpages
         return context
+
+    class Meta:
+        verbose_name = "Search page (don't use or modify)"
 
 
 class TypedPage(Page):
@@ -623,7 +611,7 @@ class TypedPage(Page):
             # Display event page as usual
             return super().serve(request)
 
-    tags = Page.objects.raw('SELECT * FROM blog_coloredtag WHERE "order" = 0')
+    tags = Page.objects.raw('SELECT * FROM blog_tags WHERE "level" = 0')
     date = models.DateField("Post date")
     text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)
     hr = blocks.RichTextBlock(features=['hr'], blank=True)
@@ -661,6 +649,9 @@ class TypedPage(Page):
         InlinePanel('typed_gallery_images', label="Партнеры"),
     ]
 
+    class Meta:
+        verbose_name = "Typed page (don't use or modify)"
+
 
 class TypedPageGalleryImage(Orderable):
     page = ParentalKey(TypedPage, on_delete=models.CASCADE, related_name='typed_gallery_images')
@@ -669,7 +660,7 @@ class TypedPageGalleryImage(Orderable):
     )
     caption = models.CharField(blank=True, max_length=250, verbose_name='подзаголовок')
     link = models.CharField(blank=True, max_length=250, verbose_name='ссылка')
-    main_tag = models.ForeignKey('Tag', null=True,
+    main_tag = models.ForeignKey('Tags', null=True,
                                  blank=True,
                                  on_delete=models.SET_NULL,
                                  related_name='+',
@@ -690,6 +681,9 @@ class TypedPageGalleryImage(Orderable):
 class FormField(AbstractFormField):
     page = ParentalKey('FormPage', on_delete=models.CASCADE, related_name='form_fields')
 
+    class Meta:
+        verbose_name = "Form field (don't use or modify)"
+
 
 class FormPage(AbstractEmailForm):
     intro = RichTextField(blank=True)
@@ -708,3 +702,7 @@ class FormPage(AbstractEmailForm):
             FieldPanel('subject'),
         ], "Email"),
     ]
+
+    class Meta:
+        verbose_name = "Form page (don't use or modify)"
+

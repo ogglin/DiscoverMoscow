@@ -113,16 +113,16 @@ function setActive() {
 
 // Main menu open/close
 function main_menu_collapse() {
-    menu_width = $('header nav').width()
+    menu_width = $('header .navbar').width()
     menu_items = $('.main_menu li')
-    menu_width_cur = 0
+    menu_width_nav = 0
     menu_items.each(function () {
-        menu_width_cur += $(this).width() + 40
+        menu_width_nav += $(this).width() + 40
     })
-    if (menu_width < (menu_width_cur + 71.15)) {
+    if (menu_width < menu_width_nav) {
         $('header .main_menu').addClass('collapse')
     }
-    if (menu_width >= (menu_width_cur + 71.15)) {
+    if (menu_width >= menu_width_nav) {
         $('header .main_menu').removeClass('collapse')
     }
 }
@@ -192,14 +192,13 @@ yt_play = function(e) {
 // Inits
 $(document).ready(function(){
 
+    main_menu_collapse()
 
     $(".owl-carousel").owlCarousel({
       loop: true,
       margin: 80,
       nav: true,
     });
-
-    main_menu_collapse()
 
     $('.ytp-chrome-top').css('display','none')
     yt_elements = $('iframe')
@@ -232,18 +231,18 @@ $(document).ready(function(){
         pop_image_remove()
     })
 
-    let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
-    frames.each(function (i) {
-        let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
-        // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
-        $(this).parent().prepend(html)
-        // $(this).parent().append(img)
-        $(this).remove()
-    })
-    frames.each(function (i) {
-        const vfile = $(this).attr('src')
-        var player = new Playerjs({id:"player"+i, file: vfile});
-    })
+    // let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
+    // frames.each(function (i) {
+    //     let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
+    //     // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
+    //     $(this).parent().prepend(html)
+    //     // $(this).parent().append(img)
+    //     $(this).remove()
+    // })
+    // frames.each(function (i) {
+    //     const vfile = $(this).attr('src')
+    //     var player = new Playerjs({id:"player"+i, file: vfile});
+    // })
 
     $('.yt_play_btn').click(function () {
         yt_play($(this).parent())

@@ -37,12 +37,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-
-            <ul id="nav-btns-right">
-                {% for slide in dop_slider %}
-                    <li class="slide-nav-btn-right"></li>
-                {% endfor %}
-            </ul>
+            {% if dop_slider|length > 1 %}
+                <ul id="nav-btns-right">
+                    {% for slide in dop_slider %}
+                        <li class="slide-nav-btn-right"></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 </div>

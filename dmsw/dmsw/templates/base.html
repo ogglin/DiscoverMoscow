@@ -1,7 +1,7 @@
 {% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras cfilters widget_tweaks %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<html class="no-js" lang="{% if 'en.' in request.get_host %}en{% else %}ru{% endif %}" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
     <head>
         <meta charset="utf-8" />
         <title>
@@ -45,17 +45,18 @@
                 <nav class="navbar">
                   <div class="main_menu">
                       {% block main_menu %}
-                          {% c_tags as main_menu %}
-                          {% a_tags as ar_tags%}
+                        {% if 'en.' in request.get_host %}
+                            {% all_tags lang='en' as main_menu %}
+                        {% else %}
+                            {% all_tags lang='ru' as main_menu %}
+                        {% endif %}
                           <ul class="nav navbar-nav">
                             {% for item in main_menu %}
-                            <li class="">
-                                {% for tag in ar_tags %}
-                                    {% if tag.id == item %}
-                                        <a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a>
-                                    {% endif %}
-                                {% endfor %}
-                            </li>
+                                {% if item.level == 0 %}
+                                    <li class="">
+                                        <a href="/tags/?tag={{ item.name }}">#{{ item.name }} {{ item.patent_id_id }}</a>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
                           </ul>
                       {% endblock %}
@@ -64,18 +65,23 @@
                 </nav>
                 <div class="navbar-tags">
                     <div class="flex-container-inline">
-                        {% c_tags as main_menu %}
-                        {% a_tags as ar_tags %}
+                        {% if 'en.' in request.get_host %}
+                            {% c_tags lang='en' as main_menu %}
+                            {% a_tags lang='en' as ar_tags%}
+                        {% else %}
+                            {% c_tags lang='ru' as main_menu %}
+                            {% a_tags lang='ru' as ar_tags%}
+                        {% endif %}
                         {% for idx, el in main_menu.items %}
                             <ul>
                                 {% for tag in ar_tags %}
                                     {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
                                         {% if el %}
                                             {% for item in el %}
                                                 {% for tag in ar_tags %}
                                                     {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
@@ -89,8 +95,13 @@
                         {% endfor %}
                     </div>
                     <div class="w-100 bottom">
-                        <a href="/about/">О проекте</a>
-                        <a href="/partners/">Партнёры</a>
+                        {% if 'en.' in request.get_host %}
+                            <a href="/about/">About</a>
+                            <a href="/partners/">Partners</a>
+                        {% else %}
+                            <a href="/about/">О проекте</a>
+                            <a href="/partners/">Партнёры</a>
+                        {% endif %}
                     </div>
                 </div>
                 <span id="btn_search"><i class="fas fa-search"></i></span>
@@ -105,10 +116,18 @@
             {% if search_query != '' %}
                 <div class="slider_block flex-container-inline">
                     <div class="left">
-                        {% show_slides %}
+                        {% if 'en.' in request.get_host %}
+                            {% show_slides locale='en' %}
+                        {% else %}
+                            {% show_slides  locale='ru' %}
+                        {% endif %}
                     </div>
                     <div class="right">
-                        {% show_dop_slides %}
+                        {% if 'en.' in request.get_host %}
+                            {% show_dop_slides locale='en' %}
+                        {% else %}
+                            {% show_dop_slides  locale='ru' %}
+                        {% endif %}
                         {% block slider_right %}
 
                         {% endblock %}
@@ -126,19 +145,23 @@
                 <div class="flex-container-inline">
                     <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
                     <div class="navbar-footer">
-{#                        {% flat_menu 'menu_footer' %}#}
-                        {% c_tags as main_menu %}
-                        {% a_tags as ar_tags %}
+                        {% if 'en.' in request.get_host %}
+                            {% c_tags lang='en' as main_menu %}
+                            {% a_tags lang='en' as ar_tags%}
+                        {% else %}
+                            {% c_tags lang='ru' as main_menu %}
+                            {% a_tags lang='ru' as ar_tags%}
+                        {% endif %}
                         {% for idx, el in main_menu.items %}
                             <ul class="col">
                                 {% for tag in ar_tags %}
                                     {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
+                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
                                         {% if el %}
                                             {% for item in el %}
                                                 {% for tag in ar_tags %}
                                                     {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.title }}</a></li>
+                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}

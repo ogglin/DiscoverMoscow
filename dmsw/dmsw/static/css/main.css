@@ -192,13 +192,13 @@ header {
   transition: all 1s ease 0s; }
   header #btn_search {
     line-height: 70px;
-    margin: 0 40px;
+    margin: 0 30px;
     color: #ffffff;
     text-decoration: none;
     cursor: pointer; }
   header #btn_burger {
     cursor: pointer;
-    padding: 12px 0 0 50px; }
+    margin: 12px 40px 0; }
     header #btn_burger img {
       max-width: 85%; }
     header #btn_burger_close {
@@ -212,7 +212,7 @@ header {
     align-content: center;
     flex: 1 1 360px; }
   header .logotype {
-    margin: 15px 50px 0 0;
+    margin: 15px 40px 0 0;
     width: 110px;
     height: auto; }
     header .logotype img {
@@ -270,7 +270,6 @@ header {
       header .bottom a:hover {
         text-decoration: underline; }
   header .main_menu {
-    padding-left: 60px;
     display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
@@ -296,7 +295,7 @@ header {
     height: 2em;
     overflow-y: hidden;
     position: relative;
-    margin: 26px 50px 0 0; }
+    margin: 26px 40px 0 0; }
     header .nav li {
       padding: 0 40px 0 0;
       margin-bottom: 1em; }
@@ -333,7 +332,7 @@ header {
 footer {
   background-color: #000000;
   padding: 40px;
-  z-index: 9999;
+  z-index: 9;
   position: relative; }
   footer .logotype {
     padding-top: 20px;
@@ -679,12 +678,14 @@ hr {
   position: relative;
   background-color: #f3f3f3;
   box-sizing: border-box;
-  padding: 40px 0 0;
+  padding: 0;
   margin-bottom: 80px; }
   .container.wide:before {
     left: 0; }
   .container.wide:after {
     right: 0; }
+  .container.wide .two-column {
+    height: 0; }
   .container.wide .slide-element > div {
     width: 150%; }
   .container.wide .slide-element {
@@ -1073,7 +1074,10 @@ h2 {
       font-size: 1.5em; }
 
 .owl-carousel {
-  margin: 40px 0; }
+  overflow: hidden;
+  margin: 0;
+  padding: 40px 0;
+  max-height: 500px; }
 
 .owl-stage-outer {
   position: relative; }
@@ -1504,8 +1508,9 @@ h2 {
 
 footer .subscribe-ajax-form {
   max-width: 370px;
-  position: relative;
   padding-bottom: 20px; }
+  footer .subscribe-ajax-form .data_form {
+    position: relative; }
   footer .subscribe-ajax-form .result_form {
     font-size: 18px; }
   footer .subscribe-ajax-form button {
@@ -1563,6 +1568,15 @@ footer .subscribe-ajax-form {
       display: inherit; }
     .partner_block .partner_text {
       width: 100%;
-      margin-top: 10px; } }
+      margin-top: 10px; }
+
+  footer .subscribe-ajax-form {
+    max-width: 100%; }
+    footer .subscribe-ajax-form .data_form {
+      width: 370px;
+      display: inline-block; } }
+@media only screen and (max-width: 480px) {
+  footer .subscribe-ajax-form .data_form {
+    width: 300px; } }
 
 /*# sourceMappingURL=main.css.map */

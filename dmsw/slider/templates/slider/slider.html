@@ -15,16 +15,18 @@
                         </li>
                     {% endfor %}
                 </ul>
+                {% if slides|length > 1 %}
+                    <div id="prev-next-btns">
+                        <div id="prev-btn"><i class="fas fa-arrow-left"></i></div>
+                        <div id="next-btn"><i class="fas fa-arrow-right"></i></div>
+                    </div>
 
-                <div id="prev-next-btns">
-                    <div id="prev-btn"><i class="fas fa-arrow-left"></i></div>
-                    <div id="next-btn"><i class="fas fa-arrow-right"></i></div>
-                </div>
-
-                <ul id="nav-btns">
-                    <li class="slide-nav-btn"></li>
-                    <li class="slide-nav-btn"></li>
-                </ul>
+                    <ul id="nav-btns">
+                        {% for slide in slides %}
+                            <li class="slide-nav-btn"></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -39,7 +39,10 @@ def media_kit():
 
 @register.filter
 def clear_url(value):
-    return value.replace("/", "")
+    print(value)
+    val = re.search(r'\w+[\/]$', value).group(0)
+    print(val)
+    return val.replace('/', '')
 
 
 @register.filter

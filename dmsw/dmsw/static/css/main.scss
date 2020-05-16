@@ -274,26 +274,49 @@ header {
 
     ul {
       list-style: none;
-      padding: 0 60px 60px 0;
+      margin: 0 60px 60px 0;
       width: calc(100% / 4);
-
+      max-height: 230px;
+      overflow: hidden;
+      position: relative;
       &:last-child {
         padding: 0 0 60px 0;
       }
-
+      &.active {
+        max-height: 100%;
+        overflow: visible;
+        margin-bottom: 90px;
+        li{
+          &:nth-child(6) {
+            padding-top: 20px !important;
+          }
+          &.more {
+            bottom: -30px;
+            top: auto;
+          }
+        }
+      }
       li {
-        padding: 0 0 20px 0;
-
+        padding: 20px 0 0 0;
+        &:nth-child(6) {
+          padding-top: 60px;
+        }
         &.more {
           font-size: 2em;
           color: $white;
           line-height: 0.2em;
+          cursor: pointer;
+          position: absolute;
+          z-index: 9;
+          top: 200px;
+          padding: 10px 0;
         }
 
         a {
           color: $white;
           text-decoration: none;
           font-size: 19px;
+          line-height: 20px;
           display: inline-block;
 
           &:hover {
@@ -302,8 +325,10 @@ header {
         }
 
         &.first {
+          padding: 0;
           a {
             font-size: 24px;
+            line-height: 30px;
             font-weight: 500;
           }
         }
@@ -446,17 +471,43 @@ footer {
 
     .col {
       width: 33.333%;
-      padding: 10px 10px 40px;
+      padding: 10px 10px 0;
+      margin-bottom: 40px;
     }
 
     ul {
       list-style: none;
-
+      max-height: 230px;
+      overflow: hidden;
+      position: relative;
+      &.active {
+        max-height: 100%;
+        overflow: visible;
+        margin-bottom: 90px;
+        li {
+          &:nth-child(6) {
+            padding-top: 20px !important;
+          }
+          &.more {
+            bottom: -30px;
+            top: auto;
+          }
+        }
+      }
       li {
+        padding: 20px 0 0 0;
+        &:nth-child(6) {
+          padding-top: 60px;
+        }
         &.more {
           font-size: 2em;
           color: $white;
           line-height: 0.2em;
+          cursor: pointer;
+          position: absolute;
+          z-index: 9;
+          top: 200px;
+          padding: 10px 0;
         }
 
         a {
@@ -464,7 +515,6 @@ footer {
           text-decoration: none;
           font-weight: 500;
           font-size: 16px;
-          padding: 0 0 10px 0;
           display: inline-block;
 
           &:hover {
@@ -473,9 +523,10 @@ footer {
         }
 
         &.first {
+          padding: 0;
           a {
             font-size: 20px;
-            padding: 0 0 20px 0;
+            padding: 0;
           }
         }
       }
@@ -1528,6 +1579,7 @@ h2 {
   margin: 0;
   padding: 40px 0;
   max-height: 500px;
+
 }
 
 .owl-stage-outer {
@@ -1833,6 +1885,10 @@ h2 {
       }
     }
 
+    .video-block div:first-child, .video-element div:first-child {
+      padding-left: 10px;
+    }
+
     .about {
       .content {
         h2 {
@@ -1963,7 +2019,9 @@ h2 {
     }
 
     .header-block {
-      padding: 0;
+      height: auto;
+      display: flex;
+      padding: 20px 0;
 
       .head-image {
         width: calc(50% - 20px);
@@ -2257,11 +2315,11 @@ h2 {
 @media only screen and (max-width: 800px) {
   pjsdiv pjsdiv:nth-child(14) > pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
-      transform: scale(4) !important;
+      transform: scale(3) !important;
     }
 
     pjsdiv {
-      transform: scale(4) !important;
+      transform: scale(3) !important;
     }
   }
 }

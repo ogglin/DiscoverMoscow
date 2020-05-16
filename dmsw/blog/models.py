@@ -408,7 +408,7 @@ class BlogIndexPage(Page):
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-last_published_at').search(search_query.lower())
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         context['locale'] = 'ru'
         context['blogpages'] = cards
@@ -472,7 +472,7 @@ class BlogIndexPageEN(Page):
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().filter(locale='en').order_by('-last_published_at').search(search_query.lower())
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         context['locale'] = 'en'
         context['blogpages'] = cards

@@ -999,7 +999,7 @@ hr {
     right: 0;
   }
   .two-column {
-    height: 0;
+    display: none;
   }
   .slide-element > div {
     width: 150%;
@@ -1578,8 +1578,11 @@ h2 {
   overflow: hidden;
   margin: 0;
   padding: 40px 0;
-  max-height: 500px;
-
+  max-height: 50px;
+  opacity: 0;
+  .owl-dots {
+    display: none;
+  }
 }
 
 .owl-stage-outer {
@@ -2511,4 +2514,13 @@ footer {
       }
     }
   }
+}
+.loading-carousel {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 100px);
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
 }

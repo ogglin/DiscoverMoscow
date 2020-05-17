@@ -206,16 +206,8 @@ $(document).ready(function(){
       margin: 80,
       nav: true,
     });
-
-    $('.ytp-chrome-top').css('display','none')
-    yt_elements = $('iframe')
-    yt_elements.each(function () {
-        $(this).height($(this).width()*0.5625)
-    })
-    yt_videos = $('.video-block div iframe')
-    yt_videos.each(function () {
-        $(this).height($(this).width()*0.5625)
-    })
+    $owl_loading = "<img class='loading-carousel' src='/static/image/loading.gif'>"
+    $(".owl-carousel").parent().prepend($owl_loading)
 
     $('#btn_search').click(function () {
         $('.form-search').toggleClass('active')
@@ -238,21 +230,32 @@ $(document).ready(function(){
         pop_image_remove()
     })
 
+    // $('.yt_play_btn').click(function () {
+    //     yt_play($(this).parent())
+    // })
+    // $('.ytp-chrome-top').css('display','none')
+    // yt_elements = $('iframe')
+    // yt_elements.each(function () {
+    //     $(this).height($(this).width()*0.5625)
+    // })
+    // yt_videos = $('.video-block div iframe')
+    // yt_videos.each(function () {
+    //     $(this).height($(this).width()*0.5625)
+    // })
+
+});
+
+window.onload = function() {
     let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
     frames.each(function (i) {
         let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
-        // const img = '<img class="yt_play_btn" src="/static/image/play.svg" data="player'+i+'">'
         $(this).parent().prepend(html)
-        // $(this).parent().append(img)
         $(this).remove()
     })
     frames.each(function (i) {
         const vfile = $(this).attr('src')
         var player = new Playerjs({id:"player"+i, file: vfile});
     })
-
-    $('.yt_play_btn').click(function () {
-        yt_play($(this).parent())
-    })
-
-});
+    $(".loading-carousel").remove()
+    $(".owl-carousel").css('max-height','100%').css('opacity','1')
+};

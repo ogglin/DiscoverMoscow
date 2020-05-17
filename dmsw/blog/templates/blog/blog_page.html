@@ -68,8 +68,8 @@
     </div>
     <div class="card-wrap tagged one_row">
         {% for post in blogpages %}
-            {% if forloop.counter < 7 %}
-                {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag %}
+            {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag %}
+                {% if forloop.counter < 7 %}
                     {% with post=post.specific %}
                         <div class="card-item {{ post.page_color }}">
                             <div class="card-front {{ post.page_type }}">
@@ -123,9 +123,9 @@
                                 {% endif %}
                                 </a>
                                 <h2 class="title">{% if post.card_title %}
-                                    {{ post.card_title }}
-                                {% elif post.tags.all.0.name %} #{{ post.tags.all.0.name }}
-                                {% else %}#{{ post.main_tag }}{% endif %}
+                                        {{ post.card_title }}
+                                    {% elif post.sub_tag.name %} #{{ post.sub_tag.name }}
+                                    {% else %}#{{ post.main_tag }}{% endif %}
                                 </h2>
                                 <p class="subtitle">
                                     {% if post.card_sub_title %}{{ post.card_sub_title }}{% else %}

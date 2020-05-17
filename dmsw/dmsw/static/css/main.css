@@ -731,7 +731,7 @@ hr {
   .container.wide:after {
     right: 0; }
   .container.wide .two-column {
-    height: 0; }
+    display: none; }
   .container.wide .slide-element > div {
     width: 150%; }
   .container.wide .slide-element {
@@ -1123,7 +1123,10 @@ h2 {
   overflow: hidden;
   margin: 0;
   padding: 40px 0;
-  max-height: 500px; }
+  max-height: 50px;
+  opacity: 0; }
+  .owl-carousel .owl-dots {
+    display: none; }
 
 .owl-stage-outer {
   position: relative; }
@@ -1628,5 +1631,13 @@ footer .subscribe-ajax-form {
 @media only screen and (max-width: 480px) {
   footer .subscribe-ajax-form .data_form {
     width: 300px; } }
+.loading-carousel {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 100px);
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important; }
 
 /*# sourceMappingURL=main.css.map */

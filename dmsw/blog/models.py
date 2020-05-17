@@ -3,10 +3,8 @@ from colorfield.fields import ColorField
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
-from taggit.models import TaggedItemBase
 from wagtail.api import APIField
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
@@ -17,10 +15,8 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel, FieldRowPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from django.db import connection
-from collections import namedtuple
 from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
 import random
@@ -341,7 +337,11 @@ class BlogPage(Page):
 
     def get_context(self, request):
         # Filter by tag
-        blogpages = BlogPage.objects.order_by('-last_published_at').all()
+        blogpages = []
+        pages = BlogPage.objects.order_by('-last_published_at').all()
+        for page in pages:
+            if (page.main_tag == self.main_tag or page.sub_tag == self.sub_tag) and page.main_tag is not None:
+                blogpages.append(page)
 
         # Update template context
         context = super().get_context(request)
@@ -556,7 +556,6 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        print(tag)
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
             blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
@@ -564,7 +563,6 @@ class BlogTagIndexPage(Page):
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
             tags = []
             for tag in Tags.objects.filter(parent_id_id=tag_id).values():
-                print(tag['id'])
                 tags.append(tag['id'])
             blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id__in=tags) | Q(sub_tag__in=tags))
 

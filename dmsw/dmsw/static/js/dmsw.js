@@ -206,8 +206,19 @@ $(document).ready(function(){
       margin: 80,
       nav: true,
     });
-    $owl_loading = "<img class='loading-carousel' src='/static/image/loading.gif'>"
-    $(".owl-carousel").parent().prepend($owl_loading)
+    // $owl_loading = "<img class='loading-carousel' src='/static/image/loading.gif'>"
+    // $(".owl-carousel").parent().prepend($owl_loading)
+
+    let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
+    frames.each(function (i) {
+        let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
+        $(this).parent().prepend(html)
+        $(this).remove()
+    })
+    frames.each(function (i) {
+        const vfile = $(this).attr('src')
+        var player = new Playerjs({id:"player"+i, file: vfile});
+    })
 
     $('#btn_search').click(function () {
         $('.form-search').toggleClass('active')
@@ -246,16 +257,7 @@ $(document).ready(function(){
 });
 
 window.onload = function() {
-    let frames = $('.video-element iframe').add($('.slide-element iframe')).add($('.video-block iframe'))
-    frames.each(function (i) {
-        let html = '<div id="player'+i+'" style="border: 1px solid #c5c5c5;"></div>'
-        $(this).parent().prepend(html)
-        $(this).remove()
-    })
-    frames.each(function (i) {
-        const vfile = $(this).attr('src')
-        var player = new Playerjs({id:"player"+i, file: vfile});
-    })
+
     $(".loading-carousel").remove()
     $(".owl-carousel").css('max-height','100%').css('opacity','1')
 };

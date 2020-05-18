@@ -772,12 +772,12 @@ hr {
       padding-right: 10px;
       margin-right: 10px;
       position: absolute;
-      bottom: 85px;
+      top: calc(100vw*0.259);
       font-family: 'PT Serif', Serif;
       font-style: italic;
       font-size: 13px; }
     .container.wide .slide-element .rich-text div:nth-child(2) {
-      margin-bottom: 15px; }
+      margin-bottom: 20px; }
     .container.wide .slide-element .rich-text h4 {
       position: relative;
       display: block;
@@ -1135,8 +1135,8 @@ h2 {
   overflow: hidden;
   margin: 0;
   padding: 40px 0;
-  max-height: 50px;
-  opacity: 0;
+  max-height: calc(100vw * 0.257 + 160px);
+  opacity: 1;
   position: relative; }
   .owl-carousel .owl-dots {
     display: none; }
@@ -1661,21 +1661,37 @@ footer .subscribe-ajax-form {
   transform: scale(5) !important; }
 .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
   transform: scale(5) !important; }
+.container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+  transform: scale(4) !important; }
+.container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+  transform: scale(4) !important; }
 
 @media only screen and (max-width: 1000px) {
-  pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(5) !important; }
-  pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(5) !important; } }
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+    transform: scale(4) !important; }
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+    transform: scale(4) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+    transform: scale(4) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+    transform: scale(4) !important; } }
 @media only screen and (max-width: 800px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2), pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
     transform: scale(3) !important; }
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+    transform: scale(3) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+    transform: scale(3) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(3) !important; } }
 @media only screen and (max-width: 640px) {
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv:nth-child(2), pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
     transform: scale(2) !important; }
-  pjsdiv pjsdiv:nth-child(14) > pjsdiv pjsdiv, pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+  .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
+    transform: scale(2) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
+    transform: scale(2) !important; }
+  .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(2) !important; } }
 
 /*# sourceMappingURL=main.css.map */

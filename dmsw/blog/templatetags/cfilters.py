@@ -38,10 +38,18 @@ def media_kit():
 
 
 @register.filter
+def en_ru(value):
+    return value.replace('en.', '')
+
+
+@register.filter
+def ru_en(value):
+    return value.replace('://', '://en.')
+
+
+@register.filter
 def clear_url(value):
-    print(value)
     val = re.search(r'\w+[\/]$', value).group(0)
-    print(val)
     return val.replace('/', '')
 
 

@@ -105,6 +105,11 @@
                     </div>
                 </div>
                 <span id="btn_search"><i class="fas fa-search"></i></span>
+                {% if 'en.' in request.get_host %}
+                    <a href="http://{{ request.get_host|en_ru }}" class="lang_selector">RU</a>
+                {% else %}
+                    <a href="http://en.{{ request.get_host }}" class="lang_selector">EN</a>
+                {% endif %}
                 <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
                 <form role="search" method="get" class="form-search" action="/blog/" method="get">
                     <input type="text" class="form-control search-query" name="q" placeholder="Поиск" title="Search for:" />

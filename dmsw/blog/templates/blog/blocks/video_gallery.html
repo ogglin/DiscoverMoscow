@@ -5,7 +5,9 @@
         {% for item in self %}
             <div class="slide-element text-center">
                 {{ item }}
-                <span class="counter">{{ forloop.counter }} / {{ len }}</span>
+                <p class="meta">
+                    <span class="counter">{{ forloop.counter }} / {{ len }}</span>
+                </p>
             </div>
         {% endfor %}
     {% endwith %}

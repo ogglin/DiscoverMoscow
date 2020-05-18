@@ -340,9 +340,13 @@ class BlogPage(Page):
         blogpages = []
         pages = BlogPage.objects.order_by('-last_published_at').all()
         for page in pages:
-            if (page.main_tag == self.main_tag or page.sub_tag == self.sub_tag) and page.main_tag is not None:
+            if page.sub_tag == self.sub_tag:
                 blogpages.append(page)
-
+        if len(blogpages) < 6:
+            for page in pages:
+                if page.main_tag == self.main_tag and page.main_tag is not None:
+                    blogpages.append(page)
+        random.shuffle(blogpages)
         # Update template context
         context = super().get_context(request)
         context['blogpages'] = blogpages
@@ -556,10 +560,8 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
-        print(tag)
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
-            print('tag', tag_id)
             blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         else:
             tags = []
@@ -567,13 +569,11 @@ class BlogTagIndexPage(Page):
             tags.append(tag_id)
             for tag in Tags.objects.filter(parent_id_id=tag_id).values():
                 tags.append(tag['id'])
-            print(tags)
             if len(tags) > 1:
                 blogpages = BlogPage.objects.order_by('-last_published_at').filter(
                     Q(main_tag_id__in=tags) | Q(sub_tag_id__in=tags))
             else:
                 tag_id = int(tags[0])
-                print('tags', tag_id)
                 blogpages = BlogPage.objects.order_by('-last_published_at').filter(
                     Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         # Update template context

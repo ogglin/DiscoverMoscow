@@ -49,6 +49,18 @@
   width: 25%; }
 
 @font-face {
+  font-family: 'ALS Gorizont Bold Expanded';
+  src: url("../webfonts/ALSGorizont-BoldExpanded.eot");
+  src: url("../webfonts/ALSGorizont-BoldExpanded.eot?#iefix") format("embedded-opentype"), url("../webfonts/ALSGorizont-BoldExpanded.woff2") format("woff2"), url("../webfonts/ALSGorizont-BoldExpanded.woff") format("woff"), url("../webfonts/ALSGorizont-BoldExpanded.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: 'ALS Gorizont ExtraBold Expanded';
+  src: url("../webfonts/ALSGorizont-ExtraBoldExpanded.eot");
+  src: url("../webfonts/ALSGorizont-ExtraBoldExpanded.eot?#iefix") format("embedded-opentype"), url("../webfonts/ALSGorizont-ExtraBoldExpanded.woff2") format("woff2"), url("../webfonts/ALSGorizont-ExtraBoldExpanded.woff") format("woff"), url("../webfonts/ALSGorizont-ExtraBoldExpanded.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal; }
+@font-face {
   font-family: 'Druk Wide';
   src: url("../webfonts/DrukWideCy-Medium.eot");
   src: url("../webfonts/DrukWideCy-Medium.eot?#iefix") format("embedded-opentype"), url("../webfonts/DrukWideCy-Medium.woff2") format("woff2"), url("../webfonts/DrukWideCy-Medium.woff") format("woff"), url("../webfonts/DrukWideCy-Medium.ttf") format("truetype");
@@ -158,9 +170,9 @@ body {
       text-align: left;
       height: auto; }
       .slider_image .text-block a {
-        font-size: calc(100vw * 0.035);
+        font-size: calc(100vw * 0.045);
         color: #ffffff;
-        font-family: 'Druk Wide';
+        font-family: 'ALS Gorizont ExtraBold Expanded';
         text-decoration: none;
         line-height: 1em; }
       .slider_image .text-block .slider_subtitle {
@@ -992,7 +1004,7 @@ h2 {
         display: none; }
     .header-block .head-block .title {
       color: #000000;
-      font-family: 'Druk Wide';
+      font-family: 'ALS Gorizont ExtraBold Expanded';
       font-size: var(--big_font_size);
       padding: 40px 0 0; }
 
@@ -1001,7 +1013,7 @@ h2 {
   background-position: center;
   line-height: 260px;
   color: #ffffff;
-  font-family: 'Druk Wide';
+  font-family: 'ALS Gorizont ExtraBold Expanded';
   font-size: calc(100vw * 0.03);
   padding: 0 110px; }
 .partners .navigate {
@@ -1079,7 +1091,7 @@ h2 {
   background-position: center;
   line-height: 260px;
   color: #ffffff;
-  font-family: 'Druk Wide';
+  font-family: 'ALS Gorizont ExtraBold Expanded';
   font-size: calc(100vw * 0.03);
   padding: 0 110px; }
 .about .navigate, .about .images {

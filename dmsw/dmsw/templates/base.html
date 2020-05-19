@@ -20,7 +20,7 @@
         {% endblock %}
 
         <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
         {# Global stylesheets #}
         {% compress css %}
@@ -193,9 +193,11 @@
                         {% if params|length > 0 %}
                             <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">
                                 {% if 'en.' in request.get_host %}
+                                    join the project
                                 {% else %}
+                                    присоединится к проекту
                                 {% endif %}
-                                присоединится к проекту
+
                             </a>
                         {% endif %}
                     </div>

@@ -1811,6 +1811,7 @@ h2 {
 
       .slider_image {
         .text-block {
+          left: 40px;
           a {
             font-size: calc(100vw * 0.065)
           }
@@ -2112,17 +2113,26 @@ h2 {
     }
 
     .slider_block {
+      #prev-btn {
+        left: 0;
+      }
+      #next-btn {
+        right: 0;
+      }
       .slider_image {
         .text-block {
-          left: 75px;
+          left: 15px;
+          width: calc(100% - 30px);
 
           a {
             font-size: 30px;
           }
-
+          .slider_title {
+            font-size: 28px;
+          }
           .slider_subtitle {
             font-size: 15px;
-            max-width: calc(100vw * 0.9 - 120px);
+            max-width: 100%;
           }
         }
       }

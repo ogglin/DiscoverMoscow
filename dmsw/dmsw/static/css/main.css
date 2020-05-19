@@ -75,7 +75,8 @@
 html {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%; }
 
 body {
   font-family: 'Montserrat', sans-serif;

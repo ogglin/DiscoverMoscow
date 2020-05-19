@@ -169,7 +169,7 @@ body {
       left: 115px;
       text-align: left;
       height: auto; }
-      .slider_image .text-block a {
+      .slider_image .text-block .slider_title {
         font-size: calc(100vw * 0.045);
         color: #ffffff;
         font-family: 'ALS Gorizont ExtraBold Expanded';
@@ -514,6 +514,8 @@ footer {
     z-index: 19; }
   .card-item.white .title, .card-item.white .tags, .card-item.white .intro, .card-item.white .subtitle {
     color: #ffffff !important; }
+    .card-item.white .title a, .card-item.white .tags a, .card-item.white .intro a, .card-item.white .subtitle a {
+      color: #ffffff !important; }
   .card-item.black .title, .card-item.black .tags, .card-item.black .intro, .card-item.black .subtitle {
     color: #000000 !important; }
   .card-item .image {
@@ -1311,8 +1313,10 @@ h2 {
       body .slider_block .slider_image .text-block .slider_subtitle {
         font-size: calc(100vw * 0.026);
         max-width: calc(100vw * 0.9 - 120px); }
-    body .video-block div:first-child, body .video-element div:first-child {
-      padding-left: 10px; }
+    body .video-block div, body .video-element div {
+      padding: 10px 0; }
+      body .video-block div:first-child, body .video-block div:last-child, body .video-element div:first-child, body .video-element div:last-child {
+        padding: 10px 0; }
     body .about .content h2 {
       margin-bottom: 40px; }
     body .about .content .btn-block {
@@ -1338,7 +1342,8 @@ h2 {
       flex-direction: column-reverse; }
     body footer .navbar-footer {
       align-self: flex-end;
-      padding: 0 0 20px 0; }
+      padding: 0 0 20px 0;
+      width: 100%; }
       body footer .navbar-footer .col {
         width: 33.333%; }
     body footer .socblock {

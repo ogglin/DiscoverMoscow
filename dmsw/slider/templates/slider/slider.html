@@ -5,14 +5,14 @@
                 <ul id="slidewrapper">
                     {% for slide in slides %}
                         {% image slide.image width-1000 as img %}
-                        <li class="slide {{ slide.text_color }}">
+                        <a href="{{ slide.link }}" class="slider_tag"><li class="slide {{ slide.text_color }}">
                             <div style='background-image: url("{{ img.url }}")' class="slider_image">
                                 <div class="text-block">
-                                    <a href="{{ slide.link }}" class="slider_tag">{{ slide.title }}</a>
+                                    <div class="slider_title">{{ slide.title }}</div>
                                     <p class="slider_subtitle">{{ slide.subtitle }}</p>
                                 </div>
                             </div>
-                        </li>
+                        </li></a>
                     {% endfor %}
                 </ul>
                 {% if slides|length > 1 %}

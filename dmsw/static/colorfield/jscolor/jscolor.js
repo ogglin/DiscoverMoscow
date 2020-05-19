@@ -619,7 +619,7 @@ var jsc = {
 
         switch (controlName) {
         case 'pad':
-            // if the dop_slider is at the bottom, move it up
+            // if the slider is at the bottom, move it up
             switch (jsc.getSliderComponent(thisObj)) {
             case 's': if (thisObj.hsv[1] === 0) { thisObj.fromHSV(null, 100, null); }; break;
             case 'v': if (thisObj.hsv[2] === 0) { thisObj.fromHSV(null, null, 100); }; break;
@@ -1398,10 +1398,10 @@ var jsc = {
                     sldB : document.createElement('div'), // border
                     sldM : document.createElement('div'), // mouse/touch area
                     sldGrad : jsc.createSliderGradient(),
-                    sldPtrS : document.createElement('div'), // dop_slider pointer spacer
-                    sldPtrIB : document.createElement('div'), // dop_slider pointer inner border
-                    sldPtrMB : document.createElement('div'), // dop_slider pointer middle border
-                    sldPtrOB : document.createElement('div'), // dop_slider pointer outer border
+                    sldPtrS : document.createElement('div'), // slider pointer spacer
+                    sldPtrIB : document.createElement('div'), // slider pointer inner border
+                    sldPtrMB : document.createElement('div'), // slider pointer middle border
+                    sldPtrOB : document.createElement('div'), // slider pointer outer border
                     btn : document.createElement('div'),
                     btnT : document.createElement('span') // text
                 };
@@ -1551,15 +1551,15 @@ var jsc = {
             p.crossLX.style.left =
                 THIS.pointerBorderWidth + 'px';
 
-            // dop_slider
+            // slider
             p.sld.style.overflow = 'hidden';
             p.sld.style.width = THIS.sliderSize + 'px';
             p.sld.style.height = THIS.height + 'px';
 
-            // dop_slider gradient
+            // slider gradient
             p.sldGrad.draw(THIS.sliderSize, THIS.height, '#000', '#000');
 
-            // dop_slider border
+            // slider border
             p.sldB.style.display = displaySlider ? 'block' : 'none';
             p.sldB.style.position = 'absolute';
             p.sldB.style.right = THIS.padding + 'px';
@@ -1567,7 +1567,7 @@ var jsc = {
             p.sldB.style.border = THIS.insetWidth + 'px solid';
             p.sldB.style.borderColor = THIS.insetColor;
 
-            // dop_slider mouse area
+            // slider mouse area
             p.sldM._jscInstance = THIS;
             p.sldM._jscControlName = 'sld';
             p.sldM.style.display = displaySlider ? 'block' : 'none';
@@ -1578,20 +1578,20 @@ var jsc = {
             p.sldM.style.height = dims[1] + 'px';
             p.sldM.style.cursor = 'default';
 
-            // dop_slider pointer inner and outer border
+            // slider pointer inner and outer border
             p.sldPtrIB.style.border =
             p.sldPtrOB.style.border =
                 THIS.pointerBorderWidth + 'px solid ' + THIS.pointerBorderColor;
 
-            // dop_slider pointer outer border
+            // slider pointer outer border
             p.sldPtrOB.style.position = 'absolute';
             p.sldPtrOB.style.left = -(2 * THIS.pointerBorderWidth + THIS.pointerThickness) + 'px';
             p.sldPtrOB.style.top = '0';
 
-            // dop_slider pointer middle border
+            // slider pointer middle border
             p.sldPtrMB.style.border = THIS.pointerThickness + 'px solid ' + THIS.pointerColor;
 
-            // dop_slider pointer spacer
+            // slider pointer spacer
             p.sldPtrS.style.width = THIS.sliderSize + 'px';
             p.sldPtrS.style.height = sliderPtrSpace + 'px';
 
@@ -1666,7 +1666,7 @@ var jsc = {
             jsc.picker.cross.style.left = (x + ofs) + 'px';
             jsc.picker.cross.style.top = (y + ofs) + 'px';
 
-            // redraw the dop_slider
+            // redraw the slider
             switch (jsc.getSliderComponent(THIS)) {
             case 's':
                 var rgb1 = HSV_RGB(THIS.hsv[0], 100, THIS.hsv[2]);
@@ -1697,7 +1697,7 @@ var jsc = {
         function redrawSld () {
             var sldComponent = jsc.getSliderComponent(THIS);
             if (sldComponent) {
-                // redraw the dop_slider pointer
+                // redraw the slider pointer
                 switch (sldComponent) {
                 case 's': var yComponent = 1; break;
                 case 'v': var yComponent = 2; break;

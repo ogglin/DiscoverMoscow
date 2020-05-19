@@ -390,9 +390,14 @@ class BlogIndexPage(Page):
                 print(response.json())
                 to_form = '{"email": "' + email + '"}'
                 save_mail(to_form)
-                data = {
-                    'message': "Спасибо!"
-                }
+                if 'en.' in request.get_host:
+                    data = {
+                        'message': "Thank you!"
+                    }
+                else:
+                    data = {
+                        'message': "Спасибо!"
+                    }
                 return JsonResponse(data)
         elif "ajax_load_more" in request.POST:
             more_data = {

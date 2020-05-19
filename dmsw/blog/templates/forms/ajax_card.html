@@ -12,17 +12,25 @@
         </div>
     </div>
     <div class="card-meta standart">
-        <form method="post" class="ajax_form subscribe-ajax-form" action="" data-url='{{ request.build_absolute_uri|safe }}'>
+        <form method="post" class="ajax_form subscribe-ajax-form" action=""
+              data-url='{{ request.build_absolute_uri|safe }}'>
             {% csrf_token %}
             <div class="data_form">
-                <input type="text" name="email" placeholder="Оставьте ваш e-mail" />
+                <input type="text" name="email"
+                       placeholder="{% if 'en.' in request.get_host %}Your e-mail{% else %}Оставьте ваш e-mail{% endif %}"/>
             </div>
             <div class="result_form"></div>
-            <button type="submit" class="" value="Подписаться">Подписаться</button>
+            <button type="submit" class="" value="">
+                {% if 'en.' in request.get_host %}
+                    Subscribe
+                {% else %}
+                    Подписаться
+                {% endif %}
+            </button>
         </form>
         <div class="tags">
             <span>
-                <a>Подпишись на новости</a>
+                <a>{% if 'en.' in request.get_host %}Subscribe to news{% else %}Подпишись на новости{% endif %}</a>
             </span>
         </div>
     </div>

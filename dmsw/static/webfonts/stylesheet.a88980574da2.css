@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'ALS Gorizont Bold Expanded';
+    src: url("ALSGorizont-BoldExpanded.11ffd2871be8.eot");
+    src: url("ALSGorizont-BoldExpanded.11ffd2871be8.eot?#iefix") format('embedded-opentype'),
+        url("ALSGorizont-BoldExpanded.e123b291aaaf.woff2") format('woff2'),
+        url("ALSGorizont-BoldExpanded.e42312255f6e.woff") format('woff'),
+        url("ALSGorizont-BoldExpanded.5d6869df9e7d.ttf") format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ALS Gorizont ExtraBold Expanded';
+    src: url("ALSGorizont-ExtraBoldExpanded.16534e49ebcd.eot");
+    src: url("ALSGorizont-ExtraBoldExpanded.16534e49ebcd.eot?#iefix") format('embedded-opentype'),
+        url("ALSGorizont-ExtraBoldExpanded.300ea11939b2.woff2") format('woff2'),
+        url("ALSGorizont-ExtraBoldExpanded.d321e867af96.woff") format('woff'),
+        url("ALSGorizont-ExtraBoldExpanded.3c16810f0dfc.ttf") format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+

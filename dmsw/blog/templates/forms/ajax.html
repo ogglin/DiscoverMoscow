@@ -1,8 +1,14 @@
 <form method="post" class="ajax_form subscribe-ajax-form" action="" data-url='{{ request.build_absolute_uri|safe }}'>
     {% csrf_token %}
     <div class="data_form">
-        <h5>подписаться на новости</h5>
-        <input type="text" name="email" placeholder="Оставьте ваш e-mail" />
+        {% if 'en.' in request.get_host %}
+            <h5>subscribe to news</h5>
+        {% else %}
+            <h5>подписаться на новости</h5>
+        {% endif %}
+
+        <input type="text" name="email"
+               placeholder="{% if 'en.' in request.get_host %}Your e-mail{% else %}Оставьте ваш e-mail{% endif %}"/>
         <div class="result_form"></div>
         <button type="submit"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     </div>

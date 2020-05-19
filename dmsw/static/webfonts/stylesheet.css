@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'ALS Gorizont Bold Expanded';
+    src: url('ALSGorizont-BoldExpanded.eot');
+    src: url('ALSGorizont-BoldExpanded.eot?#iefix') format('embedded-opentype'),
+        url('ALSGorizont-BoldExpanded.woff2') format('woff2'),
+        url('ALSGorizont-BoldExpanded.woff') format('woff'),
+        url('ALSGorizont-BoldExpanded.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ALS Gorizont ExtraBold Expanded';
+    src: url('ALSGorizont-ExtraBoldExpanded.eot');
+    src: url('ALSGorizont-ExtraBoldExpanded.eot?#iefix') format('embedded-opentype'),
+        url('ALSGorizont-ExtraBoldExpanded.woff2') format('woff2'),
+        url('ALSGorizont-ExtraBoldExpanded.woff') format('woff'),
+        url('ALSGorizont-ExtraBoldExpanded.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+

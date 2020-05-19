@@ -192,7 +192,7 @@
     max-width: 50%;
     max-height: 100%;
     position: absolute;
-    left: calc(100%/8);
+    left: calc(100% / 8);
     top: 0;
     padding: 10px; }
   body .slider-right .slide-standart a {
@@ -222,14 +222,14 @@
     margin: 20px auto 0; } }
 @media only screen and (max-width: 640px) {
   body .slider-right .slide-standart img {
-    left: calc(100%/16); } }
+    left: calc(100% / 16); } }
 @media only screen and (max-width: 480px) {
   body .slider_block {
     height: 1200px; }
     body .slider_block .left, body .slider_block .right {
       height: 600px; }
     body .slider_block .slider-right .slide-standart img {
-      left: calc(100%/16); }
+      left: calc(100% / 16); }
     body .slider_block .slider-right .slide-calendar .block_first .date {
       width: 140px;
       height: 140px; }

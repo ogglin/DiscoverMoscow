@@ -31,7 +31,7 @@
   list-style: none;
   display: inline;
   float: left; }
-  .slide.black .slider_image .text-block .slider_subtitle, .slide.black .slider_image .text-block a {
+  .slide.black .slider_image .text-block .slider_subtitle, .slide.black .slider_image .text-block .slider_title {
     color: #000000; }
 
 .slide-img {

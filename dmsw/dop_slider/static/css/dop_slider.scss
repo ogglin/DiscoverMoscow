@@ -254,7 +254,7 @@
   }
 }
 
-@media only screen and  (min-width: 480px) and (max-width: 800px) {
+@media only screen and (min-width: 480px) and (max-width: 800px) {
   body {
     .slider-right {
       .slide-standart {
@@ -264,7 +264,7 @@
           max-width: 50%;
           max-height: 100%;
           position: absolute;
-          left: calc(100%/8);
+          left: calc(100% / 8);
           top: 0;
           padding: 10px;
         }
@@ -288,17 +288,21 @@
           text-align: left;
         }
       }
+
       .slide-calendar {
         .block_first {
           display: none;
         }
+
         .block_second {
           flex-flow: row;
+
           .tag_link {
             font-size: 18px;
             text-align: left;
           }
         }
+
         .block_third {
           .btn {
             font-size: 20px;
@@ -309,51 +313,61 @@
     }
   }
 }
+
 @media only screen and (max-width: 640px) {
   body {
     .slider-right {
       .slide-standart {
         img {
-          left: calc(100%/16);
+          left: calc(100% / 16);
         }
       }
     }
   }
 }
+
 @media only screen and (max-width: 480px) {
   body {
     .slider_block {
       height: 1200px;
+
       .left, .right {
         height: 600px;
       }
+
       .slider-right {
         .slide-standart {
           img {
-            left: calc(100%/16);
+            left: calc(100% / 16);
           }
         }
+
         .slide-calendar {
           .block_first {
             .date {
               width: 140px;
               height: 140px;
+
               span {
                 font-size: 70px;
                 line-height: 80px;
               }
+
               small {
                 font-size: 20px;
               }
             }
           }
+
           .block_second {
             flex-flow: column;
             padding-top: 40px;
+
             .tag_link {
               font-size: 20px;
             }
           }
+
           .block_third {
             .btn {
               font-size: 20px;

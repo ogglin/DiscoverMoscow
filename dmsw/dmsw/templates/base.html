@@ -191,14 +191,30 @@
                         {% endblock %}
                         {% to_project as params %}
                         {% if params|length > 0 %}
-                            <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+                            <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">
+                                {% if 'en.' in request.get_host %}
+                                {% else %}
+                                {% endif %}
+                                присоединится к проекту
+                            </a>
                         {% endif %}
                     </div>
                 </div>
                 <div class="dop_links">
-                    <a href="/about/">О ПРОЕКТЕ</a>
-                    <a href="/partners/">ПАРТНЕРЫ</a>
-                    <span class="copyright">© 2020 Discover Moscow. При поддержке Правительства Москвы. Все права защищены</span>
+                    {% if 'en.' in request.get_host %}
+                        <a href="/about/">About</a>
+                        <a href="/partners/">Partners</a>
+                    {% else %}
+                        <a href="/about/">О проекте</a>
+                        <a href="/partners/">Партнёры</a>
+                    {% endif %}
+                    <span class="copyright">© 2020 Discover Moscow.
+                        {% if 'en.' in request.get_host %}
+                        With the support of the Moscow Government. All rights reserved
+                        {% else %}
+                        При поддержке Правительства Москвы. Все права защищены
+                        {% endif %}
+                    </span>
                 </div>
 {#                <div class="disclamer">#}
 {#                    <p>Перепечатка материалов данного  издания «_» (СМИ зарегистрировано Федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций — свидетельство Эл № ФС77-0000 от 00 мая 2020 года) возможна только с письменного разрешения редакции. При цитировании ссылка на www._ обязательна. Обратная связь c online редакцией info@_</p>#}

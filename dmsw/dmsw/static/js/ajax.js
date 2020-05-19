@@ -57,48 +57,48 @@ $(document).ready(function(){
 		$('.result_form').html('Вы уже подписаны.');
     }
 })
-
-$(document).ready(function () {
-    let $AjaxMore = $('.ajax_load_more form')
-    $(window).scroll(function(){
-        scrollTracking($AjaxMore)
-    })
-
-})
-let block_show = null;
-function scrollTracking(el){
-	var wt = $(window).scrollTop();
-	var wh = $(window).height();
-	var et = el.offset().top;
-	var eh = el.outerHeight();
-    var $formData = el.serialize()
-
-	if (wt + wh >= et && wt + wh - eh * 2 <= et + (wh - eh)){
-		if (block_show == null || block_show == false) {
-			console.log('Блок active в области видимости');
-			$.ajax({
-                method: "POST",
-                url: window.location.href,
-                data: $formData,
-                success: handleSuccess,
-                error: handleError,
-            })
-		}
-		block_show = true;
-	} else {
-		if (block_show == null || block_show == true) {
-			console.log('Блок active скрыт');
-		}
-		block_show = false;
-	}
-}
-function handleSuccess(data, textStatus, jqXHR){
-    console.log(data)
-    console.log(textStatus)
-    console.log(jqXHR)
-}
-function handleError(jqXHR, textStatus, errorThrown){
-    console.log(jqXHR)
-    console.log(textStatus)
-    console.log(errorThrown)
-}
+//
+// $(document).ready(function () {
+//     let $AjaxMore = $('.ajax_load_more form')
+//     $(window).scroll(function(){
+//         scrollTracking($AjaxMore)
+//     })
+//
+// })
+// let block_show = null;
+// function scrollTracking(el){
+// 	var wt = $(window).scrollTop();
+// 	var wh = $(window).height();
+// 	var et = el.offset().top;
+// 	var eh = el.outerHeight();
+//     var $formData = el.serialize()
+//
+// 	if (wt + wh >= et && wt + wh - eh * 2 <= et + (wh - eh)){
+// 		if (block_show == null || block_show == false) {
+// 			console.log('Блок active в области видимости');
+// 			$.ajax({
+//                 method: "POST",
+//                 url: window.location.href,
+//                 data: $formData,
+//                 success: handleSuccess,
+//                 error: handleError,
+//             })
+// 		}
+// 		block_show = true;
+// 	} else {
+// 		if (block_show == null || block_show == true) {
+// 			console.log('Блок active скрыт');
+// 		}
+// 		block_show = false;
+// 	}
+// }
+// function handleSuccess(data, textStatus, jqXHR){
+//     console.log(data)
+//     console.log(textStatus)
+//     console.log(jqXHR)
+// }
+// function handleError(jqXHR, textStatus, errorThrown){
+//     console.log(jqXHR)
+//     console.log(textStatus)
+//     console.log(errorThrown)
+// }

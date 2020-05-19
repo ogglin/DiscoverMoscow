@@ -88,3 +88,14 @@
     {% endif %}
 {% endblock %}
 
+{% block endless_js %}
+    <script>
+        $(document).ready(function(){
+            $marg = $('footer').height()
+            $.endlessPaginate({
+                paginateOnScroll: true,
+                paginateOnScrollMargin: $marg
+            });
+        })
+    </script>
+{% endblock %}

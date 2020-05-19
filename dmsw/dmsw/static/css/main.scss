@@ -715,7 +715,12 @@ footer {
     height: 50%;
     margin: 0 auto;
   }
-
+  .standart {
+    .image {
+      padding-top: 30px;
+      background-clip: content-box;
+    }
+  }
   .title {
     color: $black;
     width: calc(100% - 40px);

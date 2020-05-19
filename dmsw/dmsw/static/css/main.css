@@ -526,6 +526,9 @@ footer {
     width: 50%;
     height: 50%;
     margin: 0 auto; }
+  .card-item .standart .image {
+    padding-top: 30px;
+    background-clip: content-box; }
   .card-item .title {
     color: #000000;
     width: calc(100% - 40px);

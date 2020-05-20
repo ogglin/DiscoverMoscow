@@ -21,7 +21,13 @@ from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
 import datetime
 import random
 import requests
+import os
 from .snipets import *
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
+dirPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def save_mail(to_form):
@@ -30,8 +36,22 @@ def save_mail(to_form):
     cursor.execute(f'INSERT INTO wagtailforms_formsubmission (form_data, page_id, submit_time) '
                    f'VALUES (\'{to_form}\', 94,\'{date_time}\')')
     rows = cursor.fetchall()
-    print(rows)
 
+
+def save_image(img, text):
+    pos = (10, 20)
+    black = (3, 3, 3)
+    font = ImageFont.load_default()
+    unicode_text = "Test text"
+        #truetype(dirPath + "/statis/webfonts/ALSGorizont-ExtraBoldExpanded.ttf", 40)
+    in_path = dirPath + '/media/original_images/' + str(img)
+    out_path = dirPath + '/media/to_share_imgs/' + str(img)
+    print(in_path, out_path, text)
+    photo = Image.open(in_path)
+    # make the image editable
+    drawing = ImageDraw.Draw(photo)
+    drawing.text(pos, unicode_text, fill=black, font=font)
+    photo.save(out_path)
 
 def sort_cards(pages):
     all_tags = Tags.objects.all()
@@ -312,6 +332,7 @@ class BlogPage(Page):
     ]
 
     def save(self, *args, **kwargs):
+        save_image(self.article_image, self.title)
         if self.content_body.stream_data:
             self.search_body = str(self.content_body.stream_data).lower()
         return super().save(*args, **kwargs)
@@ -567,7 +588,8 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
+            blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         else:
             tags = []
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
@@ -718,4 +740,3 @@ class FormPage(AbstractEmailForm):
 
     class Meta:
         verbose_name = "Form page (don't use or modify)"
-

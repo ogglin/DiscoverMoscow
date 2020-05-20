@@ -807,6 +807,9 @@ hr {
 .video-block > div frame, .video-element > div frame {
   border: 1px solid #000000 !important; }
 
+.video-block > div {
+  min-width: 25%; }
+
 .video-block, .video-element {
   position: relative;
   width: 100%;
@@ -1600,7 +1603,8 @@ footer .subscribe-ajax-form {
   display: inline-flex;
   justify-content: space-between; }
   .partner_block .partner_image {
-    flex-direction: column; }
+    flex-direction: column;
+    max-width: 280px; }
   .partner_block .partner_text {
     width: calc(100% - 280px);
     background-color: #efefef70;
@@ -1619,6 +1623,7 @@ footer .subscribe-ajax-form {
     flex-direction: column; }
     .partner_block .partner_image img {
       width: auto;
+      max-width: 100%;
       margin: 0 auto;
       display: inherit; }
     .partner_block .partner_text {

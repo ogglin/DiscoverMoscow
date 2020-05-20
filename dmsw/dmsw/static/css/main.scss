@@ -2695,6 +2695,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-sizing: content-box !important;
     img {
       width: auto;
       height: auto;
@@ -2703,21 +2704,19 @@ footer {
   }
   .desc {
     height: 40%;
+    padding: 27px 30px;
     h4 {
-      padding: 0 15px;
       color: #ff8562;
       font-size: 12px;
       margin-bottom: 8px;
       text-align: left;
     }
     h3 {
-      padding: 0 15px;
       font-size: 20px;
       text-align: left;
     }
     p {
       font-size: 14px;
-      padding: 0 15px;
       margin-top: 8px;
       line-height: 1.55;
     }
@@ -2725,8 +2724,87 @@ footer {
   .help_link {
     padding: 4px 10px;
     border: 1px solid #000000;
+    color: #000000;
+    text-decoration: none;
+    margin: 0 10px 0 30px;
+    font-size: 14px;
   }
   .contact_link {
     color: #ff8562;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 0 10px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .charitable {
+    .img {
+      height: 45%;
+    }
+    .desc {
+      height: 45%;
+    }
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .charitable {
+    max-width: 50%;
+    .img {
+      height: 50%;
+    }
+    .desc {
+      height: 40%;
+      padding: 20px;
+    }
+    .help_link {
+      margin: 0 10px 0 20px;
+    }
+  }
+}
+@media only screen and (max-width: 800px) {
+  .charitable {
+    max-width: 50%;
+    .img {
+      height: 50%;
+    }
+
+    .desc {
+      height: 40%;
+      padding: 20px;
+    }
+    .help_link {
+      margin: 0 10px 0 20px;
+    }
+  }
+}
+@media only screen and (max-width: 640px) {
+  .charitable {
+    max-width: 50%;
+    .img {
+      height: 45%;
+    }
+
+    .desc {
+      height: 45%;
+      padding: 20px;
+    }
+    .help_link {
+      margin: 0 10px 0 20px;
+    }
+  }
+}
+@media only screen and (max-width: 560px) {
+  .charitable {
+    max-width: 100%;
+    .img {
+      height: 45%;
+    }
+    .desc {
+      height: 40%;
+      padding: 20px;
+    }
+    .help_link {
+      margin: 0 10px 0 20px;
+    }
   }
 }

@@ -228,5 +228,6 @@ Ant.initialize = function(that) {
 		}
 	}
 };
-
-new Ant();
+if ($('.ant-carousel').length > 0) {
+	new Ant();
+}

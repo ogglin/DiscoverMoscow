@@ -205,21 +205,6 @@ $(document).ready(function () {
         $(this).parent().toggleClass('active')
     })
 
-    $ytLinks = $('.slide-element a')
-    $ytAll = $ytLinks.length
-    $ytLeftPos = 0;
-    $ytRightPos = 2;
-    for (i = $ytLeftPos; i <= $ytRightPos; i++) {
-        vfile = $ytLinks[i].innerHTML
-        var player = new Playerjs({id: "ytPlayer" + i, file: vfile});
-    }
-    $('.ant-carousel-arrow-right').click(function () {
-        loadMoreYtVideo('right')
-    })
-    $('.ant-carousel-arrow-left').click(function () {
-        loadMoreYtVideo('left')
-    })
-
     let frames = $('.video-element iframe').add($('.video-block iframe'))
     frames.each(function (i) {
         let html = '<div id="player' + i + '" style="border: 1px solid #c5c5c5;"></div>'
@@ -229,6 +214,22 @@ $(document).ready(function () {
     frames.each(function (i) {
         const vfile = $(this).attr('src')
         var player = new Playerjs({id: "player" + i, file: vfile});
+    })
+    if ($('.ant-carousel').length > 0) {
+        $ytLinks = $('.slide-element a')
+        $ytAll = $ytLinks.length
+        $ytLeftPos = 0;
+        $ytRightPos = 2;
+        for (i = $ytLeftPos; i <= $ytRightPos; i++) {
+            vfile = $ytLinks[i].innerHTML
+            var player = new Playerjs({id: "ytPlayer" + i, file: vfile});
+        }
+    }
+    $('.ant-carousel-arrow-right').click(function () {
+        loadMoreYtVideo('right')
+    })
+    $('.ant-carousel-arrow-left').click(function () {
+        loadMoreYtVideo('left')
     })
 
     $('#btn_search').click(function () {
@@ -252,19 +253,6 @@ $(document).ready(function () {
         pop_image_remove()
     })
 
-    // $('.yt_play_btn').click(function () {
-    //     yt_play($(this).parent())
-    // })
-    // $('.ytp-chrome-top').css('display','none')
-    // yt_elements = $('iframe')
-    // yt_elements.each(function () {
-    //     $(this).height($(this).width()*0.5625)
-    // })
-    // yt_videos = $('.video-block div iframe')
-    // yt_videos.each(function () {
-    //     $(this).height($(this).width()*0.5625)
-    // })
-
 });
 
 window.onload = function () {
@@ -273,7 +261,7 @@ window.onload = function () {
 
 function loadMoreYtVideo(trend) {
     if (trend == 'left') {
-        if ($ytLeftPos == 0){
+        if ($ytLeftPos == 0) {
             $ytLeftPos = $ytAll - 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
@@ -283,9 +271,9 @@ function loadMoreYtVideo(trend) {
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         }
     } else if (trend == 'right') {
-        if ($ytRightPos == $ytAll){
+        if ($ytRightPos == $ytAll) {
             $ytRightPos = $ytAll
-        } else if($ytRightPos < $ytLeftPos || $ytLeftPos == 0) {
+        } else if ($ytRightPos < $ytLeftPos || $ytLeftPos == 0) {
             $ytRightPos += 1
             vfile = $ytLinks[$ytRightPos].innerHTML
             var player = new Playerjs({id: "ytPlayer" + $ytRightPos, file: vfile});

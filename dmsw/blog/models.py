@@ -332,7 +332,7 @@ class BlogPage(Page):
     ]
 
     def save(self, *args, **kwargs):
-        save_image(self.article_image, self.title)
+        # save_image(self.article_image, self.title)
         if self.content_body.stream_data:
             self.search_body = str(self.content_body.stream_data).lower()
         return super().save(*args, **kwargs)

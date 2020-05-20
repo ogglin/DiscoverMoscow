@@ -527,7 +527,7 @@ footer {
     height: 50%;
     margin: 0 auto; }
   .card-item .standart .image {
-    padding-top: 30px;
+    margin-top: 20px;
     background-clip: content-box; }
   .card-item .title {
     color: #000000;

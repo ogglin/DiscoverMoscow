@@ -8,8 +8,8 @@
                         <a href="{{ slide.link }}" class="slider_tag"><li class="slide {{ slide.text_color }}">
                             <div style='background-image: url("{{ img.url }}")' class="slider_image">
                                 <div class="text-block">
-                                    <div class="slider_title">{{ slide.title }}</div>
-                                    <p class="slider_subtitle">{{ slide.subtitle }}</p>
+                                    <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>
+                                    <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>
                                 </div>
                             </div>
                         </li></a>

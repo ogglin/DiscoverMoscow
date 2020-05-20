@@ -1,12 +1,22 @@
 {% load wagtailcore_tags wagtailimages_tags cfilters %}
 
-<div class="owl-carousel">
-    {% with self|length as len %}
+<div class="ant-carousel">
+  <div class="ant-carousel-hider">
+    <ul class="ant-carousel-list">
+        {% with self|length as len %}
         {% for item in self %}
-            <div class="slide-element text-center">
-                {{ item }}
-                <span class="counter">{{ forloop.counter }} / {{ len }}</span>
-            </div>
+            <li class="ant-carousel-element">
+                <div class="slide-element text-center">
+                    <div id="ytPlayer{{ forloop.counter0 }}">{{ item }}</div>
+                    <span class="counter">{{ forloop.counter }} / {{ len }}</span>
+                    <div class="desc">{{ item }}</div>
+                </div>
+            </li>
         {% endfor %}
     {% endwith %}
+    </ul>
+  </div>
+  <div class="ant-carousel-arrow-left"></div>
+    <div class="ant-carousel-arrow-right"></div>
+  <div class="ant-carousel-dots"></div>
 </div>

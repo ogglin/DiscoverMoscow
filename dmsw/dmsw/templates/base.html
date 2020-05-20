@@ -28,8 +28,7 @@
         {% endcompress %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
-        <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/ant.carousel.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
 
         {% block extra_css %}
@@ -124,14 +123,14 @@
                         {% if 'en.' in request.get_host %}
                             {% show_slides locale='en' %}
                         {% else %}
-                            {% show_slides  locale='ru' %}
+                            {% show_slides locale='ru' %}
                         {% endif %}
                     </div>
                     <div class="right">
                         {% if 'en.' in request.get_host %}
                             {% show_dop_slides locale='en' %}
                         {% else %}
-                            {% show_dop_slides  locale='ru' %}
+                            {% show_dop_slides locale='ru' %}
                         {% endif %}
                         {% block slider_right %}
 
@@ -232,7 +231,7 @@
         <!-- Font Awesome kit -->
         <script src="https://kit.fontawesome.com/c39147399e.js" crossorigin="anonymous"></script>
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/ant.carousel.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/lightslider.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/playerjs.js' %}"></script>

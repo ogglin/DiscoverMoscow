@@ -86,6 +86,6 @@ function dop_setActive() {
     })
 }
 
-$(window).resize(function() {
-    dop_nextSlideRight();
-})
+// $(window).resize(function() {
+//     dop_nextSlideRight();
+// })

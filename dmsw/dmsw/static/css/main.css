@@ -770,16 +770,6 @@ hr {
       line-height: 15px;
       max-height: 30px;
       min-height: 15px; }
-      .container.wide .slide-element .meta span {
-        padding-right: 10px;
-        margin-right: 10px;
-        position: relative;
-        font-family: 'PT Serif', Serif;
-        font-style: italic; }
-        .container.wide .slide-element .meta span:after {
-          position: absolute;
-          content: '|';
-          right: -5px; }
     .container.wide .slide-element h3 {
       width: 150%;
       text-align: left;
@@ -794,30 +784,10 @@ hr {
       font-family: 'PT Serif', Serif;
       font-style: italic;
       font-size: 13px; }
-    .container.wide .slide-element .rich-text div:nth-child(2) {
-      margin-bottom: 20px; }
-    .container.wide .slide-element .rich-text h4 {
-      position: relative;
-      display: block;
-      padding: 25px 0 0 50px;
-      font-weight: 600;
-      font-size: 13px;
-      text-align: left;
-      width: 100%; }
-      .container.wide .slide-element .rich-text h4:before {
-        position: absolute;
-        content: '|';
-        left: 40px; }
-    .container.wide .slide-element .rich-text h3 {
-      width: 100%; }
-    .container.wide .slide-element .rich-text p {
-      width: 100%; }
-      .container.wide .slide-element .rich-text p:first-child {
-        display: none; }
     .container.wide .slide-element p {
       height: 46px;
       overflow: hidden;
-      width: 150%;
+      width: 100%;
       line-height: 15px;
       font-size: 14px;
       font-weight: 400;
@@ -1723,5 +1693,24 @@ footer .subscribe-ajax-form {
     transform: scale(2) !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
     transform: scale(2) !important; } }
+.ant-carousel-element {
+  padding: 0 0 90px 0; }
+  .ant-carousel-element .slide-element {
+    opacity: 0; }
+  .ant-carousel-element .desc p:first-child {
+    display: none; }
+  .ant-carousel-element .desc p, .ant-carousel-element .desc h4 {
+    text-align: left; }
+    .ant-carousel-element .desc p:nth-child(2), .ant-carousel-element .desc h4:nth-child(2) {
+      position: relative;
+      display: block;
+      padding: 10px 0 0 50px;
+      font-weight: 600;
+      width: 100%;
+      height: auto; }
+      .ant-carousel-element .desc p:nth-child(2):before, .ant-carousel-element .desc h4:nth-child(2):before {
+        position: absolute;
+        content: '|';
+        left: 40px; }
 
 /*# sourceMappingURL=main.css.map */

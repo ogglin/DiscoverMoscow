@@ -1729,7 +1729,7 @@ footer .subscribe-ajax-form {
     height: 520px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
   .charitable .img {
-    height: 50%;
+    height: 48%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -1740,7 +1740,7 @@ footer .subscribe-ajax-form {
       height: auto;
       max-width: 100%; }
   .charitable .desc {
-    height: 40%;
+    height: 39%;
     padding: 27px 30px; }
     .charitable .desc h4 {
       color: #ff8562;

@@ -35,12 +35,23 @@ class VideoItem(blocks.StreamBlock):
     class Meta:
         template = 'blog/blocks/video_item.html'
 
+
 class VideoGallery(blocks.StreamBlock):
     video = blocks.RichTextBlock()
     element = VideoItem(icon='video', label='Добавить видео', null=True, blank=True, required=False)
 
     class Meta:
         template = 'blog/blocks/video_gallery.html'
+
+
+class СharitableItem(blocks.StreamBlock):
+    main_image = ImageChooserBlock()
+    body_text = blocks.RichTextBlock()
+    help_link = blocks.CharBlock(verbose_name='Ссылка на кнопку Помочь')
+    contact_link = blocks.CharBlock(verbose_name='Ссылка на кнопку Контакт')
+
+    class Meta:
+        template = 'blog/blocks/charitable_block.html'
 
 
 class ColumnBlock(blocks.StreamBlock):
@@ -51,6 +62,8 @@ class ColumnBlock(blocks.StreamBlock):
     html = blocks.RawHTMLBlock()
     gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
     partner = PartnerBlock(icon='placeholder', label='Блок партнера', null=True, blank=True, required=False)
+    charitable = СharitableItem(icon='placeholder', label='Блок благотворительность', null=True, blank=True,
+                                required=False)
 
     class Meta:
         template = 'blog/blocks/column_block.html'

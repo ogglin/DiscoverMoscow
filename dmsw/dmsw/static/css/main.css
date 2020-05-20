@@ -1718,4 +1718,46 @@ footer .subscribe-ajax-form {
         content: '|';
         left: 40px; }
 
+.charitable {
+  max-width: 33%;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+  float: left; }
+  .charitable .inner {
+    height: 520px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+  .charitable .img {
+    height: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .charitable .img img {
+      width: auto;
+      height: auto;
+      max-width: 100%; }
+  .charitable .desc {
+    height: 40%; }
+    .charitable .desc h4 {
+      padding: 0 15px;
+      color: #ff8562;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-align: left; }
+    .charitable .desc h3 {
+      padding: 0 15px;
+      font-size: 20px;
+      text-align: left; }
+    .charitable .desc p {
+      font-size: 14px;
+      padding: 0 15px;
+      margin-top: 8px;
+      line-height: 1.55; }
+  .charitable .help_link {
+    padding: 4px 10px;
+    border: 1px solid #000000; }
+  .charitable .contact_link {
+    color: #ff8562; }
+
 /*# sourceMappingURL=main.css.map */

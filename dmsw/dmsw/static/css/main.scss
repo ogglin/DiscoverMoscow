@@ -2679,3 +2679,54 @@ footer {
 
   }
 }
+.charitable {
+  max-width: 33%;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  .inner {
+    height: 520px;
+    box-shadow: 0 0 5px rgba(0,0,0,.3);
+  }
+  .img {
+    height: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+    }
+  }
+  .desc {
+    height: 40%;
+    h4 {
+      padding: 0 15px;
+      color: #ff8562;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    h3 {
+      padding: 0 15px;
+      font-size: 20px;
+      text-align: left;
+    }
+    p {
+      font-size: 14px;
+      padding: 0 15px;
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+  }
+  .help_link {
+    padding: 4px 10px;
+    border: 1px solid #000000;
+  }
+  .contact_link {
+    color: #ff8562;
+  }
+}

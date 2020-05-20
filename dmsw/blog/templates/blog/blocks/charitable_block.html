@@ -1,0 +1,19 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="charitable">
+    <div class="inner">
+        {% for item in self %}
+            {% if item.block_type == 'main_image' %}
+                <div class="img">{{ item }}</div>
+            {% endif %}
+            {% if item.block_type == 'body_text' %}
+                <div class="desc">{{ item }}</div>
+            {% endif %}
+            {% if item.block_type == 'help_link' %}
+                <a href="{{ item }}" class="help_link">Помочь</a>
+            {% endif %}
+            {% if item.block_type == 'contact_link' %}
+                <a href="{{ item }}" class="contact_link">Контакт</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

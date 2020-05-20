@@ -1117,6 +1117,7 @@ hr {
     iframe {
       width: 100% !important;
       height: 100% !important;
+      min-height: calc(100vw * 0.14);
     }
   }
 }

@@ -802,7 +802,8 @@ hr {
 
 .video-element div iframe {
   width: 100% !important;
-  height: 100% !important; }
+  height: 100% !important;
+  min-height: calc(100vw * 0.14); }
 
 .video-block > div frame, .video-element > div frame {
   border: 1px solid #000000 !important; }

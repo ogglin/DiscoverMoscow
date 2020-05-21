@@ -108,6 +108,18 @@
   }
 }
 
+.carousel-item {
+  &.black {
+    .slider_image {
+      .text-block {
+        .slider_subtitle, .slider_title {
+          color: #000000;
+        }
+      }
+    }
+  }
+}
+
 .owl-nav, .owl-dots {
   position: absolute;
   width: 100%;

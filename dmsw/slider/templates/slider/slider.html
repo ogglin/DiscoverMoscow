@@ -1,8 +1,8 @@
 {% load static wagtailimages_tags %}
 
-<div id="owl-carousel-1" class="owl-carousel slider {{ slide.text_color }}">
+<div id="owl-carousel-1" class="owl-carousel slider">
     {% for slide in slides %}
-        <div class="carousel-item">
+        <div class="carousel-item {{ slide.text_color }}">
             {% image slide.image width-1000 as img %}
             <a href="{{ slide.link }}" class="slider_tag">
                 <div style='background-image: url("{{ img.url }}")' class="slider_image">

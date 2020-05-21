@@ -82,6 +82,9 @@
     width: 14px;
     height: 14px; }
 
+.carousel-item.black .slider_image .text-block .slider_subtitle, .carousel-item.black .slider_image .text-block .slider_title {
+  color: #000000; }
+
 .owl-nav, .owl-dots {
   position: absolute;
   width: 100%;

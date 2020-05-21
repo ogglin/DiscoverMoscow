@@ -396,13 +396,13 @@ class BlogIndexPage(Page):
         if "email" in request.POST:
             email = request.POST['email']
 
-            list_id = '176059'
+            list_id = '177645'
             url = "https://api.notisend.ru/v1/email/lists/" + list_id + "/recipients"
             payload = {'unconfirmed': '1',
                        'email': '' + email + ''}
             headers = {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer fefb77c131fff95404fbf9537e4d6c8f'
+                'Authorization': 'Bearer 529b446badf979b0a8da0967860c8cde'
             }
             response = requests.post(url, headers=headers, json=payload, )
             if 'errors' in response.json():

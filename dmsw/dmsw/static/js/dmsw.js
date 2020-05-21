@@ -9,7 +9,7 @@ $(document).ready(function () {
         ],
         // Автоматическое проигрывание
         autoplay: true,
-        autoplayTimeout: 3500,
+        autoplayTimeout: 5500,
         autoplaySpeed: 1000,
         slideTransition: 'linear',
         autoplayHoverPause: true

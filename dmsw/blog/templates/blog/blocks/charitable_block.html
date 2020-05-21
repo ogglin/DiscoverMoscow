@@ -9,10 +9,10 @@
                 <div class="desc">{{ item }}</div>
             {% endif %}
             {% if item.block_type == 'help_link' %}
-                <a href="{{ item }}" class="help_link">Помочь</a>
+                <a href="{{ item }}" target="_blank" class="help_link">Помочь</a>
             {% endif %}
             {% if item.block_type == 'contact_link' %}
-                <a href="{{ item }}" class="contact_link">Контакт</a>
+                <a href="{{ item }}" target="_blank" class="contact_link">Контакт</a>
             {% endif %}
         {% endfor %}
     </div>

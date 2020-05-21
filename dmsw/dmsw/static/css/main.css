@@ -148,7 +148,8 @@ body {
       bottom: 20px !important; }
   .slider_block .left {
     -webkit-flex-basis: var(--slider_left_width);
-    flex-basis: var(--slider_left_width); }
+    flex-basis: var(--slider_left_width);
+    max-width: var(--slider_left_width); }
   .slider_block .right {
     -webkit-flex-basis: var(--slider_right_width);
     flex-basis: var(--slider_right_width); }
@@ -490,7 +491,7 @@ footer {
   display: flex;
   display: -webkit-flex;
   flex-wrap: wrap;
-  margin-top: -6px; }
+  margin-top: -10px; }
 
 .card-wrap.tagged .card-item:nth-child(2) .background, .card-wrap.tagged .card-item:nth-child(4) .background,
 .card-wrap.tagged .card-item:nth-child(5) .background, .card-wrap.tagged .card-item:nth-child(7) .background,
@@ -870,33 +871,6 @@ hr {
   font-weight: 600;
   font-size: 13px; }
 
-.owl-nav {
-  display: block !important;
-  position: absolute;
-  left: calc(33% - 20px);
-  top: calc(50% - 40px); }
-  .owl-nav button {
-    position: relative;
-    width: 40px;
-    height: 40px; }
-    .owl-nav button span {
-      font-size: 1pt; }
-    .owl-nav button.owl-prev {
-      float: left; }
-      .owl-nav button.owl-prev:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: url("../image/arrow-left.png"); }
-    .owl-nav button.owl-next {
-      float: right;
-      left: calc(50vw - 30px); }
-      .owl-nav button.owl-next:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: url("../image/arrow-right.png"); }
-
 .align-center {
   text-align: center; }
 
@@ -1123,37 +1097,6 @@ h2 {
       text-decoration: none;
       font-size: 1.5em; }
 
-.owl-carousel {
-  overflow: hidden;
-  margin: 0;
-  padding: 40px 0;
-  max-height: calc(100vw * 0.257 + 160px);
-  opacity: 1;
-  position: relative; }
-  .owl-carousel .owl-dots {
-    display: none; }
-
-.owl-stage-outer {
-  position: relative; }
-  .owl-stage-outer:before {
-    position: absolute;
-    content: '';
-    height: 100%;
-    width: calc(50% - 25vw - 40px);
-    top: 0;
-    left: 0;
-    z-index: 3;
-    background-color: #f3f3f3b0; }
-  .owl-stage-outer:after {
-    position: absolute;
-    content: '';
-    height: 100%;
-    width: calc(50% - 25vw - 40px);
-    top: 0;
-    right: 0;
-    z-index: 3;
-    background-color: #f3f3f3b0; }
-
 @media only screen and (max-width: 1600px) {
   body {
     --columns: 4;
@@ -1217,14 +1160,6 @@ h2 {
         padding-left: 40px; }
       body .container.wide iframe {
         width: calc(150% - 20px); }
-      body .container.wide .owl-nav {
-        left: calc(33% + 30px);
-        width: calc(100vw - 40px); }
-        body .container.wide .owl-nav button.owl-next {
-          left: 0;
-          width: 40px; }
-    body .owl-stage-outer:before, body .owl-stage-outer:after {
-      z-index: -1; }
     body .gallery .image-gallery {
       min-height: calc(100vw * 0.4); }
     body .slider_block {
@@ -1734,6 +1669,7 @@ footer .subscribe-ajax-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     box-sizing: content-box !important; }
     .charitable .img img {
       width: auto;
@@ -1769,14 +1705,14 @@ footer .subscribe-ajax-form {
 
 @media only screen and (max-width: 1200px) {
   .charitable .img {
-    height: 45%; }
+    height: 42%; }
   .charitable .desc {
     height: 45%; } }
 @media only screen and (max-width: 1000px) {
   .charitable {
     max-width: 50%; }
     .charitable .img {
-      height: 50%; }
+      height: 45%; }
     .charitable .desc {
       height: 40%;
       padding: 20px; }
@@ -1786,23 +1722,13 @@ footer .subscribe-ajax-form {
   .charitable {
     max-width: 50%; }
     .charitable .img {
-      height: 50%; }
+      height: 40%; }
     .charitable .desc {
-      height: 40%;
-      padding: 20px; }
+      height: 46%;
+      padding: 10px; }
     .charitable .help_link {
       margin: 0 10px 0 20px; } }
 @media only screen and (max-width: 640px) {
-  .charitable {
-    max-width: 50%; }
-    .charitable .img {
-      height: 45%; }
-    .charitable .desc {
-      height: 45%;
-      padding: 20px; }
-    .charitable .help_link {
-      margin: 0 10px 0 20px; } }
-@media only screen and (max-width: 560px) {
   .charitable {
     max-width: 100%; }
     .charitable .img {

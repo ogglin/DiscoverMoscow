@@ -1,3 +1,22 @@
+$(document).ready(function () {
+    $('#owl-carousel-1').owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        navText: [
+          '<i class="fas fa-arrow-left" aria-hidden="true"></i>',
+          '<i class="fas fa-arrow-right" aria-hidden="true"></i>'
+        ],
+        // Автоматическое проигрывание
+        autoplay: true,
+        autoplayTimeout: 3500,
+        autoplaySpeed: 1000,
+        slideTransition: 'linear',
+        autoplayHoverPause: true
+    });
+});
+
+
 // Burger menu
 var docHeight = $(document).height();
 var footerHeight = $('footer').height();
@@ -30,7 +49,7 @@ $(document).ready(function () {
     $('#viewport-right').hover(function () {
         clearInterval(switchInterval_right);
     }, function () {
-        switchInterval_right = setInterval(nextSlide, slideInterval_right);
+        switchInterval_right = setInterval(nextSlideRight, slideInterval_right);
     });
 
     $('#next-btn-right').click(function () {
@@ -104,16 +123,6 @@ function setActive() {
     })
 }
 
-// $(window).scroll(function(){
-//     scrollTop = window.pageYOffset
-//     if (scrollTop >= 390) {
-//         $('.slider_block').addClass('sticky')
-//     }
-//     if (scrollTop < 390) {
-//         $('.slider_block').removeClass('sticky')
-//     }
-// });
-
 // Main menu open/close
 function main_menu_collapse() {
     menu_width = $('header .navbar').width()
@@ -132,7 +141,7 @@ function main_menu_collapse() {
 
 $(window).resize(function () {
     main_menu_collapse();
-    nextSlideRight();
+    //nextSlideRight();
 })
 $('header #more').click(function () {
     $('header .main_menu').toggleClass('open')

@@ -1,37 +1,57 @@
 {% load static wagtailimages_tags %}
-<div class="slider">
-        <div id="block-for-slider">
-            <div id="viewport">
-                <ul id="slidewrapper">
-                    {% for slide in slides %}
-                        {% image slide.image width-1000 as img %}
-                        <a href="{{ slide.link }}" class="slider_tag"><li class="slide {{ slide.text_color }}">
-                            <div style='background-image: url("{{ img.url }}")' class="slider_image">
-                                <div class="text-block">
-                                    <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>
-                                    <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>
-                                </div>
-                            </div>
-                        </li></a>
-                    {% endfor %}
-                </ul>
-                {% if slides|length > 1 %}
-                    <div id="prev-next-btns">
-                        <div id="prev-btn"><i class="fas fa-arrow-left"></i></div>
-                        <div id="next-btn"><i class="fas fa-arrow-right"></i></div>
-                    </div>
 
-                    <ul id="nav-btns">
-                        {% for slide in slides %}
-                            <li class="slide-nav-btn"></li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
+<div id="owl-carousel-1" class="owl-carousel slider {{ slide.text_color }}">
+    {% for slide in slides %}
+        <div class="carousel-item">
+            {% image slide.image width-1000 as img %}
+            <a href="{{ slide.link }}" class="slider_tag">
+                <div style='background-image: url("{{ img.url }}")' class="slider_image">
+                    <div class="text-block">
+                        <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>
+                        <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>
+                    </div>
+                </div>
+            </a>
         </div>
-    </div>
+    {% endfor %}
+</div>
+
+
+{#<div class="slider">#}
+{#    <div id="block-for-slider">#}
+{#        <div id="viewport">#}
+{#             <ul id="slidewrapper">#}
+{#                {% for slide in slides %}#}
+{#                    {% image slide.image width-1000 as img %}#}
+{#                    <a href="{{ slide.link }}" class="slider_tag"><li class="slide {{ slide.text_color }}">#}
+{#                        <div style='background-image: url("{{ img.url }}")' class="slider_image">#}
+{#                            <div class="text-block">#}
+{#                                <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>#}
+{#                                <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </li></a>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#            {% if slides|length > 1 %}#}
+{#                <div id="prev-next-btns">#}
+{#                    <div id="prev-btn"><i class="fas fa-arrow-left"></i></div>#}
+{#                    <div id="next-btn"><i class="fas fa-arrow-right"></i></div>#}
+{#                </div>#}
+{##}
+{#                <ul id="nav-btns">#}
+{#                    {% for slide in slides %}#}
+{#                        <li class="slide-nav-btn"></li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
 
 {% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/slider.css' %}">
 {% endblock %}
 {% block extra_js %}

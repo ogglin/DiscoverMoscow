@@ -209,9 +209,11 @@ $(document).ready(function () {
 
     $('.navbar-tags .more').click(function () {
         $(this).parent().toggleClass('active')
+        $(this).remove()
     })
     $('.navbar-footer .more').click(function () {
         $(this).parent().toggleClass('active')
+        $(this).remove()
     })
 
     let frames = $('.video-element iframe').add($('.video-block iframe'))

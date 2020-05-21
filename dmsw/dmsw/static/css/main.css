@@ -172,7 +172,7 @@ body {
       text-align: left;
       height: auto; }
       .slider_image .text-block .slider_title {
-        font-size: calc(100vw * 0.045);
+        font-size: calc(100vw * 0.035);
         color: #ffffff;
         font-family: 'ALS Gorizont ExtraBold Expanded';
         text-decoration: none;
@@ -1491,7 +1491,8 @@ h2 {
     border: 0;
     font-size: 24px;
     text-decoration: underline;
-    background-color: transparent; }
+    background-color: transparent;
+    line-height: 50px; }
     .card-meta .subscribe-ajax-form button:hover {
       text-decoration: none; }
   .card-meta .subscribe-ajax-form .result_form {
@@ -1738,5 +1739,7 @@ footer .subscribe-ajax-form {
       padding: 20px; }
     .charitable .help_link {
       margin: 0 10px 0 20px; } }
+.more_interest {
+  font-size: calc(100vw * 0.032) !important; }
 
 /*# sourceMappingURL=main.css.map */

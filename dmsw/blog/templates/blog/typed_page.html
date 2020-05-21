@@ -46,15 +46,15 @@
 {#    About #}
     <div class="content abouts">
         <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>
-        <div class="btn-block">
-            {% media_kit as meidakit %}
-            {% if meidakit|length > 0 %}
-                <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>
-            {% endif %}
-            {% if params|length > 0 %}
-                <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
-            {% endif %}
-        </div>
+{#        <div class="btn-block">#}
+{#            {% media_kit as meidakit %}#}
+{#            {% if meidakit|length > 0 %}#}
+{#                <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>#}
+{#            {% endif %}#}
+{#            {% if params|length > 0 %}#}
+{#                <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>#}
+{#            {% endif %}#}
+{#        </div>#}
         <div class="info-block">
             <div class="items">
                 <p class="title">Адрес:</p>

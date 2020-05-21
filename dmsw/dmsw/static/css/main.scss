@@ -171,7 +171,7 @@ body {
       height: auto;
 
       .slider_title {
-        font-size: calc(100vw * 0.045);
+        font-size: calc(100vw * 0.035);
         color: $white;
         font-family: 'ALS Gorizont ExtraBold Expanded';
         text-decoration: none;
@@ -2297,6 +2297,7 @@ h2 {
     font-size: 24px;
     text-decoration: underline;
     background-color: transparent;
+    line-height: 50px;
 
     &:hover {
       text-decoration: none;
@@ -2694,4 +2695,7 @@ footer {
       margin: 0 10px 0 20px;
     }
   }
+}
+.more_interest {
+  font-size: calc(100vw * 0.032) !important;
 }

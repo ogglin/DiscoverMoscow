@@ -1,4 +1,5 @@
 *.sqlite3
+/dmsw/db.sqlite3
 /desing/
 /dmsw/static/CACHE/
 /dmsw/static/admin/

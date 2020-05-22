@@ -166,7 +166,7 @@ pop_gallery = function (e) {
     html += '</ul></div>'
     $('.full_image').addClass('active').append(html)
 
-    var slider = $('.full_image .image-gallery').lightSlider({
+    var slider_gal = $('.full_image .image-gallery').lightSlider({
         gallery: true,
         item: 1,
         thumbItem: 4,
@@ -174,9 +174,10 @@ pop_gallery = function (e) {
         thumbMargin: 20,
         speed: 2500,
         loop: true,
-        onSliderLoad: function (el) {
+        onSliderLoad: function (gel) {
             $('.full_image .image-gallery').removeClass('cS-hidden');
-            el.lightGallery({
+	    $('.full_image .image-gallery').css('height', 'auto')
+            gel.lightGallery({
                 selector: '.full_image .image-gallery .lslide'
             });
         }
@@ -227,10 +228,11 @@ $(document).ready(function () {
         var player = new Playerjs({id: "player" + i, file: vfile});
     })
     if ($('.ant-carousel').length > 0) {
-        $ytLinks = $('.slide-element a')
+	$ytLinks = $('.slide-element > div:first-child > div> p> a')
+	console.log($ytLinks)
         $ytAll = $ytLinks.length
         $ytLeftPos = 0;
-        $ytRightPos = 2;
+        $ytRightPos = 4;
         for (i = $ytLeftPos; i <= $ytRightPos; i++) {
             vfile = $ytLinks[i].innerHTML
             var player = new Playerjs({id: "ytPlayer" + i, file: vfile});
@@ -252,12 +254,10 @@ $(document).ready(function () {
         pop_gallery($(this));
     })
 
-    $('.container .two-column img').click(function () {
-        pop_image($(this));
-    })
-
-    $('.container > img').click(function () {
-        pop_image($(this));
+    $('.container img').click(function () {
+	if (!$(this).hasClass('pop_gal')) {
+            pop_image($(this));
+	}
     })
 
     $('.full_image').click(function () {
@@ -267,6 +267,7 @@ $(document).ready(function () {
 });
 
 window.onload = function () {
+    $('.gallery li img').addClass('pop_gal')
     $('.ant-carousel-element .slide-element').css('opacity', 1);
 };
 
@@ -275,10 +276,12 @@ function loadMoreYtVideo(trend) {
         if ($ytLeftPos == 0) {
             $ytLeftPos = $ytAll - 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
+	    console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         } else if ($ytLeftPos > $ytRightPos) {
             $ytLeftPos -= 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
+	    console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         }
     } else if (trend == 'right') {
@@ -287,6 +290,7 @@ function loadMoreYtVideo(trend) {
         } else if ($ytRightPos < $ytLeftPos || $ytLeftPos == 0) {
             $ytRightPos += 1
             vfile = $ytLinks[$ytRightPos].innerHTML
+	    console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytRightPos, file: vfile});
         }
 

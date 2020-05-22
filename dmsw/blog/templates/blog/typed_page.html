@@ -4,76 +4,114 @@
 
 {% block body_class %}template-typed{% endblock %}
 
+{% block sharing_block %}
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="#Москвастобой">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.intro }}">
+    <meta property="og:url" content="{{ self.url }}">
+    <meta property="og:locale" content="ru_RU">
+    {% image page.article_image scale-100 as img %}
+    <meta property="og:image" content="http://moscowwithyou.ru{{ img.url }}">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.intro }}">
+    {% image page.article_image scale-100 as img %}
+    <meta name="twitter:image:src" content="http://moscowwithyou.ru{{ img.url }}">
+    <meta name="twitter:url" content="{{ self.url }}">
+    <meta name="twitter:domain" content="http://moscowwithyou.ru">
+    <meta name="twitter:site" content="@moscowwithyou.ru">
+    <meta name="twitter:creator" content="@moscowwithyou.ru">
+{% endblock %}
+
+
 {% block content %}
     {% image page.main_image scale-100 as img %}
     <div class="{{ page.url|clear_url }}">
-        <div class="header" style="background-image: url('{{ img.url }}')">
-            <h1>#{{ page.title }}</h1>
-        </div>
-{#    Parthners #}
-        <div class="navigate">
-            <div style="display: inline-block;">
-                <div class="left">
-                    <h2>Наши партнеры делают Москву лучше. Мы тоже. Поэтому всегда готовы к сотрудничеству.</h2>
-                </div>
-                <div class="right">
-                    {% to_project as params %}
-                    {% if params|length > 0 %}
-                        <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
-                    {% endif %}
-                </div>
+    <div class="header" style="background-image: url('{{ img.url }}')">
+        <h1>#{{ page.title }}</h1>
+    </div>
+    {#    Parthners #}
+    <div class="navigate">
+        <div style="display: inline-block;">
+            <div class="left">
+                <h2>Наши партнеры делают Москву лучше. Мы тоже. Поэтому всегда готовы к сотрудничеству.</h2>
             </div>
-            <div class="filter_btns">
-                {% for tag in page.tags %}
-                    <a class="btn" area-label="{{ tag.name }}">#{{ tag.name }}</a>
-                {% endfor %}
+            <div class="right">
+                {% to_project as params %}
+                {% if params|length > 0 %}
+                    <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>
+                {% endif %}
             </div>
         </div>
-        <div class="content images">
-            {% for item in page.typed_gallery_images.all %}
-                {% image item.image scale-100 as img %}
-                <a href="{{ item.link }}" target="_blank">
-                    <div class="partner_img" style="background-image: url('{{ img.url }}')" area="{{ item.main_tag }}">
-                        <p class="meta">
-                            {{ item.caption }}
-                        </p>
-                    </div>
-                </a>
+        <div class="filter_btns">
+            {% for tag in page.tags %}
+                <a class="btn" area-label="{{ tag.name }}">#{{ tag.name }}</a>
             {% endfor %}
         </div>
-{#    Parthners end #}
-
-{#    About #}
-    <div class="content abouts">
-        <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>
-{#        <div class="btn-block">#}
-{#            {% media_kit as meidakit %}#}
-{#            {% if meidakit|length > 0 %}#}
-{#                <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>#}
-{#            {% endif %}#}
-{#            {% if params|length > 0 %}#}
-{#                <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>#}
-{#            {% endif %}#}
-{#        </div>#}
-        <div class="info-block">
-            <div class="items">
-                <p class="title">Адрес:</p>
-                <a href="https://yandex.ru/maps/-/CWssZ82W" target="_blank">127238 Россия, Москва, <br>ул. Правды, 12. стр. 1</a>
-            </div>
-            <div class="items">
-                <p class="title">Телефон:</p>
-                <a href="tel:+79035698752">+7 903 569 87 52</a> <br>
-                <a href="tel:+79161269857">+7 916 126 98 57</a>
-            </div>
-            <div class="items">
-                <p class="title">Email:</p>
-                <a href="mailto:info@discovermoscow.com">info@discovermoscow.com</a> <br>
-                <a href="mailto:olya@discovermoscow.com">olya@discovermoscow.com</a>
-            </div>
-        </div>
-        <div class="addthis_inline_share_toolbox"></div>
     </div>
-{#    About end #}
+    <div class="content images">
+        {% for item in page.typed_gallery_images.all %}
+            {% image item.image scale-100 as img %}
+            <a href="{{ item.link }}" target="_blank">
+                <div class="partner_img" style="background-image: url('{{ img.url }}')" area="{{ item.main_tag }}">
+                    <p class="meta">
+                        {{ item.caption }}
+                    </p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {#    Parthners end #}
+
+    {#    About #}
+    <div class="content abouts">
+            <h2>#Москвастобой</h2>
+            <h3>Изучать Москву, самые интересные музеи, известные на весь мир достопримечательности, культурные и
+                выставочные проекты, посещать лекции, гулять по московским улицам теперь можно удобно и увлекательно из
+                любой точки мира. </h3>
+            <p>#Москвастобой будет пополняться новыми экскурсиями, интересными статьями и культурными проектами. Сегодня
+                уже опубликовано уже более 500 видео, включая видео-прогулки, мастер-классы, лекции, мультфильмы,
+                цирковые шоу и оперные подборки. Более 120 экскурсий было записано специально для проекта. В их числе:
+                Государственная Третьяковская галерея, ГМИИ имени А.С. Пушкина, ВДНХ, Еврейский музей и центр
+                толерантности, Центральный выставочный зал «Манеж», музеи-заповедники «Царицыно» и «Коломенское» и
+                многие другие. Давайте изучать Москву вместе!</p>
+            {#        <h2>Мы делаем наше издание для вас, потому что мы так же сидим дома. Друзья, чтобы вы оставались с нами, но успели он нас отдохнуть, мы выбрали ролики, которые помогут пережить эти дни. За вас, за нас!</h2>#}
+            {#        <div class="btn-block">#}
+            {#            {% media_kit as meidakit %}#}
+            {#            {% if meidakit|length > 0 %}#}
+            {#                <a href="/media/{{ meidakit.0 }}" target="_blank" class="btn">скачать медиакит</a>#}
+            {#            {% endif %}#}
+            {#            {% if params|length > 0 %}#}
+            {#                <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">присоединится к проекту</a>#}
+            {#            {% endif %}#}
+            {#        </div>#}
+            <div class="info-block">
+                <div class="items">
+                <p class="title">Email:</p>
+                <a href="press@welcome.moscow">press@welcome.moscow</a>
+                </div>
+{#                <div class="items">#}
+{#                    <p class="title">Адрес:</p>#}
+{#                    <a href="https://yandex.ru/maps/-/CWssZ82W" target="_blank">127238 Россия, Москва, <br>ул. Правды,#}
+{#                        12. стр. 1</a>#}
+{#                </div>#}
+{#                <div class="items">#}
+{#                    <p class="title">Телефон:</p>#}
+{#                    <a href="tel:+79035698752">+7 903 569 87 52</a> <br>#}
+{#                    <a href="tel:+79161269857">+7 916 126 98 57</a>#}
+{#                </div>#}
+{#                <div class="items">#}
+{#                    <p class="title">Email:</p>#}
+{#                    <a href="mailto:info@discovermoscow.com">info@discovermoscow.com</a> <br>#}
+{#                    <a href="mailto:olya@discovermoscow.com">olya@discovermoscow.com</a>#}
+{#                </div>#}
+            </div>
+            <div class="addthis_inline_share_toolbox"></div>
+        {#    About end #}
 
     </div>
 
@@ -84,7 +122,7 @@
 {% block extra_js %}
     <script type="text/javascript">
         label = ''
-        $(document).ready(function() {
+        $(document).ready(function () {
             all_parthners = $('.partner_img')
             $('.filter_btns .btn').click(function () {
                 $('.filter_btns .btn').removeClass('active')

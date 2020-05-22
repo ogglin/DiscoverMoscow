@@ -11,7 +11,11 @@
                 {% endwith %}
             {% endblock %}
             {% block title %}
-                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+                {% if self.seo_title %}
+                    {{ self.seo_title }}
+                {% else %}
+                    {{ self.title }}
+                {% endif %}
             {% endblock %}
 
         </title>
@@ -85,7 +89,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endfor %}
-                                            {% if el|length > 5 %}
+                                            {% if el|length > 4 %}
                                                 <li class="more">...</li>
                                             {% endif %}
                                         {% endif %}
@@ -208,6 +212,7 @@
                         <a href="/partners/">Partners</a>
                     {% else %}
                         <a href="/about/">О проекте</a>
+                        <a href="http://old.moscowwithyou.ru">Старая версия сайта</a>
 {#                        <a href="/partners/">Партнёры</a>#}
                     {% endif %}
                     <span class="copyright">© 2020 Discover Moscow.

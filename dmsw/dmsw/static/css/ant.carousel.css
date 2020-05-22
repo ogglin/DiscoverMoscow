@@ -96,4 +96,40 @@ span.ant-dot {
   border-radius: 5px;
   cursor: pointer; }
 
+@media only screen and (max-width: 1000px) {
+  .ant-carousel {
+    max-height: calc(100vw * 0.25 + 100px); }
+
+  .ant-carousel-list {
+    margin-left: calc(100vw * 0.25) !important; }
+
+  .slide-element h3 {
+    font-size: 18px !important; }
+
+  .ant-carousel-element {
+    height: calc(100vw * 0.23 + 70px); } }
+@media only screen and (max-width: 800px) {
+  .ant-carousel {
+    max-height: calc(100vw * 0.45 + 100px); }
+
+  .ant-carousel-hider:before, .ant-carousel-hider:after {
+    display: none; }
+
+  .ant-carousel-element {
+    width: calc(100vw - 80px) !important;
+    margin: 0 40px !important;
+    height: calc(100vw * 0.46 + 70px); }
+
+  .slide-element h3 {
+    font-size: 16px !important; }
+
+  .ant-carousel-list {
+    margin-left: 0 !important; }
+
+  div.ant-carousel-arrow-left {
+    left: calc(50% - 50vw + 15px); }
+
+  div.ant-carousel-arrow-right {
+    right: calc(50% - 50vw + 15px); } }
+
 /*# sourceMappingURL=ant.carousel.css.map */

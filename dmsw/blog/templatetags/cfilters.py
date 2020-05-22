@@ -75,7 +75,7 @@ def label_with_classes(value, arg):
 
 @register.simple_tag
 def all_tags(lang):
-    return Tags.objects.filter(locale=lang)
+    return Tags.objects.filter(locale=lang).order_by('order_num')
 
 
 @register.simple_tag

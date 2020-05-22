@@ -122,4 +122,11 @@
     width: 14px;
     height: 14px; }
 
+@media only screen and (max-width: 640px) {
+  .owl-nav .owl-prev {
+    margin-top: calc(100vw * 0.45); }
+  .owl-nav .owl-next {
+    margin-top: calc(100vw * 0.45);
+    float: right; } }
+
 /*# sourceMappingURL=slider.css.map */

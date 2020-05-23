@@ -18,6 +18,8 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.search import index
 from django.db import connection
 from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import datetime
 import random
 import requests
@@ -39,19 +41,26 @@ def save_mail(to_form):
 
 
 def save_image(img, text):
-    pos = (10, 20)
-    black = (3, 3, 3)
-    font = ImageFont.load_default()
-    unicode_text = "Test text"
-        #truetype(dirPath + "/statis/webfonts/ALSGorizont-ExtraBoldExpanded.ttf", 40)
-    in_path = dirPath + '/media/original_images/' + str(img)
-    out_path = dirPath + '/media/to_share_imgs/' + str(img)
-    print(in_path, out_path, text)
-    photo = Image.open(in_path)
-    # make the image editable
-    drawing = ImageDraw.Draw(photo)
-    drawing.text(pos, unicode_text, fill=black, font=font)
-    photo.save(out_path)
+    if img:
+        pos = (10, 20)
+        black = (0, 0, 0)
+        white = (255, 255, 255)
+        font = ImageFont.truetype("arial.ttf", 18)
+        # truetype(dirPath + "/statis/webfonts/ALSGorizont-ExtraBoldExpanded.ttf", 40)
+        unicode_text = text
+        newsize = (500, 261)
+        in_path = dirPath + '/media/original_images/' + str(img)
+        out_path = dirPath + '/media/to_share_imgs/' + str(img)
+        print(in_path, out_path, text)
+        photo = Image.open(in_path)
+        photo = photo.resize(newsize)
+        # make the image editable
+        drawing = ImageDraw.Draw(photo)
+        drawing.text(pos, unicode_text, fill=white, font=font)
+        photo.save(out_path)
+    else:
+        print('no image')
+
 
 def sort_cards(pages):
     all_tags = Tags.objects.all()
@@ -740,3 +749,10 @@ class FormPage(AbstractEmailForm):
 
     class Meta:
         verbose_name = "Form page (don't use or modify)"
+
+
+@receiver(post_save, sender=BlogPage)
+def my_handler(sender, **kwargs):
+    img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image
+    text = BlogPage.objects.get(id=kwargs.get('instance').id).title
+    save_image(img, text)

@@ -27,18 +27,34 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
         {# Global stylesheets #}
-        <link type="text/x-scss" href="{% static 'css/all.min.css' %}" rel="stylesheet" media="screen">
+        <link type="text/css" href="{% static 'css/all.min.css' %}" media="screen">
         {% compress css %}
             <link type="text/x-scss" href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
         {% endcompress %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
+
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
         {% endblock %}
+    <!-- Yandex.Metrika counter -->
+        <script type="text/javascript" >
+           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+           ym(63567055, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+           });
+        </script>
+        <noscript><div><img src="https://mc.yandex.ru/watch/63567055" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
     </head>
 
     <body class="{% block body_class %}{% endblock %}">

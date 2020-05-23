@@ -1056,12 +1056,16 @@ h2 {
   color: #ffffff;
   padding: 100px 200px; }
   .about .content h2 {
-    font-size: 40px;
+    font-size: 70px;
     font-family: 'Montserrat', sans-serif; }
   .about .content h3 {
-    padding: 15px 0; }
+    padding: 15px 0;
+    font-size: 24px; }
   .about .content p {
-    padding: 10px 0; }
+    padding: 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5; }
   .about .content .btn-block {
     display: flex;
     justify-content: space-around; }
@@ -1080,10 +1084,10 @@ h2 {
     margin: 80px 0; }
     .about .content .info-block .items {
       text-align: center;
-      font-size: 16px;
+      font-size: 18px;
       font-family: 'Montserrat', sans-serif; }
       .about .content .info-block .items .title {
-        color: #333333;
+        color: #FFFFFF;
         margin-bottom: 15px; }
       .about .content .info-block .items a {
         line-height: 2em;
@@ -1599,7 +1603,10 @@ footer .subscribe-ajax-form {
       display: inline-block; } }
 @media only screen and (max-width: 480px) {
   footer .subscribe-ajax-form .data_form {
-    width: 300px; } }
+    width: 300px; }
+
+  .endless_container .endless_more, .endless_container .endless_loading {
+    font-size: 16px; } }
 .loading-carousel {
   position: absolute;
   top: 10px;
@@ -1625,41 +1632,57 @@ footer .subscribe-ajax-form {
     background-color: #FFFFFF; }
 
 .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-  transform: scale(5) !important; }
+  transform: scale(5) !important;
+  zoom: 1 !important; }
 .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-  transform: scale(5) !important; }
+  transform: scale(5) !important;
+  zoom: 1 !important; }
 .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-  transform: scale(4) !important; }
+  transform: scale(4) !important;
+  zoom: 1 !important; }
 .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-  transform: scale(4) !important; }
+  transform: scale(4) !important;
+  zoom: 1 !important; }
 
 @media only screen and (max-width: 1000px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(4) !important; } }
+    transform: scale(4) !important;
+    zoom: 1 !important; } }
 @media only screen and (max-width: 800px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(3) !important; } }
+    transform: scale(3) !important;
+    zoom: 1 !important; } }
 @media only screen and (max-width: 640px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(2) !important; } }
+    transform: scale(2) !important;
+    zoom: 1 !important; } }
 .ant-carousel-element {
   padding: 0 0 90px 0; }
   .ant-carousel-element .slide-element {
@@ -1780,6 +1803,8 @@ footer .subscribe-ajax-form {
 .three_col > div {
   max-width: calc(33% - 30px);
   margin: 15px; }
+  .three_col > div iframe {
+    max-width: 100%; }
 
 .three_col > div img {
   max-width: 100%; }

@@ -192,6 +192,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "DiscoverMoscow"
@@ -231,6 +233,6 @@ LOGGING = {
 }
 
 SITE_URL = 'https://discover.moscow/'
-EL_PAGINATION_PER_PAGE = 24
+EL_PAGINATION_PER_PAGE = 23
 JQUERY_URL = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

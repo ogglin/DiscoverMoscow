@@ -1498,14 +1498,18 @@ h2 {
     padding: 100px 200px;
 
     h2 {
-      font-size: 40px;
+      font-size: 70px;
       font-family: 'Montserrat', sans-serif;
     }
     h3 {
       padding: 15px 0;
+      font-size: 24px;
     }
     p {
       padding: 10px 0;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.5;
     }
     .btn-block {
       display: flex;
@@ -1532,11 +1536,11 @@ h2 {
 
       .items {
         text-align: center;
-        font-size: 16px;
+        font-size: 18px;
         font-family: 'Montserrat', sans-serif;
 
         .title {
-          color: #333333;
+          color: #FFFFFF;
           margin-bottom: 15px;
         }
 
@@ -2475,6 +2479,11 @@ footer {
       }
     }
   }
+  .endless_container {
+    .endless_more, .endless_loading {
+      font-size: 16px;
+    }
+  }
 }
 
 .loading-carousel {
@@ -2510,10 +2519,12 @@ footer {
   pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
       transform: scale(5) !important;
+      zoom: 1 !important;
     }
 
     pjsdiv {
       transform: scale(5) !important;
+      zoom: 1 !important;
     }
   }
 
@@ -2521,10 +2532,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
     }
   }
@@ -2535,10 +2548,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2546,10 +2561,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(4) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(4) !important;
+          zoom: 1 !important;
         }
       }
     }
@@ -2561,10 +2578,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(3) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(3) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2572,10 +2591,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(3) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(3) !important;
+          zoom: 1 !important;
         }
       }
     }
@@ -2587,10 +2608,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(2) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(2) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2598,10 +2621,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(2) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(2) !important;
+          zoom: 1 !important;
         }
       }
     }
@@ -2796,6 +2821,9 @@ footer {
 }
 
 .three_col > div {
+  iframe {
+    max-width: 100%;
+  }
   max-width: calc(33% - 30px);
   margin: 15px;
 }

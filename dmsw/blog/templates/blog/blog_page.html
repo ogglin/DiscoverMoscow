@@ -12,7 +12,7 @@
     <meta property="og:url" content="{{ self.url }}">
     <meta property="og:locale" content="ru_RU">
     {% image page.article_image scale-100 as img %}
-    <meta property="og:image" content="http://moscowwithyou.ru/media/to_share_imgs/{{ img.url|image_name }}">
+    <meta property="og:image" content="{{ page.get_site.root_url }}/media/to_share_imgs/{{ img.url|image_name }}">
     <meta property="og:image:width" content="968">
     <meta property="og:image:height" content="504">
 
@@ -20,9 +20,9 @@
     <meta name="twitter:title" content="{{ page.title }}">
     <meta name="twitter:description" content="{{ page.intro }}">
     {% image page.article_image scale-100 as img %}
-    <meta name="twitter:image:src" content="http://moscowwithyou.ru/media/to_share_imgs/{{ img.url|image_name }}">
+    <meta name="twitter:image:src" content="{{ page.get_site.root_url }}/media/to_share_imgs/{{ img.url|image_name }}">
     <meta name="twitter:url" content="{{ self.url }}">
-    <meta name="twitter:domain" content="http://moscowwithyou.ru">
+    <meta name="twitter:domain" content="{{ page.get_site.root_url }}">
     <meta name="twitter:site" content="@moscowwithyou.ru">
     <meta name="twitter:creator" content="@moscowwithyou.ru">
 {% endblock %}

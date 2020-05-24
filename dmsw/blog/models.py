@@ -84,8 +84,9 @@ def save_image(img, text, tag):
         share_bg = Image.open(dirPath + '/static/image/share_bg.jpg')
         overlay = Image.open(dirPath + '/static/image/overlay.png')
         logo = Image.open(dirPath + '/static/image/logotype_over.png')
-        in_path = dirPath + '/media/' + transliterate(str(img))
-        out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img))
+        in_path = dirPath + '/media/' + transliterate(str(img)).replace('original_images', 'original_images/')
+        print(in_path)
+        out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img)).replace('original_images', '')
         try:
             photo = Image.open(in_path)
             photo = photo.resize(newsize)

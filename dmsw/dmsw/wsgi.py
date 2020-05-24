@@ -12,7 +12,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-sys.path.append('/var/www/DiscoverMoscow/dmsw')
+sys.path.append('/var/www/prod/DiscoverMoscow/dmsw')
 
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dmsw.settings.production")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dmsw.settings.dev")

@@ -2479,6 +2479,11 @@ footer {
       }
     }
   }
+  .endless_container {
+    .endless_more, .endless_loading {
+      font-size: 16px;
+    }
+  }
 }
 
 .loading-carousel {
@@ -2514,10 +2519,12 @@ footer {
   pjsdiv pjsdiv:nth-child(15) > pjsdiv {
     &:nth-child(2) {
       transform: scale(5) !important;
+      zoom: 1 !important;
     }
 
     pjsdiv {
       transform: scale(5) !important;
+      zoom: 1 !important;
     }
   }
 
@@ -2525,10 +2532,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
     }
   }
@@ -2539,10 +2548,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(4) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2550,10 +2561,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(4) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(4) !important;
+          zoom: 1 !important;
         }
       }
     }
@@ -2565,10 +2578,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(3) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(3) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2576,10 +2591,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(3) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(3) !important;
+          zoom: 1 !important;
         }
       }
     }
@@ -2591,10 +2608,12 @@ footer {
     pjsdiv pjsdiv:nth-child(15) > pjsdiv {
       &:nth-child(2) {
         transform: scale(2) !important;
+        zoom: 1 !important;
       }
 
       pjsdiv {
         transform: scale(2) !important;
+        zoom: 1 !important;
       }
     }
 
@@ -2602,10 +2621,12 @@ footer {
       pjsdiv pjsdiv:nth-child(15) > pjsdiv {
         &:nth-child(2) {
           transform: scale(2) !important;
+          zoom: 1 !important;
         }
 
         pjsdiv {
           transform: scale(2) !important;
+          zoom: 1 !important;
         }
       }
     }

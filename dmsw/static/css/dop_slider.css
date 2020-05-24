@@ -66,6 +66,11 @@
       height: calc(100vw * 0.096);
       padding: 2px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .slider-right .slide-calendar .date.image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none; }
       .slider-right .slide-calendar .date span {
         display: block;
         font-size: calc(100vw * 0.06);

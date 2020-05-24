@@ -84,7 +84,7 @@ def save_image(img, text, tag):
         share_bg = Image.open(dirPath + '/static/image/share_bg.jpg')
         overlay = Image.open(dirPath + '/static/image/overlay.png')
         logo = Image.open(dirPath + '/static/image/logotype_over.png')
-        in_path = dirPath + '/media/original_images/' + transliterate(str(img))
+        in_path = dirPath + '/media/' + transliterate(str(img))
         out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img))
         try:
             photo = Image.open(in_path)
@@ -803,7 +803,7 @@ class FormPage(AbstractEmailForm):
 
 @receiver(post_save, sender=BlogPage)
 def my_handler(sender, **kwargs):
-    img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image
+    img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image.file
     text = BlogPage.objects.get(id=kwargs.get('instance').id).title
     tag = ''
     # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:

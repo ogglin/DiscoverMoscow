@@ -28,8 +28,38 @@ from .snipets import *
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+import textwrap
 
 dirPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def transliterate(name):
+    """
+    Автор: LarsKort
+    Дата: 16/07/2011; 1:05 GMT-4;
+    Не претендую на "хорошесть" словарика. В моем случае и такой пойдет,
+    вы всегда сможете добавить свои символы и даже слова. Только
+    это нужно делать в обоих списках, иначе будет ошибка.
+    """
+    # Слоаврь с заменами
+    slovar = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e',
+              'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'i', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+              'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h',
+              'ц': 'c', 'ч': 'cz', 'ш': 'sh', 'щ': 'scz', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e',
+              'ю': 'u', 'я': 'ia', 'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'E',
+              'Ж': 'ZH', 'З': 'Z', 'И': 'I', 'Й': 'I', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N',
+              'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'H',
+              'Ц': 'C', 'Ч': 'CZ', 'Ш': 'SH', 'Щ': 'SCH', 'Ъ': '', 'Ы': 'y', 'Ь': '', 'Э': 'E',
+              'Ю': 'U', 'Я': 'YA', ',': '', '?': '', ' ': '_', '~': '', '!': '', '@': '', '#': '',
+              '$': '', '%': '', '^': '', '&': '', '*': '', '(': '', ')': '', '-': '', '=': '', '+': '',
+              ':': '', ';': '', '<': '', '>': '', '\'': '', '"': '', '\\': '', '/': '', '№': '',
+              '[': '', ']': '', '{': '', '}': '', 'ґ': '', 'ї': '', 'є': '', 'Ґ': 'g', 'Ї': 'i',
+              'Є': 'e', '—': ''}
+
+    # Циклически заменяем все буквы в строке
+    for key in slovar:
+        name = name.replace(key, slovar[key])
+    return name
 
 
 def save_mail(to_form):
@@ -40,23 +70,43 @@ def save_mail(to_form):
     rows = cursor.fetchall()
 
 
-def save_image(img, text):
+def save_image(img, text, tag):
     if img:
         pos = (10, 20)
         black = (0, 0, 0)
         white = (255, 255, 255)
-        font = ImageFont.truetype("arial.ttf", 18)
-        # truetype(dirPath + "/statis/webfonts/ALSGorizont-ExtraBoldExpanded.ttf", 40)
-        unicode_text = text
-        newsize = (500, 261)
-        in_path = dirPath + '/media/original_images/' + str(img)
-        out_path = dirPath + '/media/to_share_imgs/' + str(img)
-        print(in_path, out_path, text)
-        photo = Image.open(in_path)
-        photo = photo.resize(newsize)
+        w = 1050
+        h = 550
+        # font = ImageFont.truetype("trebucbd.ttf", 40)
+        tag_font = ImageFont.truetype(dirPath + "/static/webfonts/Montserrat-Bold.ttf", 30)
+        font = ImageFont.truetype(dirPath + "/static/webfonts/Montserrat-Bold.ttf", 40)
+        newsize = (w, h)
+        share_bg = Image.open(dirPath + '/static/image/share_bg.jpg')
+        overlay = Image.open(dirPath + '/static/image/overlay.png')
+        logo = Image.open(dirPath + '/static/image/logotype_over.png')
+        in_path = dirPath + '/media/original_images/' + transliterate(str(img))
+        out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img))
+        try:
+            photo = Image.open(in_path)
+            photo = photo.resize(newsize)
+            photo.paste(overlay, (0, 0), overlay)
+        except:
+            photo = Image.open(dirPath + '/static/image/share_bg.jpg')
+        photo.paste(logo, (60, 60), logo)
         # make the image editable
         drawing = ImageDraw.Draw(photo)
-        drawing.text(pos, unicode_text, fill=white, font=font)
+        drawing.text((225, 78), "#Москвастобой", font=tag_font, fill=white)
+        drawing.text((400, 78), tag, font=tag_font, fill=white)
+        lines = textwrap.wrap(text, width=38)
+        if len(lines) > 1:
+            y_text = h/2 - (50 * len(lines)/2) + 60
+        else:
+            y_text = h / 2 + 60
+        for line in lines:
+            width, height = font.getsize(line)
+            drawing.text((64, y_text), line, font=font, fill=white)
+            y_text += height + 10
+        print('saving photo')
         photo.save(out_path)
     else:
         print('no image')
@@ -755,4 +805,9 @@ class FormPage(AbstractEmailForm):
 def my_handler(sender, **kwargs):
     img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image
     text = BlogPage.objects.get(id=kwargs.get('instance').id).title
-    save_image(img, text)
+    tag = ''
+    # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:
+    #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag
+    # else:
+    #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).main_tag
+    save_image(img, text, tag)

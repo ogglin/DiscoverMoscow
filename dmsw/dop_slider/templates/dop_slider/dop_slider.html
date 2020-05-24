@@ -9,8 +9,8 @@
                             <div class="slide-{{ slide.slider_type }}">
                                 <a href="{{ slide.standart_link }}" class="">{{ slide.title }}</a>
                                 {% image slide.image width-1000 as img %}
-                                <img src="{{ img.url }}">
-                                <p class="">
+                                <a href="{{ slide.standart_link }}" class=""><img src="{{ img.url }}"></a>
+                                <p class="text-center">
                                     {{ slide.subtitle }}
                                 </p>
                             </div>
@@ -19,9 +19,15 @@
                         <li class="slide" style="background-color: {{ slide.color }}">
                             <div class="slide-{{ slide.slider_type }}">
                                 <div class="block_first">
-                                    <div class="date">
-                                        <span>{{ slide.title }}</span>
-                                        <small>{{ slide.subtitle }}</small>
+                                    {% image slide.calendar_image width-1000 as img %}
+                                    <div class="date {% if slide.calendar_image %}image{% endif %}"
+                                         style='background-image: url("{{ img.url }}")'
+                                    >
+                                        {% if slide.calendar_image %}
+                                        {% else %}
+                                            <span>{{ slide.title }}</span>
+                                            <small>{{ slide.subtitle }}</small>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="block_second">

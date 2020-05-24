@@ -25,9 +25,12 @@ class Sliders(models.Model):
     title = models.CharField(max_length=128, null=True, blank=True, verbose_name="заголовок")
     subtitle = models.CharField(blank=True, max_length=250, verbose_name="подзаголовок")
     standart_link = models.CharField(blank=True, max_length=255, verbose_name="ссылка")
-    image = models.ForeignKey(
-        'wagtailimages.Image', blank=True, null=True, on_delete=models.CASCADE, related_name='+'
-    )
+    image = models.ForeignKey('wagtailimages.Image', blank=True, null=True, on_delete=models.CASCADE, related_name='+',
+                              verbose_name="Основное изображение",
+                              )
+    calendar_image = models.ForeignKey('wagtailimages.Image', blank=True, null=True, on_delete=models.CASCADE,
+                                       related_name='+', verbose_name="Изображение в календарь",
+                                       )
     slider_type = models.CharField(max_length=250, choices=slider_types, default='black', verbose_name="Тип слайда")
     title_one = models.CharField(max_length=250, blank=True, verbose_name="подзаголовок 1")
     tag_link_one = models.CharField(blank=True, max_length=255, verbose_name="ссылка 1")
@@ -48,6 +51,7 @@ class Sliders(models.Model):
         ], heading="Данные слайдера"),
         ImageChooserPanel('image'),
         MultiFieldPanel([
+            ImageChooserPanel('calendar_image'),
             FieldPanel('title_one'),
             FieldPanel('tag_link_one'),
             FieldPanel('title_two'),

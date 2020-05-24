@@ -64,6 +64,11 @@ def clear_image_url(value):
 
 
 @register.filter
+def image_name(value):
+    return value.replace('/media/images/', '').replace('.scale-100', '')
+
+
+@register.filter
 def clear_val(value):
     return str(value)
 

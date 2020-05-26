@@ -648,7 +648,7 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                 Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         else:
             tags = []
@@ -657,11 +657,11 @@ class BlogTagIndexPage(Page):
             for tag in Tags.objects.filter(parent_id_id=tag_id).values():
                 tags.append(tag['id'])
             if len(tags) > 1:
-                blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                     Q(main_tag_id__in=tags) | Q(sub_tag_id__in=tags))
             else:
                 tag_id = int(tags[0])
-                blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                     Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         # Update template context
         context = super().get_context(request)

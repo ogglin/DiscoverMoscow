@@ -85,16 +85,18 @@ def save_image(img, text, tag):
         overlay = Image.open(dirPath + '/static/image/overlay.png')
         logo = Image.open(dirPath + '/static/image/logotype_over.png')
         in_path = dirPath + '/media/' + transliterate(str(img)).replace('original_images', 'original_images/')
-        print(in_path)
         out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img)).replace('original_images', '')
         try:
             photo = Image.open(in_path)
+
             photo = photo.resize(newsize)
             photo.paste(overlay, (0, 0), overlay)
         except:
             photo = Image.open(dirPath + '/static/image/share_bg.jpg')
         photo.paste(logo, (60, 60), logo)
+
         # make the image editable
+        print(photo)
         drawing = ImageDraw.Draw(photo)
         drawing.text((225, 78), "#Москвастобой", font=tag_font, fill=white)
         drawing.text((400, 78), tag, font=tag_font, fill=white)
@@ -648,7 +650,7 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+            blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                 Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         else:
             tags = []
@@ -657,11 +659,11 @@ class BlogTagIndexPage(Page):
             for tag in Tags.objects.filter(parent_id_id=tag_id).values():
                 tags.append(tag['id'])
             if len(tags) > 1:
-                blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                     Q(main_tag_id__in=tags) | Q(sub_tag_id__in=tags))
             else:
                 tag_id = int(tags[0])
-                blogpages = BlogPage.objects.order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
                     Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         # Update template context
         context = super().get_context(request)
@@ -804,7 +806,10 @@ class FormPage(AbstractEmailForm):
 
 @receiver(post_save, sender=BlogPage)
 def my_handler(sender, **kwargs):
-    img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image.file
+    if BlogPage.objects.get(id=kwargs.get('instance').id).article_image:
+        img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image.file
+    else:
+        img = BlogPage.objects.get(id=kwargs.get('instance').id).main_image.file
     text = BlogPage.objects.get(id=kwargs.get('instance').id).title
     tag = ''
     # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:

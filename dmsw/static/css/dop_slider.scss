@@ -89,6 +89,13 @@
       padding: 2px;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
+      &.image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+      }
+
       span {
         display: block;
         font-size: calc(100vw * 0.06);

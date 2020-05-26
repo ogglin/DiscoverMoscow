@@ -1603,7 +1603,10 @@ footer .subscribe-ajax-form {
       display: inline-block; } }
 @media only screen and (max-width: 480px) {
   footer .subscribe-ajax-form .data_form {
-    width: 300px; } }
+    width: 300px; }
+
+  .endless_container .endless_more, .endless_container .endless_loading {
+    font-size: 16px; } }
 .loading-carousel {
   position: absolute;
   top: 10px;
@@ -1629,41 +1632,57 @@ footer .subscribe-ajax-form {
     background-color: #FFFFFF; }
 
 .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-  transform: scale(5) !important; }
+  transform: scale(5) !important;
+  zoom: 1 !important; }
 .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-  transform: scale(5) !important; }
+  transform: scale(5) !important;
+  zoom: 1 !important; }
 .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-  transform: scale(4) !important; }
+  transform: scale(4) !important;
+  zoom: 1 !important; }
 .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-  transform: scale(4) !important; }
+  transform: scale(4) !important;
+  zoom: 1 !important; }
 
 @media only screen and (max-width: 1000px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(4) !important; }
+    transform: scale(4) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(4) !important; } }
+    transform: scale(4) !important;
+    zoom: 1 !important; } }
 @media only screen and (max-width: 800px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(3) !important; }
+    transform: scale(3) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(3) !important; } }
+    transform: scale(3) !important;
+    zoom: 1 !important; } }
 @media only screen and (max-width: 640px) {
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv:nth-child(2) {
-    transform: scale(2) !important; }
+    transform: scale(2) !important;
+    zoom: 1 !important; }
   .container.wide .two-column pjsdiv pjsdiv:nth-child(15) > pjsdiv pjsdiv {
-    transform: scale(2) !important; } }
+    transform: scale(2) !important;
+    zoom: 1 !important; } }
 .ant-carousel-element {
   padding: 0 0 90px 0; }
   .ant-carousel-element .slide-element {

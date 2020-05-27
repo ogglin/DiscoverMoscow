@@ -88,11 +88,7 @@ def save_image(img, text, tag):
         out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img)).replace('original_images', '')
         try:
             photo = Image.open(in_path)
-<<<<<<< HEAD
-
-=======
             photo = photo.convert('RGB')
->>>>>>> origin/master
             photo = photo.resize(newsize)
             photo.paste(overlay, (0, 0), overlay)
         except:

@@ -4,42 +4,44 @@
         <div id="viewport-right">
             <ul id="slidewrapper-right">
                 {% for slide in dop_slider %}
-                    {% if slide.slider_type == 'standart' %}
-                        <li class="slide" style="background-color: {{ slide.color }};">
-                            <div class="slide-{{ slide.slider_type }}">
-                                <a href="{{ slide.standart_link }}" class="">{{ slide.title }}</a>
-                                {% image slide.image width-1000 as img %}
-                                <a href="{{ slide.standart_link }}" class=""><img src="{{ img.url }}"></a>
-                                <p class="text-center">
-                                    {{ slide.subtitle }}
-                                </p>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li class="slide" style="background-color: {{ slide.color }}">
-                            <div class="slide-{{ slide.slider_type }}">
-                                <div class="block_first">
-                                    {% image slide.calendar_image width-1000 as img %}
-                                    <div class="date {% if slide.calendar_image %}image{% endif %}"
-                                         style='background-image: url("{{ img.url }}")'
-                                    >
-                                        {% if slide.calendar_image %}
-                                        {% else %}
-                                            <span>{{ slide.title }}</span>
-                                            <small>{{ slide.subtitle }}</small>
-                                        {% endif %}
+                    {% if forloop.counter < 4 %}
+                        {% if slide.slider_type == 'standart' %}
+                            <li class="slide" style="background-color: {{ slide.color }};">
+                                <div class="slide-{{ slide.slider_type }}">
+                                    <a href="{{ slide.standart_link }}" class="">{{ slide.title }}</a>
+                                    {% image slide.image width-1000 as img %}
+                                    <a href="{{ slide.standart_link }}" class=""><img src="{{ img.url }}"></a>
+                                    <p class="text-center">
+                                        {{ slide.subtitle }}
+                                    </p>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="slide" style="background-color: {{ slide.color }}">
+                                <div class="slide-{{ slide.slider_type }}">
+                                    <div class="block_first">
+                                        {% image slide.calendar_image width-1000 as img %}
+                                        <div class="date {% if slide.calendar_image %}image{% endif %}"
+                                             style='background-image: url("{{ img.url }}")'
+                                        >
+                                            {% if slide.calendar_image %}
+                                            {% else %}
+                                                <span>{{ slide.title }}</span>
+                                                <small>{{ slide.subtitle }}</small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="block_second">
+                                        <a href="{{ slide.tag_link_one }}" class="tag_link">{{ slide.title_one|safe }}</a>
+                                        <a href="{{ slide.tag_link_two }}" class="tag_link">{{ slide.title_two|safe }}</a>
+                                        <a href="{{ slide.tag_link_three }}" class="tag_link">{{ slide.title_three|safe }}</a>
+                                    </div>
+                                    <div class="block_third">
+                                        <a href="/tags/?tag={{ slide.collect_tag }}" class="btn">{{ slide.collect }}</a>
                                     </div>
                                 </div>
-                                <div class="block_second">
-                                    <a href="{{ slide.tag_link_one }}" class="tag_link">{{ slide.title_one|safe }}</a>
-                                    <a href="{{ slide.tag_link_two }}" class="tag_link">{{ slide.title_two|safe }}</a>
-                                    <a href="{{ slide.tag_link_three }}" class="tag_link">{{ slide.title_three|safe }}</a>
-                                </div>
-                                <div class="block_third">
-                                    <a href="/tags/?tag={{ slide.collect_tag }}" class="btn">{{ slide.collect }}</a>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </ul>

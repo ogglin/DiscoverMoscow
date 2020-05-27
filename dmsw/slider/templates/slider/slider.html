@@ -2,17 +2,19 @@
 
 <div id="owl-carousel-1" class="owl-carousel slider">
     {% for slide in slides %}
-        <div class="carousel-item {{ slide.text_color }}">
-            {% image slide.image width-1000 as img %}
-            <a href="{{ slide.link }}" class="slider_tag">
-                <div style='background-image: url("{{ img.url }}")' class="slider_image">
-                    <div class="text-block">
-                        <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>
-                        <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>
+        {% if forloop.counter < 7 %}
+            <div class="carousel-item {{ slide.text_color }}">
+                {% image slide.image width-1000 as img %}
+                <a href="{{ slide.link }}" class="slider_tag">
+                    <div style='background-image: url("{{ img.url }}")' class="slider_image">
+                        <div class="text-block">
+                            <div class="slider_title">{% if slide.title %}{{ slide.title }}{% endif %}</div>
+                            <p class="slider_subtitle">{% if slide.subtitle %}{{ slide.subtitle }}{% endif %}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 

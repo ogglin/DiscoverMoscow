@@ -380,7 +380,7 @@ header {
       color: $white;
       text-decoration: none;
       font-size: 19px;
-      padding: 0 80px 10px 0;
+      margin: 0 80px 10px 0;
       display: inline-block;
 
       &:hover {
@@ -587,7 +587,7 @@ footer {
 
     a {
       color: $white;
-      padding-right: 40px;
+      margin-right: 40px;
       text-decoration: none;
 
       &:hover {

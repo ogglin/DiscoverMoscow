@@ -37,6 +37,7 @@ class Photo(models.Model):
     class Meta:
         verbose_name = 'Изображение слайдера'
         verbose_name_plural = 'Изображения слайдера'
+        ordering = ['-id']
 
 
 class PhotoEN(Photo):

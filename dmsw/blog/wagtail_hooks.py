@@ -13,6 +13,10 @@ class SlidersInline(ModelAdmin):
     list_display = ('title', 'image')
     list_filter = ('title',)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
+
 
 class SlidersInlineEN(ModelAdmin):
     model = SlidersEN
@@ -49,6 +53,10 @@ class PageTagInline(ModelAdmin):
     list_display = ('id', 'name', 'level', 'parent_id', 'order_num')
     list_filter = ('name',)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
+
 
 class PageTagInlineEN(ModelAdmin):
     model = TagsEN
@@ -65,6 +73,10 @@ class PageTagColors(ModelAdmin):
     menu_icon = 'folder-open-inverse'
     menu_order = 200
     list_display = ('color_title', 'color')
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
 
 
 class PageTagColorsEN(ModelAdmin):

@@ -232,7 +232,7 @@ LOGGING = {
     },
 }
 
-SITE_URL = 'https://discover.moscow/'
+SITE_URL = 'https://moscowwithyou.ru'
 EL_PAGINATION_PER_PAGE = 23
 JQUERY_URL = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

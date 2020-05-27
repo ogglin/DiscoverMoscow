@@ -1,10 +1,12 @@
 from django.db import models
+from django import forms
 from colorfield.fields import ColorField
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
+from smart_selects.db_fields import ChainedForeignKey
 from wagtail.api import APIField
 from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
 from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
@@ -102,7 +104,7 @@ def save_image(img, text, tag):
         drawing.text((400, 78), tag, font=tag_font, fill=white)
         lines = textwrap.wrap(text, width=38)
         if len(lines) > 1:
-            y_text = h/2 - (50 * len(lines)/2) + 60
+            y_text = h / 2 - (50 * len(lines) / 2) + 60
         else:
             y_text = h / 2 + 60
         for line in lines:
@@ -206,13 +208,6 @@ class Tags(ClusterableModel):
     parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE,
                                   verbose_name="Родительский TAG", )
 
-    # def __init__(self, *args, **kwargs):
-    #     super(Tags, self).__init__(*args, **kwargs)
-    #     if self.lang == 'ru':
-    #         self.parent_id.queryset = Tags.objects.filter(locale='ru')
-    #     elif self.lang == 'en':
-    #         self.parent_id.queryset = Tags.objects.filter(locale='en')
-
     panels = [
         MultiFieldPanel([
             FieldPanel('parent_id'),
@@ -223,7 +218,11 @@ class Tags(ClusterableModel):
     ]
 
     def __str__(self):
-        return str(self.name) if self.name else ''
+        if self.parent_id_id:
+            val = "-%s- %s" % (self.parent_id_id, self.name)
+        else:
+            val = "%s" % (self.name)
+        return val if self.name else ''
 
     class Meta:
         verbose_name = 'Тег'
@@ -244,10 +243,15 @@ class TagsEN(Tags):
 
 
 class TagColors(models.Model):
+    locales = [
+        ('ru', 'ru'),
+        ('en', 'en'),
+    ]
     tag_id = models.ForeignKey(Tags, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True,
                                blank=True, verbose_name='Тег', limit_choices_to={'level': 0})
     color_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Название цвета')
     color = ColorField(default='#FFFFFF', verbose_name='Цвет')
+    locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
 
     panels = [
         MultiFieldPanel([
@@ -257,7 +261,11 @@ class TagColors(models.Model):
         ])]
 
     def __str__(self):
-        return str(self.color_title) if self.color_title else ''
+        if self.tag_id_id:
+            val = "-%s- %s" % (self.tag_id_id, self.color_title)
+        else:
+            val = "%s" % (self.color_title)
+        return val if self.color_title else ''
 
     class Meta:
         verbose_name = 'Цвет тега'
@@ -266,6 +274,7 @@ class TagColors(models.Model):
 
 class TagColorsEN(TagColors):
     locale = 'en'
+    lang = 'en'
 
     def save(self, *args, **kwargs):
         self.locale = 'en'
@@ -311,12 +320,15 @@ class BlogPage(Page):
         ('container_wide', ContainerWideBlock()),
     ], null=True, blank=True, verbose_name="Статья")
     main_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
-                                 limit_choices_to={'parent_id_id__isnull': True}, verbose_name="Основной тег")
-    sub_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL,
-                                limit_choices_to={'parent_id_id__isnull': False}, related_name='+',
-                                verbose_name="Дополнительный тег")
+                                 verbose_name="Основной тег",
+                                 limit_choices_to=(Q(parent_id_id__isnull=True) & Q(locale='ru'))
+                                 # limit_choices_to={'parent_id_id__isnull': True}
+                                 )
+    sub_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
+                                verbose_name="Дополнительный тег",
+                                limit_choices_to=(Q(parent_id_id__isnull=False) & Q(locale='ru')))
     main_color = models.ForeignKey('TagColors', null=True, blank=True, on_delete=models.SET_NULL,
-                                   related_name='+', verbose_name="Основной цвет")
+                                   related_name='+', verbose_name="Основной цвет", limit_choices_to=Q(locale='ru'))
     color_tags = TagColors.objects.all()
     page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
     page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
@@ -333,7 +345,7 @@ class BlogPage(Page):
         verbose_name="Основное изображение"
     )
     animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
-    ontop = models.BooleanField(null=True, blank=True, default=False)
+    ontop = models.BooleanField('поднять', null=True, blank=True, default=False)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -371,13 +383,14 @@ class BlogPage(Page):
             FieldPanel('date'),
             FieldPanel('card_title'),
             FieldPanel('card_sub_title'),
-            FieldPanel('main_tag'),
-            FieldPanel('sub_tag'),
-            FieldPanel('main_color'),
+            FieldPanel('main_tag', classname='main_tag'),
+            FieldPanel('sub_tag', classname='sub_tag'),
+            FieldPanel('main_color', classname='main_color'),
             FieldPanel('page_type'),
             FieldPanel('page_type_hover'),
             FieldPanel('page_color'),
             FieldPanel('adv_link'),
+            FieldPanel('ontop', widget=forms.CheckboxInput),
             # FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Данные карточки"),
         MultiFieldPanel([
@@ -386,7 +399,6 @@ class BlogPage(Page):
             FieldPanel('animate_image'),
         ]),
         FieldPanel('article_title'),
-        # FieldPanel('ontop', widget=forms.CheckboxInput),
         ImageChooserPanel('article_image'),
         StreamFieldPanel('content_body'),
         # FieldPanel('body', classname="full"),
@@ -421,7 +433,7 @@ class BlogPage(Page):
     def get_context(self, request):
         # Filter by tag
         blogpages = []
-        pages = BlogPage.objects.order_by('-last_published_at').all()
+        pages = BlogPage.objects.order_by('-first_published_at').all()
         for page in pages:
             if page.sub_tag == self.sub_tag:
                 blogpages.append(page)
@@ -495,12 +507,12 @@ class BlogIndexPage(Page):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
 
-        blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-last_published_at')
+        blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-first_published_at').order_by('-ontop')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
+            blogpages = BlogPage.objects.live().order_by('-first_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         context['locale'] = 'ru'
         context['blogpages'] = cards
@@ -559,12 +571,12 @@ class BlogIndexPageEN(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = BlogPage.objects.live().filter(locale='en').order_by('-last_published_at')
+        blogpages = BlogPage.objects.live().filter(locale='en').order_by('-first_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().order_by('-last_published_at').search(search_query.lower())
+            blogpages = BlogPage.objects.live().order_by('-first_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         context['locale'] = 'en'
         context['blogpages'] = cards
@@ -592,12 +604,12 @@ class BlogPreviewPage(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = BlogPage.objects.all().order_by('-last_published_at')
+        blogpages = BlogPage.objects.all().order_by('-first_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.all().order_by('-last_published_at').search(search_query)
+            blogpages = BlogPage.objects.all().order_by('-first_published_at').search(search_query)
         cards = sort_cards(blogpages)
         context['blogpages'] = cards
         context['search_query'] = search_query
@@ -650,7 +662,7 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
-            blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
+            blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
                 Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         else:
             tags = []
@@ -659,15 +671,16 @@ class BlogTagIndexPage(Page):
             for tag in Tags.objects.filter(parent_id_id=tag_id).values():
                 tags.append(tag['id'])
             if len(tags) > 1:
-                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
                     Q(main_tag_id__in=tags) | Q(sub_tag_id__in=tags))
             else:
                 tag_id = int(tags[0])
-                blogpages = BlogPage.objects.live().order_by('-last_published_at').filter(
+                blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
                     Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
         # Update template context
         context = super().get_context(request)
         context['blogpages'] = blogpages
+        context['tag'] = request.GET.get('tag')
 
         return context
 

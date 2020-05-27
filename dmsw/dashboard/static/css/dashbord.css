@@ -11,4 +11,17 @@
     background-color: #1a1a1a;
     color: #fff; }
 
+.sub_tag option, .main_color option {
+  display: none;
+  position: relative; }
+  .sub_tag option.active, .main_color option.active {
+    display: block; }
+  .sub_tag option:before, .main_color option:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    height: 2em;
+    width: 20px; }
+
 /*# sourceMappingURL=dashbord.css.map */

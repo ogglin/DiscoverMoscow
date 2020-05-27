@@ -1,5 +1,6 @@
 """Richtext hooks."""
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
+from django.utils.html import format_html
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler
 )
@@ -86,3 +87,11 @@ def register_centertext_feature(features):
 
     # Step 6, This is optional.
     features.default_features.append(feature_name)
+
+
+@hooks.register('insert_global_admin_js')
+def global_admin_js():
+    return format_html(
+        '<script src="/static/js/dashbord.js"></script>',
+    )
+

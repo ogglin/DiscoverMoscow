@@ -31,10 +31,14 @@ def media_kit():
     row = []
     if len(rows) > 0:
         row = rows[0]
-    print(row)
     cursor.close()
 
     return row
+
+
+@register.filter
+def check_type(obj):
+    return type(obj)
 
 
 @register.filter

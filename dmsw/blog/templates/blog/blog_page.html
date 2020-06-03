@@ -70,7 +70,7 @@
         {% for post in blogpages %}
             {% if page.id != post.id %}
                 {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag %}
-                    {% if forloop.counter < 7 %}
+                    {% if forloop.counter < 12 %}
                         {% with post=post.specific %}
                             <div class="card-item {{ post.page_color }}">
                                 <div class="card-front {{ post.page_type }}">

@@ -1,0 +1,4 @@
+{% load wagtailcore_tags wagtailimages_tags cfilters %}
+{% with self as items %}
+    <a href="{{ items.1 }}" target="_blank">{{ items.0 }}</a>
+{% endwith %}

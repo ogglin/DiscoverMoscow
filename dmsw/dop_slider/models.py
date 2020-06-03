@@ -1,6 +1,7 @@
 import os
 from colorfield.fields import ColorField
 from django.db import models
+from django import forms
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -21,6 +22,9 @@ class Sliders(models.Model):
         ('en', 'en'),
     ]
     locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
+    order_num = models.IntegerField('Порядок', null=False, blank=True, default=999)
+    ontop = models.BooleanField('в начало', null=True, blank=True, default=False)
+    draft = models.BooleanField('черновик', null=True, blank=True, default=False)
     color = ColorField(default='#FFFFFF', verbose_name="цвет")
     title = models.CharField(max_length=128, null=True, blank=True, verbose_name="заголовок")
     subtitle = models.CharField(blank=True, max_length=250, verbose_name="подзаголовок")
@@ -43,6 +47,9 @@ class Sliders(models.Model):
                                     verbose_name='Tag подборки')
     panels = [
         MultiFieldPanel([
+            FieldPanel('order_num'),
+            FieldPanel('ontop', widget=forms.CheckboxInput),
+            FieldPanel('draft', widget=forms.CheckboxInput),
             FieldPanel('slider_type'),
             FieldPanel('title'),
             FieldPanel('subtitle'),
@@ -66,7 +73,7 @@ class Sliders(models.Model):
     class Meta:
         verbose_name = 'Изображение слайдера'
         verbose_name_plural = 'Изображения слайдера'
-        ordering = ['-id']
+        ordering = ['-ontop', 'order_num', 'draft', '-id']
 
 
 class SlidersEN(Sliders):

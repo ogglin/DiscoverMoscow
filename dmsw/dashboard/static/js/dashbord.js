@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $pathname = window.location.pathname;
     $pid = $('.main_tag select').val();
     $sub_opts = $('.sub_tag option');
     $color_opts = $('.main_color option')
@@ -10,6 +11,48 @@ $(document).ready(function () {
         change_opts()
     });
 
+    $tags = $('#id_parent_id option')
+    if ($pathname.indexOf('/tagsen/') > 0){
+        for (i = 0; i < $tags.length; i++) {
+            if (isKyr($tags[i].innerHTML)) {
+                $tags.eq(i).css('display', 'none')
+            }
+        }
+    } else if ($pathname.indexOf('/tags/') > 0){
+        for (i = 0; i < $tags.length; i++) {
+            if (isKyr($tags[i].innerHTML)) {
+
+            } else {
+                $tags.eq(i).css('display', 'none')
+            }
+        }
+    }
+
+    $color_tags = $('#id_tag_id option')
+    if ($pathname.indexOf('/tagcolorsen/') > 0){
+        for (i = 0; i < $color_tags.length; i++) {
+            if (isKyr($color_tags[i].innerHTML)) {
+                $color_tags.eq(i).css('display', 'none')
+            } else {
+                console.log('is not cyrilic')
+            }
+        }
+    } else if ($pathname.indexOf('/tagcolors/') > 0){
+        for (i = 0; i < $color_tags.length; i++) {
+            if (isKyr($color_tags[i].innerHTML)) {
+                console.log('is latin')
+            } else {
+                $color_tags.eq(i).css('display', 'none')
+            }
+        }
+    }
+
+    if ($('.account')[0].innerText.indexOf('admin') > 0) {
+
+    } else {
+        $('.nav-main ul .menu-item:nth-child(7) .nav-submenu ul .menu-item:nth-child(6)').addClass('hidden')
+        $('.nav-main ul .menu-item:nth-child(7) .nav-submenu ul .menu-item:nth-child(7)').addClass('hidden')
+    }
 })
 
 function named_opts() {
@@ -50,4 +93,8 @@ function change_opts() {
             $color_opts.eq(i).removeClass('active')
         }
     }
+}
+
+function isKyr(str) {
+    return /[а-яё]/i.test(str);
 }

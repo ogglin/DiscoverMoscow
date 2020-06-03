@@ -1,273 +1,283 @@
 {% load static compress wagtailuserbar menu_tags wagtailroutablepage_tags slider_extras dop_slider_extras cfilters widget_tweaks %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="{% if 'en.' in request.get_host %}en{% else %}ru{% endif %}" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title_suffix %}
-                {% with self.get_site.site_name as site_name %}
-                    {% if site_name %}{{ site_name }} -{% endif %}
-                {% endwith %}
-            {% endblock %}
-            {% block title %}
-                {% if self.seo_title %}
-                    {{ self.seo_title }}
-                {% else %}
-                    {{ self.title }}
-                {% endif %}
-            {% endblock %}
-
-        </title>
-
-        {% block sharing_block %}
+<html class="no-js" lang="{% if 'en.' in request.get_host %}en{% else %}ru{% endif %}"
+      prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        {% block title_suffix %}
+            {% with self.get_site.site_name as site_name %}
+                {% if site_name %}{{ site_name }} -{% endif %}
+            {% endwith %}
         {% endblock %}
-
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
-        {# Global stylesheets #}
-        <link type="text/css" href="{% static 'css/all.min.css' %}" media="screen">
-        {% compress css %}
-            <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"  media="screen">
-            <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
-            <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
-            <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">
-            <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
-        {% endcompress %}
-
-
-        {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
-    <!-- Yandex.Metrika counter -->
-        <script type="text/javascript" >
-           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-           m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-           (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-           ym(63567055, "init", {
-                clickmap:true,
-                trackLinks:true,
-                accurateTrackBounce:true,
-                webvisor:true
-           });
-        </script>
-        <noscript><div><img src="https://mc.yandex.ru/watch/63567055" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    </head>
-
-    <body class="{% block body_class %}{% endblock %}">
-        {% block header %}
-            <header class="flex-container">
-                <a class="navbar-menu" id="btn_burger"><img src="{% static 'image/burger.png' %}" alt="menu"></a>
-                <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}" alt="menu"></a>
-                <nav class="navbar">
-                  <div class="main_menu">
-                      {% block main_menu %}
-                        {% if 'en.' in request.get_host %}
-                            {% all_tags lang='en' as main_menu %}
-                        {% else %}
-                            {% all_tags lang='ru' as main_menu %}
-                        {% endif %}
-                          <ul class="nav navbar-nav">
-                            {% for item in main_menu %}
-                                {% if item.level == 0 %}
-                                    <li class="">
-                                        <a href="/tags/?tag={{ item.name }}">#{{ item.name }} {{ item.patent_id_id }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                          </ul>
-                      {% endblock %}
-                      <div id="more">...</div>
-                  </div>
-                </nav>
-                <div class="navbar-tags">
-                    <div class="flex-container-inline">
-                        {% if 'en.' in request.get_host %}
-                            {% c_tags lang='en' as main_menu %}
-                            {% a_tags lang='en' as ar_tags%}
-                        {% else %}
-                            {% c_tags lang='ru' as main_menu %}
-                            {% a_tags lang='ru' as ar_tags%}
-                        {% endif %}
-                        {% for idx, el in main_menu.items %}
-                            <ul>
-                                {% for tag in ar_tags %}
-                                    {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
-                                        {% if el %}
-                                            {% for item in el %}
-                                                {% for tag in ar_tags %}
-                                                    {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                            {% if el|length > 4 %}
-                                                <li class="more">...</li>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        {% endfor %}
-                    </div>
-                    <div class="w-100 bottom">
-                        {% if 'en.' in request.get_host %}
-                            <a href="/about/">About</a>
-                            <a href="/partners/">Partners</a>
-                        {% else %}
-                            <a href="/about/">О проекте</a>
-{#                            <a href="/partners/">Партнёры</a>#}
-                        {% endif %}
-                    </div>
-                </div>
-                <span id="btn_search"><i class="fas fa-search"></i></span>
-{#                {% if 'en.' in request.get_host %}#}
-{#                    <a href="http://{{ request.get_host|en_ru }}" class="lang_selector">RU</a>#}
-{#                {% else %}#}
-{#                    <a href="http://en.{{ request.get_host }}" class="lang_selector">EN</a>#}
-{#                {% endif %}#}
-                <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
-                <form role="search" method="get" class="form-search" action="/blog/" method="get">
-                    <input type="text" class="form-control search-query" name="q" placeholder="Поиск" title="Search for:" />
-                    <button type="submit" class="btn btn-default" name="submit" id="searchsubmit" value="Search"></button>
-                </form>
-            </header>
-        {% endblock %}
-        {% block slider-block %}
-            {% if search_query != '' %}
-                <div class="slider_block flex-container-inline">
-                    <div class="left">
-                        {% if 'en.' in request.get_host %}
-                            {% show_slides locale='en' %}
-                        {% else %}
-                            {% show_slides locale='ru' %}
-                        {% endif %}
-                    </div>
-                    <div class="right">
-                        {% if 'en.' in request.get_host %}
-                            {% show_dop_slides locale='en' %}
-                        {% else %}
-                            {% show_dop_slides locale='ru' %}
-                        {% endif %}
-                        {% block slider_right %}
-
-                        {% endblock %}
-                    </div>
-                </div>
+        {% block title %}
+            {% if self.seo_title %}
+                {{ self.seo_title }}
             {% else %}
-                <div class="search-qfield">{{ search_query }}</div>
+                {{ self.title }}
             {% endif %}
         {% endblock %}
 
-        {% block content %}{% endblock %}
+    </title>
 
-        {% block footer %}
-            <footer>
-                <div class="flex-container-inline">
-                    <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
-                    <div class="navbar-footer">
-                        {% if 'en.' in request.get_host %}
-                            {% c_tags lang='en' as main_menu %}
-                            {% a_tags lang='en' as ar_tags%}
-                        {% else %}
-                            {% c_tags lang='ru' as main_menu %}
-                            {% a_tags lang='ru' as ar_tags%}
-                        {% endif %}
-                        {% for idx, el in main_menu.items %}
-                            <ul class="col">
-                                {% for tag in ar_tags %}
-                                    {% if tag.id == idx %}
-                                        <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
-                                        {% if el %}
-                                            {% for item in el %}
-                                                {% for tag in ar_tags %}
-                                                    {% if tag.id == item %}
-                                                        <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                            {% if el|length > 4 %}
-                                                <li class="more">...</li>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        {% endfor %}
+    {% block sharing_block %}
+    {% endblock %}
 
-                    </div>
-{#                    <div class="socblock">#}
-{#                        <a href="https://facebook.com"><i class="fa fa-facebook"></i></a>#}
-{#                        <a href="http://twitter.com"><i class="fa fa-twitter"></i></a>#}
-{#                        <a href="https://instagram.com"><i class="fa fa-instagram"></i></a>#}
-{#                        <a href="https://vk.com"><i class="fa fa-vk"></i></a>#}
-{#                    </div>#}
-                    <div class="newsletter">
-                        {% block subscribe %}
-                        {% endblock %}
-                        {% to_project as params %}
-                        {% if params|length > 0 %}
-                            <a href="mailto:{{ params.2 }}?subject={{ params.1 }}" class="btn">
-                                {% if 'en.' in request.get_host %}
-                                    join the project
-                                {% else %}
-                                    присоединится к проекту
-                                {% endif %}
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+    {# Global stylesheets #}
+    <link type="text/css" href="{% static 'css/all.min.css' %}" media="screen">
+    {% compress css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" media="screen">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
+    {% endcompress %}
 
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="dop_links">
+
+    {% block extra_css %}
+        {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments)
+            };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(63567055, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/63567055" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+{% block header %}
+    <header class="flex-container">
+        <a class="navbar-menu" id="btn_burger"><img src="{% static 'image/burger.png' %}" alt="menu"></a>
+        <a class="navbar-menu hide" id="btn_burger_close"><img src="{% static 'image/burger_close.png' %}"
+                                                               alt="menu"></a>
+        <nav class="navbar">
+            <div class="main_menu">
+                {% block main_menu %}
                     {% if 'en.' in request.get_host %}
-                        <a href="/about/">About</a>
-                        <a href="/partners/">Partners</a>
+                        {% all_tags lang='en' as main_menu %}
                     {% else %}
-                        <a href="/about/">О проекте</a>
-                        <a href="http://old.moscowwithyou.ru">Старая версия сайта</a>
-{#                        <a href="/partners/">Партнёры</a>#}
+                        {% all_tags lang='ru' as main_menu %}
                     {% endif %}
-                    <span class="copyright">© 2020 Discover Moscow.
-                        {% if 'en.' in request.get_host %}
-                        With the support of the Moscow Government. All rights reserved
-                        {% else %}
-                        При поддержке Правительства Москвы. Все права защищены
-                        {% endif %}
-                    </span>
-                </div>
-{#                <div class="disclamer">#}
-{#                    <p>Перепечатка материалов данного  издания «_» (СМИ зарегистрировано Федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций — свидетельство Эл № ФС77-0000 от 00 мая 2020 года) возможна только с письменного разрешения редакции. При цитировании ссылка на www._ обязательна. Обратная связь c online редакцией info@_</p>#}
-{#                </div>#}
-            </footer>
-        {% endblock %}
+                    <ul class="nav navbar-nav">
+                        {% for item in main_menu %}
+                            {% if item.level == 0 %}
+                                <li class="">
+                                    <a href="/tags/?tag={{ item.name }}">#{{ item.name }} {{ item.patent_id_id }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endblock %}
+                <div id="more">...</div>
+            </div>
+        </nav>
+        <div class="navbar-tags">
+            <div class="flex-container-inline">
+                {% if 'en.' in request.get_host %}
+                    {% c_tags lang='en' as main_menu %}
+                    {% a_tags lang='en' as ar_tags %}
+                {% else %}
+                    {% c_tags lang='ru' as main_menu %}
+                    {% a_tags lang='ru' as ar_tags %}
+                {% endif %}
+                {% for idx, el in main_menu.items %}
+                    <ul>
+                        {% for tag in ar_tags %}
+                            {% if tag.id == idx %}
+                                <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                {% if el %}
+                                    {% for item in el %}
+                                        {% for tag in ar_tags %}
+                                            {% if tag.id == item %}
+                                                <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% if el|length > 4 %}
+                                        <li class="more">...</li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+            <div class="w-100 bottom">
+                {% if 'en.' in request.get_host %}
+                    <a href="/about/">About</a>
+                    <a href="/partners/">Partners</a>
+                {% else %}
+                    <a href="/about/">О проекте</a>
+                    <a href="/partners/">Партнёры</a>
+                {% endif %}
+            </div>
+        </div>
+        <span id="btn_search"><i class="fas fa-search"></i></span>
+        {#                {% if 'en.' in request.get_host %}#}
+        {#                    <a href="http://{{ request.get_host|en_ru }}" class="lang_selector">RU</a>#}
+        {#                {% else %}#}
+        {#                    <a href="http://en.{{ request.get_host }}" class="lang_selector">EN</a>#}
+        {#                {% endif %}#}
+        <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
+        <form role="search" method="get" class="form-search" action="/blog/" method="get">
+            <input type="text" class="form-control search-query" name="q" placeholder="Поиск" title="Search for:"/>
+            <button type="submit" class="btn btn-default" name="submit" id="searchsubmit" value="Search"></button>
+        </form>
+    </header>
+{% endblock %}
+{% block slider-block %}
+    {% if search_query != '' %}
+        <div class="slider_block flex-container-inline">
+            <div class="left">
+                {% if 'en.' in request.get_host %}
+                    {% show_slides locale='en' %}
+                {% else %}
+                    {% show_slides locale='ru' %}
+                {% endif %}
+            </div>
+            <div class="right">
+                {% if 'en.' in request.get_host %}
+                    {% show_dop_slides locale='en' %}
+                {% else %}
+                    {% show_dop_slides locale='ru' %}
+                {% endif %}
+                {% block slider_right %}
 
-        {% wagtailuserbar %}
-        <!-- jQuery -->
-        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e930c46ed58b204"></script>
-        <!-- Font Awesome kit -->
-        <script type="text/javascript" src="{% static 'js/all.min.js' %}"></script>
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/ant.carousel.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/lightslider.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/playerjs.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/dmsw.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/dop_slider.js' %}"></script>
-        {% block extra_js %}
-            {# Override this in templates to add extra javascript #}
-        {% endblock %}
-        {% block endless_js %}
-        {% endblock %}
-    <div class="full_image">
-        <span class="close">X</span>
-    </div>
-    </body>
+                {% endblock %}
+            </div>
+        </div>
+    {% else %}
+        <div class="search-qfield">{{ search_query }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class="flex-container-inline">
+            <a href="/" class="logotype"><img src="{% static 'image/logotype.png' %}" alt="logotype"></a>
+            <div class="navbar-footer">
+                {% if 'en.' in request.get_host %}
+                    {% c_tags lang='en' as main_menu %}
+                    {% a_tags lang='en' as ar_tags %}
+                {% else %}
+                    {% c_tags lang='ru' as main_menu %}
+                    {% a_tags lang='ru' as ar_tags %}
+                {% endif %}
+                {% for idx, el in main_menu.items %}
+                    <ul class="col">
+                        {% for tag in ar_tags %}
+                            {% if tag.id == idx %}
+                                <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                {% if el %}
+                                    {% for item in el %}
+                                        {% for tag in ar_tags %}
+                                            {% if tag.id == item %}
+                                                <li><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% if el|length > 4 %}
+                                        <li class="more">...</li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+
+            </div>
+            {#                    <div class="socblock">#}
+            {#                        <a href="https://facebook.com"><i class="fa fa-facebook"></i></a>#}
+            {#                        <a href="http://twitter.com"><i class="fa fa-twitter"></i></a>#}
+            {#                        <a href="https://instagram.com"><i class="fa fa-instagram"></i></a>#}
+            {#                        <a href="https://vk.com"><i class="fa fa-vk"></i></a>#}
+            {#                    </div>#}
+            <div class="newsletter">
+                {% block subscribe %}
+                {% endblock %}
+                {% to_project as params %}
+                {% if params|length > 0 %}
+                    <a href="mailto:{{ params.1 }}?subject={% if 'en.' in request.get_host %}Join the project as a partner{% else %}Присоединиться к проекту как партнер{% endif %}" class="btn">
+                        {% if 'en.' in request.get_host %}
+                            join the project
+                        {% else %}
+                            присоединиться к проекту
+                        {% endif %}
+
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="dop_links">
+            {% if 'en.' in request.get_host %}
+                <a href="/about/">About</a>
+                <a href="/partners/">Partners</a>
+                <a href="http://old.moscowwithyou.ru">Old version of site</a>
+            {% else %}
+                <a href="/about/">О проекте</a>
+                <a href="/partners/">Партнёры</a>
+                <a href="http://old.moscowwithyou.ru">Старая версия сайта</a>
+            {% endif %}
+            <span class="copyright">© 2020 Discover Moscow.
+                {% if 'en.' in request.get_host %}
+                    All rights reserved
+                {% else %}
+                    Все права защищены
+                {% endif %}
+                    </span>
+        </div>
+        {#                <div class="disclamer">#}
+        {#                    <p>Перепечатка материалов данного  издания «_» (СМИ зарегистрировано Федеральной службой по надзору в сфере связи, информационных технологий и массовых коммуникаций — свидетельство Эл № ФС77-0000 от 00 мая 2020 года) возможна только с письменного разрешения редакции. При цитировании ссылка на www._ обязательна. Обратная связь c online редакцией info@_</p>#}
+        {#                </div>#}
+    </footer>
+{% endblock %}
+
+{% wagtailuserbar %}
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e930c46ed58b204"></script>
+<!-- Font Awesome kit -->
+<script type="text/javascript" src="{% static 'js/all.min.js' %}"></script>
+{# Global javascript #}
+<script type="text/javascript" src="{% static 'js/ant.carousel.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lightbox.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lightslider.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/playerjs.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dmsw.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dop_slider.js' %}"></script>
+{% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+{% endblock %}
+{% block endless_js %}
+{% endblock %}
+<div class="full_image">
+    <span class="close">X</span>
+</div>
+</body>
 </html>

@@ -11,7 +11,7 @@ var JsonSubscribers = {
         SelectBox.move_all('id_subscriptions_to', 'id_subscriptions_from');
 
         if (id) {
-            xmlhttp.open( "GET", "/admin/newsletter/message/"+id+"/subscribers/json/", true );
+            xmlhttp.open( "GET", "/modeladmin/newsletter/message/"+id+"/subscribers/json/", true );
             xmlhttp.onreadystatechange=function() {
                 if (xmlhttp.readyState==4 && xmlhttp.status == 200) {
 

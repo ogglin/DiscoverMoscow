@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
         ('wagtailcore', '0045_assign_unlock_grouppagepermission'),
         ('wagtailredirects', '0006_redirect_increase_max_length'),
         ('wagtailforms', '0004_add_verbose_name_plural'),
-        ('wagtailmenus', '0023_remove_use_specific'),
         ('blog', '0021_auto_20200511_2049'),
     ]
 

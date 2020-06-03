@@ -173,6 +173,11 @@ def sort_cards(pages):
     return cards
 
 
+def lang_choiser(locale):
+    limit = Q(level=0) & Q(locale=locale)
+    return limit
+
+
 class CustomTagSerializer(Field):
     """Custom Tag Serializer."""
 
@@ -206,7 +211,8 @@ class Tags(ClusterableModel):
     level = models.IntegerField(choices=orders_list, default=1, null=False, blank=False, verbose_name="Уровень меню", )
     order_num = models.IntegerField(null=True, blank=True, verbose_name='Порядок')
     parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE,
-                                  verbose_name="Родительский TAG", )
+                                  verbose_name="Родительский TAG",
+                                  limit_choices_to=(Q(parent_id_id__isnull=True)))
 
     panels = [
         MultiFieldPanel([
@@ -247,8 +253,9 @@ class TagColors(models.Model):
         ('ru', 'ru'),
         ('en', 'en'),
     ]
+    lang = 'ru'
     tag_id = models.ForeignKey(Tags, related_name='%(class)s_tag', on_delete=models.CASCADE, null=True,
-                               blank=True, verbose_name='Тег', limit_choices_to={'level': 0})
+                               blank=True, verbose_name='Тег', limit_choices_to=(Q(level=0)))
     color_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Название цвета')
     color = ColorField(default='#FFFFFF', verbose_name='Цвет')
     locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
@@ -321,8 +328,7 @@ class BlogPage(Page):
     ], null=True, blank=True, verbose_name="Статья")
     main_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
                                  verbose_name="Основной тег",
-                                 limit_choices_to=(Q(parent_id_id__isnull=True) & Q(locale='ru'))
-                                 # limit_choices_to={'parent_id_id__isnull': True}
+                                 limit_choices_to=(Q(level=0) & Q(locale='ru'))
                                  )
     sub_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
                                 verbose_name="Дополнительный тег",
@@ -404,6 +410,7 @@ class BlogPage(Page):
         # FieldPanel('body', classname="full"),
         # InlinePanel('gallery_images', label="Галерея изображений"),
     ]
+    parent_page_types = ['blog.BlogIndexPage']
 
     def save(self, *args, **kwargs):
         # save_image(self.article_image, self.title)
@@ -449,12 +456,13 @@ class BlogPage(Page):
         return context
 
     class Meta:
-        ordering = ('date',)
+        ordering = ('-date',)
         verbose_name = 'Статья на Русском'
 
 
 class BlogPageEN(BlogPage):
     locale = 'en'
+    parent_page_types = ['blog.BlogIndexPageEN']
 
     def save(self, *args, **kwargs):
         self.locale = 'en'
@@ -701,6 +709,10 @@ class SearchPage(Page):
 
 
 class TypedPage(Page):
+    locales = [
+        ('ru', 'ru'),
+        ('en', 'en'),
+    ]
 
     def serve(self, request):
         if "email" in request.POST:
@@ -721,6 +733,7 @@ class TypedPage(Page):
             # Display event page as usual
             return super().serve(request)
 
+    locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
     tags = Page.objects.raw('SELECT * FROM blog_tags WHERE "level" = 0')
     date = models.DateField("Post date")
     text = blocks.RichTextBlock(features=['h2', 'h3', 'bold', 'italic', 'link'], blank=True)
@@ -753,6 +766,7 @@ class TypedPage(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('title'),
+            FieldPanel('locale'),
             ImageChooserPanel('main_image')
         ], heading="Данные страницы"),
         StreamFieldPanel('content_body'),
@@ -761,6 +775,17 @@ class TypedPage(Page):
 
     class Meta:
         verbose_name = "Typed page (don't use or modify)"
+
+
+class TypedPageEN(TypedPage):
+    locale = 'en'
+
+    def save(self, *args, **kwargs):
+        self.locale = 'en'
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Typed page in english (don't use or modify)"
 
 
 class TypedPageGalleryImage(Orderable):

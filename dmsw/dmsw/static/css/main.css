@@ -930,7 +930,7 @@ h2 {
     height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center; }
+    background-position: center bottom; }
   .header-block .head-block {
     position: relative;
     padding: 0 60px 0 15px;
@@ -1013,7 +1013,7 @@ h2 {
   border-right: 1px solid #bfbfbf99;
   border-top: 1px solid #bfbfbf99;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: 90% auto;
   background-position: center;
   float: left;
   width: calc(100% / 4);
@@ -1453,7 +1453,17 @@ h2 {
     font-family: inherit;
     font-weight: 500; }
   .full_image .gallery_pop {
-    padding: 70px 40px; }
+    padding: 70px 40px;
+    width: 100%; }
+    .full_image .gallery_pop .image-gallery li {
+      text-align: center; }
+      .full_image .gallery_pop .image-gallery li img {
+        height: auto;
+        width: auto; }
+    .full_image .gallery_pop .lSSlideOuter .lSPager.lSGallery li {
+      text-align: center; }
+      .full_image .gallery_pop .lSSlideOuter .lSPager.lSGallery li img {
+        max-height: 100px; }
 
 @media only screen and (max-width: 370px) {
   header .logotype {
@@ -1840,5 +1850,7 @@ footer .subscribe-ajax-form {
 
   .three_col iframe {
     height: calc(100vw * 0.38); } }
+.lSSlideOuter .lightSlider, .lSSlideOuter .lSPager {
+  height: auto !important; }
 
 /*# sourceMappingURL=main.css.map */

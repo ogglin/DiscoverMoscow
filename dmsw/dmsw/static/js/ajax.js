@@ -54,6 +54,8 @@ $(document).ready(function(){
         console.log(jqXHR)
         console.log(textStatus)
         console.log(errorThrown)
+        $('.data_form').remove()
+        $('.subscribe-ajax-form button').remove()
 		$('.result_form').html('Вы уже подписаны.');
     }
 })

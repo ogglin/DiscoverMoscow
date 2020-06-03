@@ -95,3 +95,22 @@ def global_admin_js():
         '<script src="/static/js/dashbord.js"></script>',
     )
 
+
+@hooks.register('construct_settings_menu')
+def hide_settings_menu_items(request, menu_items):
+    for item in menu_items:
+        print(item.name)
+    if request.user.username == 'admin':
+        menu_items[:] = [item for item in menu_items]
+    else:
+        menu_items[:] = [item for item in menu_items if item.name != 'languages']
+
+
+@hooks.register('construct_main_menu')
+def hide_main_menu_items(request, menu_items):
+    # for item in menu_items:
+    #     print(item, item.name)
+    if request.user.username == 'admin':
+        menu_items[:] = [item for item in menu_items]
+    else:
+        menu_items[:] = [item for item in menu_items if item.name != 'explorer' and item.name != 'reports']

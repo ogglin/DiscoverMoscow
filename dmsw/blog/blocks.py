@@ -37,8 +37,7 @@ class VideoItem(blocks.StreamBlock):
 
 
 class VideoGallery(blocks.StreamBlock):
-    video = blocks.RichTextBlock()
-    element = VideoItem(icon='video', label='Добавить видео', null=True, blank=True, required=False)
+    video = blocks.RichTextBlock(label='Добавить видео')
 
     class Meta:
         template = 'blog/blocks/video_gallery.html'
@@ -54,13 +53,22 @@ class СharitableItem(blocks.StreamBlock):
         template = 'blog/blocks/charitable_block.html'
 
 
+class ImageLinkedBlock(blocks.StreamBlock):
+    image = ImageChooserBlock(label='Изображение')
+    link = blocks.TextBlock(icon='link', label='Ссылка')
+
+    class Meta:
+        template = 'blog/blocks/image_linked_block.html'
+
+
 class ColumnBlock(blocks.StreamBlock):
     paragraph = blocks.RichTextBlock()
-    image = ImageChooserBlock()
+    image = ImageChooserBlock(label='Изображение')
+    linked_image = ImageLinkedBlock(label='Изображение с сылкой', icon='image')
     video = VideoBlock(icon='placeholder', label='Видео блок', null=True, blank=True, required=False)
     yt_video = VideoGallery(icon='placeholder', label='Видео галерея', null=True, blank=True, required=False)
     html = blocks.RawHTMLBlock()
-    gallery = GalleryBlock(icon='image', label='Галерея', null=True, blank=True, required=False)
+    gallery = GalleryBlock(icon='image', label='Галерея изображений', null=True, blank=True, required=False)
     partner = PartnerBlock(icon='placeholder', label='Блок партнера', null=True, blank=True, required=False)
     charitable = СharitableItem(icon='placeholder', label='Блок благотворительность', null=True, blank=True,
                                 required=False)

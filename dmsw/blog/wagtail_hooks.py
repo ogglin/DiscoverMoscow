@@ -1,8 +1,30 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register, ModelAdminGroup)
-from .models import Tags, TagColors, TagsEN, TagColorsEN
+from .models import Tags, TagColors, TagsEN, TagColorsEN, BlogPage, BlogPageEN, TypedPage, TypedPageEN
 from slider.models import Photo, PhotoEN
 from dop_slider.models import Sliders, SlidersEN
+
+
+class BlogPageInline(ModelAdmin):
+    model = BlogPage
+    menu_label = 'Статьи'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 10
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
+
+
+class BlogPageInlineEN(ModelAdmin):
+    model = BlogPageEN
+    menu_label = 'Articles'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 10
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
 
 
 class SlidersInline(ModelAdmin):
@@ -10,7 +32,7 @@ class SlidersInline(ModelAdmin):
     menu_label = 'Доп. слайдер'
     menu_icon = 'folder-open-inverse'
     menu_order = 100
-    list_display = ('title', 'image')
+    list_display = ('title', 'image', 'order_num', 'ontop', 'draft')
     list_filter = ('title',)
 
     def get_queryset(self, request):
@@ -23,8 +45,12 @@ class SlidersInlineEN(ModelAdmin):
     menu_label = 'Functional slider'
     menu_icon = 'folder-open-inverse'
     menu_order = 100
-    list_display = ('title', 'image')
+    list_display = ('title', 'image', 'order_num', 'ontop', 'draft')
     list_filter = ('title',)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
 
 
 class PhotoInline(ModelAdmin):
@@ -32,8 +58,14 @@ class PhotoInline(ModelAdmin):
     menu_label = 'Слайдер слева'
     menu_icon = 'folder-open-inverse'
     menu_order = 50
-    list_display = ('title', 'image')
+    list_display = ('title', 'image', 'order_num', 'ontop', 'draft')
     list_filter = ('title',)
+    index_template_name = 'modeladmin/index.html'
+    inspect_template_name = 'modeladmin/inspect.html'
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
 
 
 class PhotoInlineEN(ModelAdmin):
@@ -41,8 +73,12 @@ class PhotoInlineEN(ModelAdmin):
     menu_label = 'Slider on the left'
     menu_icon = 'folder-open-inverse'
     menu_order = 50
-    list_display = ('title', 'image')
+    list_display = ('title', 'image', 'order_num', 'ontop', 'draft')
     list_filter = ('title',)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
 
 
 class PageTagInline(ModelAdmin):
@@ -66,6 +102,10 @@ class PageTagInlineEN(ModelAdmin):
     list_display = ('id', 'name', 'level', 'parent_id', 'order_num')
     list_filter = ('name',)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
+
 
 class PageTagColors(ModelAdmin):
     model = TagColors
@@ -86,26 +126,45 @@ class PageTagColorsEN(ModelAdmin):
     menu_order = 200
     list_display = ('color_title', 'color')
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
+
+
+class TypedPageInline(ModelAdmin):
+    model = TypedPage
+    menu_label = 'Статичные страницы'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 200
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='ru')
+
+
+class TypedPageInlineEN(ModelAdmin):
+    model = TypedPageEN
+    menu_label = 'Static pages'
+    menu_icon = 'folder-open-inverse'
+    menu_order = 200
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(locale='en')
+
 
 class LocaleRU(ModelAdminGroup):
     menu_label = 'Русский'
     menu_icon = 'folder-open-inverse'
     menu_order = 200
-    items = (PageTagInline, PageTagColors, PhotoInline, SlidersInline)
+    items = (BlogPageInline, PageTagInline, PageTagColors, PhotoInline, SlidersInline, TypedPageInline)
 
 
 class LocaleEN(ModelAdminGroup):
     menu_label = 'English'
     menu_icon = 'folder-open-inverse'
     menu_order = 200
-    items = (PageTagInlineEN, PageTagColorsEN, PhotoInlineEN, SlidersInlineEN)
-
-
-# class Locales(ModelAdminGroup):
-#     menu_label = 'Меню / Теги / Слайдеры'
-#     menu_icon = 'folder-open-inverse'
-#     menu_order = 200
-#     items = (LocaleRU, LocaleEN)
+    items = (BlogPageInlineEN, PageTagInlineEN, PageTagColorsEN, PhotoInlineEN, SlidersInlineEN, TypedPageInlineEN)
 
 
 modeladmin_register(LocaleRU)

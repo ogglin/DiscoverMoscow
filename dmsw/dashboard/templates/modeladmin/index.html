@@ -1,0 +1,6 @@
+{% extends "modeladmin/index.html" %}
+
+{% block header_extra %}
+    <a href="/admin/pages/69/view_draft/" target="_blank" >Превью главной</a>
+    {{ block.super }}{% comment %}Display the original buttons {% endcomment %}
+{% endblock %}

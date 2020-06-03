@@ -1307,7 +1307,7 @@ h2 {
     height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center bottom;
   }
 
   .head-block {
@@ -1437,7 +1437,7 @@ h2 {
     border-right: 1px solid #bfbfbf99;
     border-top: 1px solid #bfbfbf99;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: 90% auto;
     background-position: center;
     float: left;
     width: calc(100% / 4);
@@ -2261,6 +2261,26 @@ h2 {
 
   .gallery_pop {
     padding: 70px 40px;
+    width: 100%;
+    .image-gallery {
+      li {
+        text-align: center;
+        img {
+          height: auto;
+          width: auto;
+        }
+      }
+    }
+    .lSSlideOuter {
+      .lSPager.lSGallery {
+        li {
+          text-align: center;
+          img {
+            max-height: 100px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -2874,4 +2894,7 @@ footer {
   .three_col iframe {
     height: calc(100vw * 0.38);
   }
+}
+.lSSlideOuter .lightSlider, .lSSlideOuter .lSPager {
+  height: auto !important;
 }

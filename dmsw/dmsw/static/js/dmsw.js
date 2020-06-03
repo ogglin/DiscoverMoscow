@@ -196,7 +196,7 @@ pop_gallery = function (e) {
         loop: true,
         onSliderLoad: function (gel) {
             $('.full_image .image-gallery').removeClass('cS-hidden');
-	    $('.full_image .image-gallery').css('height', 'auto')
+	        $('.full_image .image-gallery').css('height', 'auto')
             gel.lightGallery({
                 selector: '.full_image .image-gallery .lslide'
             });
@@ -248,11 +248,10 @@ $(document).ready(function () {
         var player = new Playerjs({id: "player" + i, file: vfile});
     })
     if ($('.ant-carousel').length > 0) {
-	$ytLinks = $('.slide-element > div:first-child > div> p> a')
-	console.log($ytLinks)
+	    $ytLinks = $('.slide-element > div:first-child > div> p> a')
         $ytAll = $ytLinks.length
         $ytLeftPos = 0;
-        $ytRightPos = 4;
+        $ytRightPos = 3;
         for (i = $ytLeftPos; i <= $ytRightPos; i++) {
             vfile = $ytLinks[i].innerHTML
             var player = new Playerjs({id: "ytPlayer" + i, file: vfile});

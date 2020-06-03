@@ -45,7 +45,7 @@
                     }
                 }
 
-                // SelectBox is a global var from djangojs "admin/js/SelectBox.js"
+                // SelectBox is a global var from djangojs "modeladmin/js/SelectBox.js"
                 // Clear cache to avoid the elements duplication
                 if (typeof SelectBox !== 'undefined') {
                     if (typeof SelectBox.cache[cache_to] !== 'undefined') {
@@ -113,7 +113,7 @@
                     $selectField.html(options);
                     if ($selectedto.length) {
                         $selectedto.html(selectedoptions);
-                        // SelectBox is a global var from djangojs "admin/js/SelectBox.js"
+                        // SelectBox is a global var from djangojs "modeladmin/js/SelectBox.js"
                         for (i = 0, j = selectedoptions.length; i < j; i = i + 1) {
                             node = selectedoptions[i];
                             SelectBox.cache[cache_to].push({value: node.prop("value"), text: node.prop("text"), displayed: 1});

@@ -98,7 +98,6 @@ def save_image(img, text, tag):
         photo.paste(logo, (60, 60), logo)
 
         # make the image editable
-        print(photo)
         drawing = ImageDraw.Draw(photo)
         drawing.text((225, 78), "#Москвастобой", font=tag_font, fill=white)
         drawing.text((400, 78), tag, font=tag_font, fill=white)
@@ -111,13 +110,21 @@ def save_image(img, text, tag):
             width, height = font.getsize(line)
             drawing.text((64, y_text), line, font=font, fill=white)
             y_text += height + 10
-        print('saving photo')
         photo.save(out_path)
     else:
         print('no image')
 
 
 def sort_cards(pages):
+    all_pages = []
+    for page in pages:
+        if page.ontop:
+            all_pages.append(page)
+    for page in pages:
+        if page.ontop is False:
+            all_pages.append(page)
+    pages = all_pages
+
     all_tags = Tags.objects.all()
     temp_cards = []
     primary = []
@@ -293,6 +300,7 @@ class TagColorsEN(TagColors):
 
 
 class BlogPage(Page):
+
     page_types = [
         ('standart', 'Стандарт'),
         ('fullimage', 'Заливка картинкой'),
@@ -351,7 +359,7 @@ class BlogPage(Page):
         verbose_name="Основное изображение"
     )
     animate_image = models.ImageField(null=True, blank=True, verbose_name="Дополнительное изображение (анимация)")
-    ontop = models.BooleanField('поднять', null=True, blank=True, default=False)
+    ontop = models.BooleanField('поднять', null=False, blank=True, default=False)
     article_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -387,6 +395,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
+            FieldPanel('locale'),
             FieldPanel('card_title'),
             FieldPanel('card_sub_title'),
             FieldPanel('main_tag', classname='main_tag'),
@@ -410,7 +419,6 @@ class BlogPage(Page):
         # FieldPanel('body', classname="full"),
         # InlinePanel('gallery_images', label="Галерея изображений"),
     ]
-    parent_page_types = ['blog.BlogIndexPage']
 
     def save(self, *args, **kwargs):
         # save_image(self.article_image, self.title)
@@ -440,7 +448,7 @@ class BlogPage(Page):
     def get_context(self, request):
         # Filter by tag
         blogpages = []
-        pages = BlogPage.objects.order_by('-first_published_at').all()
+        pages = BlogPage.objects.live().order_by('-first_published_at')
         for page in pages:
             if page.sub_tag == self.sub_tag:
                 blogpages.append(page)
@@ -457,19 +465,19 @@ class BlogPage(Page):
 
     class Meta:
         ordering = ('-date',)
-        verbose_name = 'Статья на Русском'
+        verbose_name = 'Статья'
 
 
-class BlogPageEN(BlogPage):
-    locale = 'en'
-    parent_page_types = ['blog.BlogIndexPageEN']
-
-    def save(self, *args, **kwargs):
-        self.locale = 'en'
-        return super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = 'Article in English'
+# class BlogPageEN(BlogPage):
+#     print('BlogPageEN')
+#     locale = 'en'
+#
+#     def save(self, *args, **kwargs):
+#         self.locale = 'en'
+#         return super().save(*args, **kwargs)
+#
+#     class Meta:
+#         verbose_name = 'Article in English'
 
 
 class BlogIndexPage(Page):
@@ -488,9 +496,10 @@ class BlogIndexPage(Page):
             }
             response = requests.post(url, headers=headers, json=payload, )
             if 'errors' in response.json():
-                print(response.json()['errors'][0]['detail'])
+                pass
+                # print(response.json()['errors'][0]['detail'])
             else:
-                print(response.json())
+                # print(response.json())
                 to_form = '{"email": "' + email + '"}'
                 save_mail(to_form)
                 if 'en.' in request.get_host:
@@ -512,16 +521,18 @@ class BlogIndexPage(Page):
             return super().serve(request)
 
     def get_context(self, request):
+        print(request.META['HTTP_HOST'], 'ru')
+        print('BlogIndexPage')
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-
-        blogpages = BlogPage.objects.live().filter(locale='ru').order_by('-first_published_at').order_by('-ontop')
+        blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().order_by('-first_published_at').search(search_query.lower())
+            blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
+        # print(cards)
         context['locale'] = 'ru'
         context['blogpages'] = cards
         context['search_query'] = search_query
@@ -544,6 +555,7 @@ class BlogIndexPage(Page):
 
 
 class BlogIndexPageEN(Page):
+
     def serve(self, request):
         if "email" in request.POST:
             email = request.POST['email']
@@ -576,15 +588,20 @@ class BlogIndexPageEN(Page):
             # Display event page as usual
             return super().serve(request)
 
+    def child_pages(self):
+        return BlogIndexPageEN.get_children(self).specific().order_by('-first_published_at')
+
     def get_context(self, request):
+        print(request.META['HTTP_HOST'], 'en')
+        print('BlogIndexPageEN')
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = BlogPage.objects.live().filter(locale='en').order_by('-first_published_at')
+        blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at')
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogPage.objects.live().order_by('-first_published_at').search(search_query.lower())
+            blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         context['locale'] = 'en'
         context['blogpages'] = cards
@@ -671,7 +688,7 @@ class BlogTagIndexPage(Page):
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
             blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
-                Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
+                (Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id)) & Q(locale='ru'))
         else:
             tags = []
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
@@ -680,11 +697,11 @@ class BlogTagIndexPage(Page):
                 tags.append(tag['id'])
             if len(tags) > 1:
                 blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
-                    Q(main_tag_id__in=tags) | Q(sub_tag_id__in=tags))
+                (Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id)) & Q(locale='ru'))
             else:
                 tag_id = int(tags[0])
                 blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
-                    Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))
+                (Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id)) & Q(locale='ru'))
         # Update template context
         context = super().get_context(request)
         context['blogpages'] = blogpages
@@ -846,12 +863,15 @@ class FormPage(AbstractEmailForm):
 def my_handler(sender, **kwargs):
     if BlogPage.objects.get(id=kwargs.get('instance').id).article_image:
         img = BlogPage.objects.get(id=kwargs.get('instance').id).article_image.file
-    else:
+    elif BlogPage.objects.get(id=kwargs.get('instance').id).main_image:
         img = BlogPage.objects.get(id=kwargs.get('instance').id).main_image.file
-    text = BlogPage.objects.get(id=kwargs.get('instance').id).title
-    tag = ''
-    # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:
-    #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag
-    # else:
-    #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).main_tag
-    save_image(img, text, tag)
+    else:
+        img = None
+    if img:
+        text = BlogPage.objects.get(id=kwargs.get('instance').id).title
+        tag = ''
+        # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:
+        #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag
+        # else:
+        #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).main_tag
+        save_image(img, text, tag)

@@ -1,30 +1,43 @@
+from django.urls import reverse
+from django.utils.html import format_html
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register, ModelAdminGroup)
-from .models import Tags, TagColors, TagsEN, TagColorsEN, BlogPage, BlogPageEN, TypedPage, TypedPageEN
+from .models import BlogIndexPage, BlogIndexPageEN, Tags, TagColors, TagsEN, TagColorsEN, BlogPage, TypedPage, TypedPageEN
 from slider.models import Photo, PhotoEN
 from dop_slider.models import Sliders, SlidersEN
 
 
 class BlogPageInline(ModelAdmin):
-    model = BlogPage
+    model = BlogIndexPage
     menu_label = 'Статьи'
     menu_icon = 'folder-open-inverse'
     menu_order = 10
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(locale='ru')
+    def view_children(self, obj):
+        url = reverse('wagtailadmin_explore', args=[obj.id])
+        return format_html(f'<a href="{url}" id="blogindexpageru">Статьи</a>')
+
+    list_display = ('title', 'live', 'view_children')
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     return qs.filter(locale='ru')
 
 
 class BlogPageInlineEN(ModelAdmin):
-    model = BlogPageEN
+    model = BlogIndexPageEN
     menu_label = 'Articles'
     menu_icon = 'folder-open-inverse'
     menu_order = 10
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(locale='en')
+    def view_children(self, obj):
+        url = reverse('wagtailadmin_explore', args=[obj.id])
+        return format_html(f'<a href="{url}" id="blogindexpageen">Articles</a>')
+
+    list_display = ('title', 'live', 'view_children')
+
+    # def get_queryset(self, request):
+    #     # qs = super().get_children(self).specific().live().order_by('-first_published_at')
+    #     return BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at')
 
 
 class SlidersInline(ModelAdmin):

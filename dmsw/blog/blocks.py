@@ -4,6 +4,16 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 
+# class ImageItem(blocks.StreamBlock):
+#     embed = ImageChooserBlock(verbose_name='Изображение')
+#     title = blocks.RichTextBlock(verbose_name='Подпись')
+#     link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка')
+#     meta = models.CharField(max_length=255, blank=True, null=True, verbose_name='Мета информация')
+#
+#     class Meta:
+#         template = 'blog/blocks/image_item.html'
+
+
 class GalleryBlock(blocks.StreamBlock):
     image = ImageChooserBlock()
 
@@ -21,6 +31,7 @@ class PartnerBlock(blocks.StreamBlock):
 
 class VideoBlock(blocks.StreamBlock):
     video = EmbedBlock()
+    paragraph = blocks.RichTextBlock()
 
     class Meta:
         template = 'blog/blocks/video_block.html'
@@ -56,6 +67,8 @@ class СharitableItem(blocks.StreamBlock):
 class ImageLinkedBlock(blocks.StreamBlock):
     image = ImageChooserBlock(label='Изображение')
     link = blocks.TextBlock(icon='link', label='Ссылка')
+    title = blocks.RichTextBlock(verbose_name='Подпись')
+    meta = blocks.RichTextBlock(verbose_name='Мета информация')
 
     class Meta:
         template = 'blog/blocks/image_linked_block.html'

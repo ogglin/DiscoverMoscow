@@ -11,7 +11,8 @@ class HomePage(Page):
     #     context['blogs'] = self.blogs()
     #     return context
     def serve(self, request):
-        # Redirect to blog index page
+        print(request.META['HTTP_HOST'], 'home')
+        #Redirect to blog index page
         return HttpResponseRedirect('/blog/')
     # def get_context(self, request):
     #     # Update context to include only published posts, ordered by reverse-chron

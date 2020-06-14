@@ -11,6 +11,15 @@ $(document).ready(function () {
         change_opts()
     });
 
+    //Article list blogindexpageru
+    if ($pathname.indexOf('blogindexpageen') > 0) {
+        $('#blogindexpageen')[0].click()
+    } else if ($pathname.indexOf('blogindexpage') > 0) {
+        $('#blogindexpageru')[0].click()
+    }
+
+
+    //Tags
     $tags = $('#id_parent_id option')
     if ($pathname.indexOf('/tagsen/') > 0){
         for (i = 0; i < $tags.length; i++) {

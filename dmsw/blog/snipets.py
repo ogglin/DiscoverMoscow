@@ -32,6 +32,9 @@ class MediaKit(models.Model):
         FieldPanel('mediakit'),
     ]
 
+    def __str__(self):
+        return "MediaKit"
+
     class Meta:
         verbose_name_plural = 'Медиакит'
 

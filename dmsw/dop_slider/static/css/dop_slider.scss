@@ -15,11 +15,11 @@
     img {
       width: auto;
       max-width: 100%;
-      max-height: 50%;
-      position: absolute;
-      left: 0;
-      top: 22%;
-      padding: 0 14% 0 19%;
+      max-height: 100%;
+      /* position: absolute; */
+      /* left: 0; */
+      /* top: 22%; */
+      margin: 0 auto;
     }
 
     a {
@@ -32,7 +32,9 @@
       padding: 0 40px;
       width: 100%;
       margin: 8% auto 40px;
-
+      &:nth-child(2) {
+        height: 50%;
+      }
       &:hover {
         text-decoration: underline;
       }

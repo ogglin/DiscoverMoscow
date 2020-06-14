@@ -49,7 +49,7 @@ def register_centertext_feature(features):
     # Step 1
     feature_name = "center"
     type_ = "CENTERTEXT"
-    tag = "div"
+    tag = "span"
 
     # Step 2
     control = {
@@ -57,7 +57,7 @@ def register_centertext_feature(features):
         "label": "Center",
         "description": "Center Text",
         "style": {
-            "display": "block",
+            "display": "span",
             "text-align": "center",
         },
     }
@@ -89,6 +89,53 @@ def register_centertext_feature(features):
     features.default_features.append(feature_name)
 
 
+@hooks.register("register_rich_text_features")
+def register_gap_feature(features):
+    """Creates gap in our richtext editor and page."""
+
+    # Step 1
+    feature_name = "gap"
+    type_ = "HR"
+    tag = "gap"
+
+    # Step 2
+    control = {
+        "type": type_,
+        "label": "Gap",
+        "description": "Интервал",
+        "style": {
+            "display": "block",
+            "padding": "20px"
+        },
+    }
+
+    # Step 3
+    features.register_editor_plugin(
+        "draftail", feature_name, draftail_features.InlineStyleFeature(control)
+    )
+
+    # Step 4
+    db_conversion = {
+        "from_database_format": {tag: InlineStyleElementHandler(type_)},
+        "to_database_format": {
+            "style_map": {
+                type_: {
+                    "element": tag,
+                    "props": {
+                        "class": "gap"
+                    }
+                }
+            }
+        }
+    }
+
+    # Step 5
+    features.register_converter_rule("contentstate", feature_name, db_conversion)
+
+    # Step 6, This is optional.
+    features.default_features.append(feature_name)
+
+
 @hooks.register('insert_global_admin_js')
 def global_admin_js():
     return format_html(
@@ -98,8 +145,6 @@ def global_admin_js():
 
 @hooks.register('construct_settings_menu')
 def hide_settings_menu_items(request, menu_items):
-    for item in menu_items:
-        print(item.name)
     if request.user.username == 'admin':
         menu_items[:] = [item for item in menu_items]
     else:

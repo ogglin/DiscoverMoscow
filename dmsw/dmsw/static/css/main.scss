@@ -73,6 +73,10 @@ body {
   text-align: center;
 }
 
+.gap {
+  padding: 20px;
+}
+
 .flex-container {
   /*генерирует flex-контейнер уровня блока*/
   max-width: 100%;
@@ -940,6 +944,9 @@ hr {
   max-width: 1160px;
   font-size: 20px;
   color: $black;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px !important;
 
   h2, h3, h4, h5, h6 {
     text-align: center;
@@ -2897,4 +2904,55 @@ footer {
 }
 .lSSlideOuter .lightSlider, .lSSlideOuter .lSPager {
   height: auto !important;
+}
+.linked_image {
+  position: relative;
+  margin-bottom: 15px;
+  .inner_image {
+    position: relative;
+  }
+  a {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+  }
+  .title {
+   text-align: center;
+  }
+  .meta {
+    position: absolute;
+    z-index: 1;
+    bottom: 15px;
+    right: 15px;
+    color: #f3f3f3;
+    text-shadow: 0 0 0 #464646;
+    p {
+      font-size: 12px;
+      padding: 0;
+    }
+  }
+}
+.embed-video, .embed-desc {
+  width: 100%;
+  padding: 0 !important;
+}
+.embed-video {
+  div {
+    padding: 0 !important;
+  }
+}
+.embed-desc {
+  text-align: center;
+  h4 {
+    display: block;
+    margin: 15px 0 0;
+    padding: 0;
+    width: 100%;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: left;
+  }
+  h3 {
+    text-align: center;
+  }
 }

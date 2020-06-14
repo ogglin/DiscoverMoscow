@@ -1,4 +1,26 @@
 {% load wagtailcore_tags wagtailimages_tags cfilters %}
 {% with self as items %}
-    <a href="{{ items.1 }}" target="_blank">{{ items.0 }}</a>
+    <div class="linked_image">
+        <div class="inner_image">
+            {% if items.1.block_type == 'link' %}<a href="{{ items.1 }}" target="_blank">{% endif %}
+            {% if items.2.block_type == 'link' %}<a href="{{ items.2 }}" target="_blank">{% endif %}
+            {% if items.3.block_type == 'link' %}<a href="{{ items.3 }}" target="_blank">{% endif %}
+                {% if items.0.block_type == 'image' %}
+                    {{ items.0 }}
+                {% endif %}
+
+                {% if items.1.block_type == 'meta' %}<div class="meta">{{ items.1
+                        }}</div>{% endif %}
+                {% if items.2.block_type == 'meta' %}<div class="meta">{{ items.2 }}</div>{% endif %}
+                {% if items.3.block_type == 'meta' %}<div class="meta">{{ items.3 }}</div>{% endif %}
+            {% if items.1.block_type == 'link' %}</a>{% endif %}
+            {% if items.2.block_type == 'link' %}</a>{% endif %}
+            {% if items.3.block_type == 'link' %}</a>{% endif %}
+        </div>
+        {% for item in items %}
+            {% if item.block_type == 'title' %}
+                <div class="title">{{ item }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endwith %}

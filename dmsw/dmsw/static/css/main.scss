@@ -946,6 +946,8 @@ hr {
   color: $black;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 40px !important;
 
   h2, h3, h4, h5, h6 {
@@ -957,8 +959,10 @@ hr {
   h2 {
     font-size: calc(100vw * 0.025);
   }
-
-  p {
+  ul, ol {
+    padding-left: 60px;
+  }
+  p, li {
     padding-bottom: 1em;
     font-size: 18px;
     line-height: 26px;
@@ -1052,7 +1056,7 @@ hr {
   box-sizing: border-box;
   padding: 0;
   margin-bottom: 80px;
-
+  display: block !important;
   &:before {
     left: 0;
   }
@@ -1060,7 +1064,9 @@ hr {
   &:after {
     right: 0;
   }
-
+  ul, ol {
+    padding-left: 0 !important;
+  }
   .two-column {
     display: none;
   }
@@ -2693,7 +2699,9 @@ footer {
 
   }
 }
-
+.container:has(.charitable) {
+  flex-direction: row;
+}
 .charitable {
   max-width: 33%;
   padding: 10px;
@@ -2917,7 +2925,10 @@ footer {
     display: inline-block;
   }
   .title {
-   text-align: center;
+    h4 {
+      font-size: 14px;
+      text-align: center;
+    }
   }
   .meta {
     position: absolute;
@@ -2955,4 +2966,7 @@ footer {
   h3 {
     text-align: center;
   }
+}
+.instagram-media {
+    margin: 0 auto !important;
 }

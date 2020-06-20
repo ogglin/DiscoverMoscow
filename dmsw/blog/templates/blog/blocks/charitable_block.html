@@ -9,10 +9,22 @@
                 <div class="desc">{{ item }}</div>
             {% endif %}
             {% if item.block_type == 'help_link' %}
-                <a href="{{ item }}" target="_blank" class="help_link">Помочь</a>
+                <a href="{{ item }}" target="_blank" class="help_link">
+                {% if 'en.' in request.get_host %}
+                    Help
+                {% else %}
+                    Помочь
+                {% endif %}
+                </a>
             {% endif %}
             {% if item.block_type == 'contact_link' %}
-                <a href="{{ item }}" target="_blank" class="contact_link">Контакт</a>
+                <a href="{{ item }}" target="_blank" class="contact_link">
+                    {% if 'en.' in request.get_host %}
+                        Contacts
+                    {% else %}
+                        Контакт
+                    {% endif %}
+                </a>
             {% endif %}
         {% endfor %}
     </div>

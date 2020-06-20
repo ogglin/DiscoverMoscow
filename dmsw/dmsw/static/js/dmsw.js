@@ -225,7 +225,9 @@ yt_play = function (e) {
 
 // Inits
 $(document).ready(function () {
-
+    if($('.charitable').length > 0) {
+        $('.charitable').parent().css('flex-direction','row');
+    }
     main_menu_collapse()
 
     $('.navbar-tags .more').click(function () {

@@ -47,7 +47,13 @@
         <div class="head-block">
             <div class="head-title">
                 <div class="breadcrumbs">
-                    <a href="{{ page.get_parent.url }}">Главная</a>
+                    <a href="{{ page.get_parent.url }}">
+                        {% if 'en.' in request.get_host %}
+                            Main
+                        {% else %}
+                            Главная
+                        {% endif %}
+                    </a>
                     <a href="/tags/?tag={{ page.main_tag }}" class="active">{{ page.main_tag }}</a>
                 </div>
                 <h1 class="title">{{ page.article_title|safe }}</h1>
@@ -58,7 +64,11 @@
     {{ page.content_body }}
     <div class="addthis_inline_share_toolbox"></div>
     <div class="container">
-        <h2>Вам наверняка будет интересно</h2>
+        {% if 'en.' in request.get_host %}
+            <h2 class="more_interest">You might also enjoy this!</h2>
+        {% else %}
+            <h2 class="more_interest">Вам наверняка будет интересно!</h2>
+        {% endif %}
         <hr>
     </div>
     </div>

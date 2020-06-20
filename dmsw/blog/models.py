@@ -1,36 +1,36 @@
-from django.db import models
-from django import forms
-from colorfield.fields import ColorField
-from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.models import ClusterableModel
-from rest_framework.fields import Field
-from smart_selects.db_fields import ChainedForeignKey
-from wagtail.api import APIField
-from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
-from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
-from wagtail.core.blocks import RawHTMLBlock
-from wagtail.embeds.blocks import EmbedBlock
-from wagtail.core.models import Page, Orderable
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core import blocks
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel, FieldRowPanel
-from wagtail.search import index
-from django.db import connection
-from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 import datetime
-import random
-import requests
 import os
-from .snipets import *
+import random
+import textwrap
+
+import requests
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-import textwrap
+from colorfield.fields import ColorField
+from django import forms
+from django.db import connection
+from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.http import JsonResponse
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from rest_framework.fields import Field
+from wagtail.admin.edit_handlers import InlinePanel, MultiFieldPanel, StreamFieldPanel, FieldRowPanel
+from wagtail.api import APIField
+from wagtail.contrib.forms.edit_handlers import FormSubmissionsPanel
+from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
+from wagtail.core import blocks
+from wagtail.core.blocks import RawHTMLBlock
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, Orderable
+from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
+
+from .blocks import ContainerBlock, ContainerNarrowBlock, ContainerWideBlock
+from .snipets import *
 
 dirPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -336,13 +336,13 @@ class BlogPage(Page):
     ], null=True, blank=True, verbose_name="Статья")
     main_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
                                  verbose_name="Основной тег",
-                                 limit_choices_to=(Q(level=0) & Q(locale='ru'))
+                                 limit_choices_to=(Q(level=0))
                                  )
     sub_tag = models.ForeignKey('Tags', null=True, blank=True, on_delete=models.SET_NULL, related_name='+',
                                 verbose_name="Дополнительный тег",
-                                limit_choices_to=(Q(parent_id_id__isnull=False) & Q(locale='ru')))
+                                limit_choices_to=(Q(parent_id_id__isnull=False)))
     main_color = models.ForeignKey('TagColors', null=True, blank=True, on_delete=models.SET_NULL,
-                                   related_name='+', verbose_name="Основной цвет", limit_choices_to=Q(locale='ru'))
+                                   related_name='+', verbose_name="Основной цвет",)
     color_tags = TagColors.objects.all()
     page_type = models.CharField(max_length=250, choices=page_types, default='standart', verbose_name="Тип карточки")
     page_type_hover = models.CharField(max_length=250, choices=page_types_hover, default='standart',
@@ -530,7 +530,8 @@ class BlogIndexPage(Page):
         if search_query == '':
             search_query = None
         if search_query:
-            blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at').search(search_query.lower())
+            blogpages = BlogPage.objects.live().order_by('-first_published_at').search(search_query.lower())
+                # BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at').search(search_query.lower())
         cards = sort_cards(blogpages)
         # print(cards)
         context['locale'] = 'ru'
@@ -602,6 +603,7 @@ class BlogIndexPageEN(Page):
             search_query = None
         if search_query:
             blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at').search(search_query.lower())
+        print(blogpages)
         cards = sort_cards(blogpages)
         context['locale'] = 'en'
         context['blogpages'] = cards

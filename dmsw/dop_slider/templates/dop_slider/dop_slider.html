@@ -51,7 +51,9 @@
             {% if dop_slider|length > 1 %}
                 <ul id="nav-btns-right">
                     {% for slide in dop_slider %}
-                        <li class="slide-nav-btn-right"></li>
+                        {% if forloop.counter0 < 4 %}
+                            <li class="slide-nav-btn-right"></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% endif %}

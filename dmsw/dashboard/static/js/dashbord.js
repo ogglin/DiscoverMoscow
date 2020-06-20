@@ -5,11 +5,18 @@ $(document).ready(function () {
     $color_opts = $('.main_color option')
     named_opts();
     change_opts();
-    $('.main_tag select').change(function () {
-        $pid = $(this).val();
-        $('.sub_tag').addClass('active');
-        change_opts()
-    });
+    $cur_locale = $('#id_locale').val()
+    console.log($cur_locale)
+    // if($cur_locale = 'ru') {
+        $('.main_tag select').change(function () {
+            $pid = $(this).val();
+            $('.sub_tag').addClass('active');
+            change_opts()
+        });
+    // } else if($cur_locale = 'en'){
+    //
+    // }
+
 
     //Article list blogindexpageru
     if ($pathname.indexOf('blogindexpageen') > 0) {
@@ -89,14 +96,14 @@ function named_opts() {
 
 function change_opts() {
     for (i = 0; i < $sub_opts.length; i++) {
-        if($sub_opts.eq(i).attr('name') == $pid) {
+        if($sub_opts.eq(i).attr('name') == $pid || $sub_opts.eq(i).attr('name') == 'NaN') {
             $sub_opts.eq(i).addClass('active')
         } else {
             $sub_opts.eq(i).removeClass('active')
         }
     }
     for (i = 0; i < $color_opts.length; i++) {
-        if($color_opts.eq(i).attr('name') == $pid) {
+        if($color_opts.eq(i).attr('name') == $pid || $sub_opts.eq(i).attr('name') == 'NaN') {
             $color_opts.eq(i).addClass('active')
         } else {
             $color_opts.eq(i).removeClass('active')

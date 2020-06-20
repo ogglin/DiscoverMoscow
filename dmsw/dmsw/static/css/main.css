@@ -688,6 +688,8 @@ hr {
   color: #000000;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 40px !important; }
   .container h2, .container h3, .container h4, .container h5, .container h6 {
     text-align: center;
@@ -695,7 +697,9 @@ hr {
     font-weight: 700; }
   .container h2 {
     font-size: calc(100vw * 0.025); }
-  .container p {
+  .container ul, .container ol {
+    padding-left: 60px; }
+  .container p, .container li {
     padding-bottom: 1em;
     font-size: 18px;
     line-height: 26px; }
@@ -754,11 +758,14 @@ hr {
   background-color: #f3f3f3;
   box-sizing: border-box;
   padding: 0;
-  margin-bottom: 80px; }
+  margin-bottom: 80px;
+  display: block !important; }
   .container.wide:before {
     left: 0; }
   .container.wide:after {
     right: 0; }
+  .container.wide ul, .container.wide ol {
+    padding-left: 0 !important; }
   .container.wide .two-column {
     display: none; }
   .container.wide .slide-element > div {
@@ -1719,6 +1726,9 @@ footer .subscribe-ajax-form {
         content: '|';
         left: 40px; }
 
+.container:has(.charitable) {
+  flex-direction: row; }
+
 .charitable {
   max-width: 33%;
   padding: 10px;
@@ -1868,7 +1878,8 @@ footer .subscribe-ajax-form {
     position: relative;
     width: 100%;
     display: inline-block; }
-  .linked_image .title {
+  .linked_image .title h4 {
+    font-size: 14px;
     text-align: center; }
   .linked_image .meta {
     position: absolute;
@@ -1900,5 +1911,8 @@ footer .subscribe-ajax-form {
     text-align: left; }
   .embed-desc h3 {
     text-align: center; }
+
+.instagram-media {
+  margin: 0 auto !important; }
 
 /*# sourceMappingURL=main.css.map */

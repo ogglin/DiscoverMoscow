@@ -41,12 +41,13 @@
                 {% endif %}
             {% endfor %}
     >
+        {% image page.title_image scale-100 as timg %}
+        <div class="title-image" style='background-image: url("{{ timg.url }}")'></div>
         {% image page.article_image scale-100 as img %}
-        <div class="head-image" style='background-image: url("{{ img.url }}")'>
-        </div>
+        <div class="head-image" style='background-image: url("{{ img.url }}")'></div>
         <div class="head-block">
             <div class="head-title">
-                <div class="breadcrumbs">
+                <div class="breadcrumbs {{ page.title_color }}">
                     <a href="{{ page.get_parent.url }}">Главная</a>
                     {% if page.main_tag %}
                         <a href="/tags/?tag={{ page.main_tag }}" class="active">{{ page.main_tag }}</a>
@@ -54,7 +55,7 @@
                         <a href="/tags/?tag={{ page.sub_tag }}" class="active">{{ page.sub_tag }}</a>
                     {% endif %}
                 </div>
-                <h1 class="title">{{ page.article_title|safe }}</h1>
+                <h1 class="title {{ page.title_color }}">{{ page.article_title|safe }}</h1>
             </div>
         </div>
     </div>

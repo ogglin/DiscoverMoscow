@@ -5,8 +5,8 @@ $(document).ready(function () {
         loop: true,
         nav: true,
         navText: [
-          '<i class="fas fa-arrow-left" aria-hidden="true"></i>',
-          '<i class="fas fa-arrow-right" aria-hidden="true"></i>'
+            '<i class="fas fa-arrow-left" aria-hidden="true"></i>',
+            '<i class="fas fa-arrow-right" aria-hidden="true"></i>'
         ],
         // Автоматическое проигрывание
         autoplay: true,
@@ -161,6 +161,7 @@ function main_menu_collapse() {
 
 $(window).resize(function () {
     main_menu_collapse();
+    yt_ratio();
     //nextSlideRight();
 })
 $('header #more').click(function () {
@@ -196,7 +197,7 @@ pop_gallery = function (e) {
         loop: true,
         onSliderLoad: function (gel) {
             $('.full_image .image-gallery').removeClass('cS-hidden');
-	        $('.full_image .image-gallery').css('height', 'auto')
+            $('.full_image .image-gallery').css('height', 'auto')
             gel.lightGallery({
                 selector: '.full_image .image-gallery .lslide'
             });
@@ -225,8 +226,8 @@ yt_play = function (e) {
 
 // Inits
 $(document).ready(function () {
-    if($('.charitable').length > 0) {
-        $('.charitable').parent().css('flex-direction','row');
+    if ($('.charitable').length > 0) {
+        $('.charitable').parent().css('flex-direction', 'row');
     }
     main_menu_collapse()
 
@@ -246,11 +247,12 @@ $(document).ready(function () {
         $(this).remove()
     })
     frames.each(function (i) {
-        const vfile = $(this).attr('src')
+        const vfile = $(this).attr('src') + '&cc_load_policy=1'
+        console.log(vfile)
         var player = new Playerjs({id: "player" + i, file: vfile});
     })
     if ($('.ant-carousel').length > 0) {
-	    $ytLinks = $('.slide-element > div:first-child > div> p> a')
+        $ytLinks = $('.slide-element > div:first-child > div> p> a')
         $ytAll = $ytLinks.length
         $ytLeftPos = 0;
         $ytRightPos = 3;
@@ -276,9 +278,9 @@ $(document).ready(function () {
     })
 
     $('.container img').click(function () {
-	if (!$(this).hasClass('pop_gal') && $(this).parent()[0].tagName.toLowerCase() !== 'a') {
+        if (!$(this).hasClass('pop_gal') && $(this).parent()[0].tagName.toLowerCase() !== 'a') {
             pop_image($(this));
-	}
+        }
     })
 
     $('.full_image').click(function () {
@@ -290,6 +292,7 @@ $(document).ready(function () {
 window.onload = function () {
     $('.gallery li img').addClass('pop_gal')
     $('.ant-carousel-element .slide-element').css('opacity', 1);
+    yt_ratio()
 };
 
 function loadMoreYtVideo(trend) {
@@ -297,12 +300,12 @@ function loadMoreYtVideo(trend) {
         if ($ytLeftPos == 0) {
             $ytLeftPos = $ytAll - 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         } else if ($ytLeftPos > $ytRightPos) {
             $ytLeftPos -= 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         }
     } else if (trend == 'right') {
@@ -311,9 +314,14 @@ function loadMoreYtVideo(trend) {
         } else if ($ytRightPos < $ytLeftPos || $ytLeftPos == 0) {
             $ytRightPos += 1
             vfile = $ytLinks[$ytRightPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytRightPos, file: vfile});
         }
 
     }
+}
+
+// YT ratio
+function yt_ratio() {
+    $('.yt_ratio iframe').css('height', $('.yt_ratio iframe').width() * 0.5625)
 }

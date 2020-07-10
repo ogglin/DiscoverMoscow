@@ -743,7 +743,7 @@ footer {
     overflow: hidden;
     top: 60%;
     left: 20px;
-    text-transform: capitalize;
+    text-transform: none;
   }
 
   .subtitle {
@@ -959,9 +959,11 @@ hr {
   h2 {
     font-size: calc(100vw * 0.025);
   }
+
   ul, ol {
     padding-left: 60px;
   }
+
   p, li {
     padding-bottom: 1em;
     font-size: 18px;
@@ -1057,6 +1059,7 @@ hr {
   padding: 0;
   margin-bottom: 80px;
   display: block !important;
+
   &:before {
     left: 0;
   }
@@ -1064,9 +1067,11 @@ hr {
   &:after {
     right: 0;
   }
+
   ul, ol {
     padding-left: 0 !important;
   }
+
   .two-column {
     display: none;
   }
@@ -1312,6 +1317,20 @@ h2 {
   height: calc(100vw * 0.375);
   padding: 60px 45px;
   margin-bottom: 30px;
+  position: relative;
+
+  .title-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 
   .head-image {
     float: left;
@@ -1321,6 +1340,8 @@ h2 {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center bottom;
+    position: relative;
+    z-index: 1;
   }
 
   .head-block {
@@ -1343,7 +1364,7 @@ h2 {
         color: #000000;
         text-decoration: none;
         position: relative;
-        padding: 0 20px 0 0;
+        padding: 0 14px 0 0;
         text-transform: capitalize;
 
         &:hover, &:focus {
@@ -1360,6 +1381,18 @@ h2 {
           display: none;
         }
       }
+
+      &.black {
+        a {
+          color: #000000;
+        }
+      }
+
+      &.white {
+        a {
+          color: #FFFFFF;
+        }
+      }
     }
 
     .title {
@@ -1367,6 +1400,14 @@ h2 {
       font-family: 'ALS Gorizont ExtraBold Expanded';
       font-size: var(--big_font_size);
       padding: 40px 0 0;
+
+      &.black {
+        color: #000000;
+      }
+
+      &.white {
+        color: #FFFFFF;
+      }
     }
   }
 }
@@ -1514,16 +1555,19 @@ h2 {
       font-size: 70px;
       font-family: 'Montserrat', sans-serif;
     }
+
     h3 {
       padding: 15px 0;
       font-size: 24px;
     }
+
     p {
       padding: 10px 0;
       font-size: 20px;
       font-weight: 600;
       line-height: 1.5;
     }
+
     .btn-block {
       display: flex;
       justify-content: space-around;
@@ -2275,19 +2319,23 @@ h2 {
   .gallery_pop {
     padding: 70px 40px;
     width: 100%;
+
     .image-gallery {
       li {
         text-align: center;
+
         img {
           height: auto;
           width: auto;
         }
       }
     }
+
     .lSSlideOuter {
       .lSPager.lSGallery {
         li {
           text-align: center;
+
           img {
             max-height: 100px;
           }
@@ -2425,10 +2473,12 @@ footer {
     font-weight: 700;
     text-decoration: none;
     margin: 10px auto;
+
     &:hover {
       text-decoration: none;
     }
   }
+
   .endless_more {
     border: 1px solid #fff;
     border-radius: 30px;
@@ -2436,6 +2486,7 @@ footer {
     height: auto;
     margin: 15px;
     padding: 0 20px;
+
     &:hover {
       text-decoration: none;
       background-color: #FFFFFF;
@@ -2699,9 +2750,11 @@ footer {
 
   }
 }
+
 .container:has(.charitable) {
   flex-direction: row;
 }
+
 .charitable {
   max-width: 33%;
   padding: 10px;
@@ -2859,6 +2912,7 @@ footer {
   iframe {
     max-width: 100%;
   }
+
   max-width: calc(33% - 30px);
   margin: 15px;
 }
@@ -2910,26 +2964,32 @@ footer {
     height: calc(100vw * 0.38);
   }
 }
+
 .lSSlideOuter .lightSlider, .lSSlideOuter .lSPager {
   height: auto !important;
 }
+
 .linked_image {
   position: relative;
   margin-bottom: 15px;
+
   .inner_image {
     position: relative;
   }
+
   a {
     position: relative;
     width: 100%;
     display: inline-block;
   }
+
   .title {
     h4 {
       font-size: 14px;
       text-align: center;
     }
   }
+
   .meta {
     position: absolute;
     z-index: 1;
@@ -2937,23 +2997,28 @@ footer {
     right: 15px;
     color: #f3f3f3;
     text-shadow: 0 0 0 #464646;
+
     p {
       font-size: 12px;
       padding: 0;
     }
   }
 }
+
 .embed-video, .embed-desc {
   width: 100%;
   padding: 0 !important;
 }
+
 .embed-video {
   div {
     padding: 0 !important;
   }
 }
+
 .embed-desc {
-  text-align: center;
+  text-align: left;
+
   h4 {
     display: block;
     margin: 15px 0 0;
@@ -2963,10 +3028,12 @@ footer {
     font-size: 13px;
     text-align: left;
   }
+
   h3 {
-    text-align: center;
+    text-align: left;
   }
 }
+
 .instagram-media {
-    margin: 0 auto !important;
+  margin: 0 auto !important;
 }

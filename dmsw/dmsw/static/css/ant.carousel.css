@@ -3,7 +3,7 @@
   overflow: hidden;
   margin: 0;
   padding: 40px 0;
-  max-height: calc(100vw * 0.257 + 160px);
+  max-height: calc(100vw * 0.257 + 180px);
   opacity: 1;
   position: relative; }
 
@@ -50,7 +50,7 @@
 .ant-carousel-element {
   display: block;
   flex: 0 0 auto;
-  height: calc(100vw * 0.277 + 70px); }
+  height: calc(100vw * 0.277 + 80px); }
 
 /* Navigation item styles */
 div.ant-carousel-arrow-left,

@@ -987,6 +987,7 @@ hr {
     max-width: 100%;
     height: auto;
     cursor: pointer;
+    margin-bottom: 15px;
   }
 
   .intro {
@@ -2972,7 +2973,9 @@ footer {
 .linked_image {
   position: relative;
   margin-bottom: 15px;
-
+  img {
+    margin-bottom: 0;
+  }
   .inner_image {
     position: relative;
   }

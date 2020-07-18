@@ -2,7 +2,7 @@ import datetime
 import os
 import random
 import textwrap
-
+from django.utils import timezone
 import requests
 from PIL import Image
 from PIL import ImageDraw
@@ -14,7 +14,6 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.http import JsonResponse
-from django.utils import timezone
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
@@ -328,6 +327,8 @@ class BlogPage(Page):
     ]
     locale = models.CharField(max_length=250, verbose_name="Language", choices=locales, default='ru')
     date = models.DateField("Post date")
+    publish_date = models.DateTimeField("Время публикации", null=False,
+                                        default=timezone.localtime(timezone.now() - timezone.timedelta(hours=1)))
     intro = models.CharField(max_length=250, verbose_name="Тект ховера карточки")
     adv_link = models.CharField(max_length=250, null=True, blank=True, verbose_name="Ссылка на рекламодателя")
     body = RichTextField(blank=True, verbose_name="Вступление статьи")
@@ -407,6 +408,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
+            FieldPanel('publish_date'),
             FieldPanel('locale'),
             FieldPanel('card_title'),
             FieldPanel('card_sub_title'),
@@ -466,7 +468,7 @@ class BlogPage(Page):
     def get_context(self, request):
         # Filter by tag
         blogpages = []
-        pages = BlogPage.objects.live().order_by('-first_published_at')
+        pages = BlogPage.objects.live().order_by('-date')
         for page in pages:
             if page.sub_tag == self.sub_tag:
                 blogpages.append(page)
@@ -482,7 +484,7 @@ class BlogPage(Page):
         return context
 
     class Meta:
-        ordering = ('-date',)
+        ordering = ('page_ptr_id', '-date',)
         verbose_name = 'Статья'
 
 
@@ -539,19 +541,18 @@ class BlogIndexPage(Page):
             return super().serve(request)
 
     def get_context(self, request):
-        print(request.META['HTTP_HOST'], 'ru')
-        print('BlogIndexPage')
-        # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = BlogIndexPage.get_children(self).specific().live().order_by(
-            '-first_published_at')
+        posts = BlogIndexPage.get_children(self).specific().live().order_by('-blogpage__date')
+        blogpages = []
+        for post in posts:
+            if timezone.localtime(timezone.now()) > post.publish_date:
+                blogpages.append(post)
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
             blogpages = []
-            posts = BlogIndexPage.get_children(self).specific().live().order_by(
-                '-first_published_at')  # .search(search_query.lower())
+            posts = BlogIndexPage.get_children(self).specific().live().order_by('-blogpage__date')
             for post in posts:
                 if search_query.lower() in post.search_body or search_query.lower() in post.title:
                     blogpages.append(post)
@@ -616,22 +617,22 @@ class BlogIndexPageEN(Page):
         return BlogIndexPageEN.get_children(self).specific().order_by('-first_published_at')
 
     def get_context(self, request):
-        print(request.META['HTTP_HOST'], 'en')
-        print('BlogIndexPageEN')
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = BlogIndexPageEN.get_children(self).specific().live().order_by('-first_published_at')
+        posts = BlogIndexPage.get_children(self).specific().live().order_by('-blogpage__date')
+        blogpages = []
+        for post in posts:
+            if timezone.localtime(timezone.now()) > post.publish_date:
+                blogpages.append(post)
         search_query = request.GET.get('q', None)
         if search_query == '':
             search_query = None
         if search_query:
             blogpages = []
-            posts = BlogIndexPageEN.get_children(self).specific().live().order_by(
-                '-first_published_at')  # .search(search_query.lower())
+            posts = BlogIndexPage.get_children(self).specific().live().order_by('-blogpage__date')
             for post in posts:
                 if search_query.lower() in post.search_body or search_query.lower() in post.title:
                     blogpages.append(post)
-        print(blogpages)
         cards = sort_cards(blogpages)
         context['locale'] = 'en'
         context['blogpages'] = cards

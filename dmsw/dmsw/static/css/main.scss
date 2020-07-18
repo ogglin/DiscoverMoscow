@@ -1520,7 +1520,7 @@ h2 {
 
     .meta {
       display: inline-flex;
-      font-family: "PT Mono";
+      font-family: 'Montserrat', sans-serif;
       font-weight: 600;
       font-size: 16px;
       color: $black;
@@ -2053,7 +2053,9 @@ h2 {
 
       .head-block {
         padding: 0;
-
+        .head-title {
+          position: relative;
+        }
         .title {
           font-size: 20px;
           padding: 20px 20px 10px 0;
@@ -2989,7 +2991,7 @@ footer {
   .title {
     h4 {
       font-size: 14px;
-      text-align: center;
+      text-align: left;
     }
   }
 
@@ -3002,8 +3004,9 @@ footer {
     text-shadow: 0 0 0 #464646;
 
     p {
-      font-size: 12px;
+      font-size: 14px;
       padding: 0;
+      font-family: 'Montserrat', sans-serif;
     }
   }
 }

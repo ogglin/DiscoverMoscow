@@ -1070,7 +1070,7 @@ h2 {
     opacity: 0.2; }
   .partners .partner_img .meta {
     display: inline-flex;
-    font-family: "PT Mono";
+    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #000000; }
@@ -1355,6 +1355,8 @@ h2 {
       margin-right: 20px; }
     body .header-block .head-block {
       padding: 0; }
+      body .header-block .head-block .head-title {
+        position: relative; }
       body .header-block .head-block .title {
         font-size: 20px;
         padding: 20px 20px 10px 0; }
@@ -1905,7 +1907,7 @@ footer .subscribe-ajax-form {
     display: inline-block; }
   .linked_image .title h4 {
     font-size: 14px;
-    text-align: center; }
+    text-align: left; }
   .linked_image .meta {
     position: absolute;
     z-index: 1;
@@ -1914,8 +1916,9 @@ footer .subscribe-ajax-form {
     color: #f3f3f3;
     text-shadow: 0 0 0 #464646; }
     .linked_image .meta p {
-      font-size: 12px;
-      padding: 0; }
+      font-size: 14px;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif; }
 
 .embed-video, .embed-desc {
   width: 100%;

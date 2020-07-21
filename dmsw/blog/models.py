@@ -363,6 +363,8 @@ class BlogPage(Page):
                                     on_delete=models.SET_NULL,
                                     related_name='+',
                                     verbose_name="Изображение заголовка на фон")
+    show_image_on_mobile = models.BooleanField('показывать "Изображение заголовка на фон" на мобильных', default=False,
+                                               null=False, blank=True)
     main_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -430,6 +432,7 @@ class BlogPage(Page):
         MultiFieldPanel([
             FieldPanel('article_title'),
             ImageChooserPanel('title_image'),
+            FieldPanel('show_image_on_mobile', widget=forms.CheckboxInput),
             FieldPanel('title_color'),
             ImageChooserPanel('article_image')],
             heading="Заголовок внутри карточки",

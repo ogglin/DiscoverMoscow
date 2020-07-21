@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="header-block"
+    <div class="header-block {% if page.show_image_on_mobile %}show_image_on_mobile{% endif %}"
             {% for ctag in page.color_tags %}
                 {% if page.main_color_id %}
                     {% if ctag.id == page.main_color_id %}
@@ -43,6 +43,9 @@
     >
         {% image page.title_image scale-100 as timg %}
         <div class="title-image" style='background-image: url("{{ timg.url }}")'></div>
+        {% if page.show_image_on_mobile %}
+            <div class="image_on_mobile"><img src="{{ timg.url }}" alt=""></div>
+        {% endif %}
         {% image page.article_image scale-100 as img %}
         <div class="head-image" style='background-image: url("{{ img.url }}")'></div>
         <div class="head-block">

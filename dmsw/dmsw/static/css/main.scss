@@ -3043,3 +3043,23 @@ footer {
 .instagram-media {
   margin: 0 auto !important;
 }
+
+.image_on_mobile {
+  display: none;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .title-image {
+    display: none;
+  }
+  .show_image_on_mobile {
+    flex-direction: column;
+    padding-top: 0 !important;
+    .image_on_mobile {
+      display: block;
+    }
+  }
+}

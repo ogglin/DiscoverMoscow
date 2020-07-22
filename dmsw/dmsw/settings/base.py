@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'compressor',
     'colorfield',
     'widget_tweaks',
-    'newsletter',
     # 'smart_selects',
     'el_pagination',
     'django.contrib.sites',

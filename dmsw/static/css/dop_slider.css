@@ -9,11 +9,8 @@
   .slider-right .slide-standart img {
     width: auto;
     max-width: 100%;
-    max-height: 50%;
-    position: absolute;
-    left: 0;
-    top: 22%;
-    padding: 0 14% 0 19%; }
+    max-height: 100%;
+    margin: 0 auto; }
   .slider-right .slide-standart a {
     color: #ffffff;
     text-decoration: none;
@@ -24,6 +21,8 @@
     padding: 0 40px;
     width: 100%;
     margin: 8% auto 40px; }
+    .slider-right .slide-standart a:nth-child(2) {
+      height: 50%; }
     .slider-right .slide-standart a:hover {
       text-decoration: underline; }
   .slider-right .slide-standart p {
@@ -228,14 +227,14 @@
     margin: 20px auto 0; } }
 @media only screen and (max-width: 640px) {
   body .slider-right .slide-standart img {
-    left: calc(100% / 16); } }
+    left: 0; } }
 @media only screen and (max-width: 480px) {
   body .slider_block {
     height: 1200px; }
     body .slider_block .left, body .slider_block .right {
       height: 600px; }
     body .slider_block .slider-right .slide-standart img {
-      left: calc(100% / 16); }
+      left: 0; }
     body .slider_block .slider-right .slide-calendar .block_first .date {
       width: 140px;
       height: 140px; }

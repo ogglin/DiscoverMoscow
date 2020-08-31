@@ -72,7 +72,7 @@ def save_mail(to_form):
     rows = cursor.fetchall()
 
 
-def save_image(img, text, tag):
+def save_image(img, text, tag, locale):
     if img:
         pos = (10, 20)
         black = (0, 0, 0)
@@ -87,7 +87,7 @@ def save_image(img, text, tag):
         overlay = Image.open(dirPath + '/static/image/overlay.png')
         logo = Image.open(dirPath + '/static/image/logotype_over.png')
         in_path = dirPath + '/media/' + transliterate(str(img)).replace('original_images', 'original_images/')
-        out_path = dirPath + '/media/to_share_imgs/' + transliterate(str(img)).replace('original_images', '')
+        out_path = dirPath + '/media/to_share_imgs/' + locale + transliterate(str(img)).replace('original_images', '')
         try:
             photo = Image.open(in_path)
             photo = photo.convert('RGB')
@@ -129,7 +129,6 @@ def sort_cards(pages):
     temp_cards = []
     primary = []
     cards = []
-    print(all_tags)
     for tag in all_tags:
         if tag.level == 0:
             primary.append(tag.id)
@@ -473,7 +472,7 @@ class BlogPage(Page):
         blogpages = []
         pages = BlogPage.objects.live().order_by('-date')
         for page in pages:
-            if page.sub_tag == self.sub_tag:
+            if page.sub_tag == self.sub_tag and self.sub_tag is not None:
                 blogpages.append(page)
         if len(blogpages) < 6:
             for page in pages:
@@ -719,6 +718,9 @@ class BlogTagIndexPage(Page):
     def get_context(self, request):
         # Filter by tag
         tag = request.GET.get('tag')
+        tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
+        print(BlogPage.objects.live().order_by('-first_published_at').filter(
+                (Q(main_tag_id=tag_id) | Q(sub_tag_id=tag_id))))
         if Tags.objects.filter(name=tag).values('parent_id_id')[0]['parent_id_id']:
             tag_id = Tags.objects.filter(name=tag).values('id')[0]['id']
             blogpages = BlogPage.objects.live().order_by('-first_published_at').filter(
@@ -905,8 +907,9 @@ def my_handler(sender, **kwargs):
     if img:
         text = BlogPage.objects.get(id=kwargs.get('instance').id).title
         tag = ''
+        locale = BlogPage.objects.get(id=kwargs.get('instance').id).locale
         # if BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag:
         #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).sub_tag
         # else:
         #     tag = BlogPage.objects.get(id=kwargs.get('instance').id).main_tag
-        save_image(img, text, tag)
+        save_image(img, text, tag, locale)

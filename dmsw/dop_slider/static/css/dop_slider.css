@@ -227,14 +227,14 @@
     margin: 20px auto 0; } }
 @media only screen and (max-width: 640px) {
   body .slider-right .slide-standart img {
-    left: calc(100% / 16); } }
+    left: 0; } }
 @media only screen and (max-width: 480px) {
   body .slider_block {
     height: 1200px; }
     body .slider_block .left, body .slider_block .right {
       height: 600px; }
     body .slider_block .slider-right .slide-standart img {
-      left: calc(100% / 16); }
+      left: 0; }
     body .slider_block .slider-right .slide-calendar .block_first .date {
       width: 140px;
       height: 140px; }

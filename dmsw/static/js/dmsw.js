@@ -1,11 +1,12 @@
+counter = 1
 $(document).ready(function () {
     $('#owl-carousel-1').owlCarousel({
         items: 1,
         loop: true,
         nav: true,
         navText: [
-          '<i class="fas fa-arrow-left" aria-hidden="true"></i>',
-          '<i class="fas fa-arrow-right" aria-hidden="true"></i>'
+            '<i class="fas fa-arrow-left" aria-hidden="true"></i>',
+            '<i class="fas fa-arrow-right" aria-hidden="true"></i>'
         ],
         // Автоматическое проигрывание
         autoplay: true,
@@ -14,31 +15,30 @@ $(document).ready(function () {
         slideTransition: 'linear',
         autoplayHoverPause: true
     });
+    $('.owl-dot').click(function () {
+        clear_interval()
+    })
+    $('.owl-next').click(function () {
+        clear_interval()
+    })
 });
 
-
-// Burger menu
-var docHeight = $(document).height();
-var footerHeight = $('footer').height();
-burgerHeight = docHeight - footerHeight - 130
-// $('header .navbar-tags').css('height',burgerHeight)
-$('#btn_burger').click(function () {
-    $('.navbar-tags').addClass('active')
-    $('#btn_burger').addClass('hide')
-    $('#btn_burger_close').removeClass('hide')
-    $('.main_menu').addClass('hide')
-});
-$('#btn_burger_close').click(function () {
-    $('.navbar-tags').removeClass('active')
-    $('#btn_burger_close').addClass('hide')
-    $('#btn_burger').removeClass('hide')
-    $('.main_menu').removeClass('hide')
-});
+function clear_interval() {
+    clearInterval(switchInterval_right);
+    switchInterval_right = setInterval(nextSlideRight, slideInterval_right);
+    if (counter < 2) {
+        counter++
+    } else {
+        counter--
+        // nextSlideRight()
+    }
+    console.log(counter)
+}
 
 //Slider aditional
 var slideNow_right = 1;
 var slideCount_right = $('#slidewrapper-right').children().length;
-var slideInterval_right = 100000;
+var slideInterval_right = 11000;
 var navBtnId_right = 0;
 var translateWidth_right = 0;
 var switchInterval_right = setInterval(nextSlideRight, slideInterval_right);
@@ -123,6 +123,26 @@ function setActive() {
     })
 }
 
+
+// Burger menu
+var docHeight = $(document).height();
+var footerHeight = $('footer').height();
+burgerHeight = docHeight - footerHeight - 130
+// $('header .navbar-tags').css('height',burgerHeight)
+$('#btn_burger').click(function () {
+    $('.navbar-tags').addClass('active')
+    $('#btn_burger').addClass('hide')
+    $('#btn_burger_close').removeClass('hide')
+    $('.main_menu').addClass('hide')
+});
+$('#btn_burger_close').click(function () {
+    $('.navbar-tags').removeClass('active')
+    $('#btn_burger_close').addClass('hide')
+    $('#btn_burger').removeClass('hide')
+    $('.main_menu').removeClass('hide')
+});
+
+
 // Main menu open/close
 function main_menu_collapse() {
     menu_width = $('header .navbar').width()
@@ -141,6 +161,7 @@ function main_menu_collapse() {
 
 $(window).resize(function () {
     main_menu_collapse();
+    yt_ratio();
     //nextSlideRight();
 })
 $('header #more').click(function () {
@@ -176,7 +197,7 @@ pop_gallery = function (e) {
         loop: true,
         onSliderLoad: function (gel) {
             $('.full_image .image-gallery').removeClass('cS-hidden');
-	    $('.full_image .image-gallery').css('height', 'auto')
+            $('.full_image .image-gallery').css('height', 'auto')
             gel.lightGallery({
                 selector: '.full_image .image-gallery .lslide'
             });
@@ -205,7 +226,9 @@ yt_play = function (e) {
 
 // Inits
 $(document).ready(function () {
-
+    if ($('.charitable').length > 0) {
+        $('.charitable').parent().css('flex-direction', 'row');
+    }
     main_menu_collapse()
 
     $('.navbar-tags .more').click(function () {
@@ -224,15 +247,15 @@ $(document).ready(function () {
         $(this).remove()
     })
     frames.each(function (i) {
-        const vfile = $(this).attr('src')
+        const vfile = $(this).attr('src') + '&cc_load_policy=1'
+        console.log(vfile)
         var player = new Playerjs({id: "player" + i, file: vfile});
     })
     if ($('.ant-carousel').length > 0) {
-	$ytLinks = $('.slide-element > div:first-child > div> p> a')
-	console.log($ytLinks)
+        $ytLinks = $('.slide-element > div:first-child > div> p> a')
         $ytAll = $ytLinks.length
         $ytLeftPos = 0;
-        $ytRightPos = 4;
+        $ytRightPos = 3;
         for (i = $ytLeftPos; i <= $ytRightPos; i++) {
             vfile = $ytLinks[i].innerHTML
             var player = new Playerjs({id: "ytPlayer" + i, file: vfile});
@@ -255,9 +278,9 @@ $(document).ready(function () {
     })
 
     $('.container img').click(function () {
-	if (!$(this).hasClass('pop_gal')) {
+        if (!$(this).hasClass('pop_gal') && $(this).parent()[0].tagName.toLowerCase() !== 'a') {
             pop_image($(this));
-	}
+        }
     })
 
     $('.full_image').click(function () {
@@ -269,6 +292,7 @@ $(document).ready(function () {
 window.onload = function () {
     $('.gallery li img').addClass('pop_gal')
     $('.ant-carousel-element .slide-element').css('opacity', 1);
+    yt_ratio()
 };
 
 function loadMoreYtVideo(trend) {
@@ -276,12 +300,12 @@ function loadMoreYtVideo(trend) {
         if ($ytLeftPos == 0) {
             $ytLeftPos = $ytAll - 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         } else if ($ytLeftPos > $ytRightPos) {
             $ytLeftPos -= 1
             vfile = $ytLinks[$ytLeftPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytLeftPos, file: vfile});
         }
     } else if (trend == 'right') {
@@ -290,9 +314,14 @@ function loadMoreYtVideo(trend) {
         } else if ($ytRightPos < $ytLeftPos || $ytLeftPos == 0) {
             $ytRightPos += 1
             vfile = $ytLinks[$ytRightPos].innerHTML
-	    console.log(vfile)
+            console.log(vfile)
             var player = new Playerjs({id: "ytPlayer" + $ytRightPos, file: vfile});
         }
 
     }
+}
+
+// YT ratio
+function yt_ratio() {
+    $('.yt_ratio iframe').css('height', $('.yt_ratio iframe').width() * 0.5625)
 }

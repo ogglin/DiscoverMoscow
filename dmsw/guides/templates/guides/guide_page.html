@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags cfilters %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block sharing_block %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="guides-header" style="background: linear-gradient(90deg, {{ page.color_one }}, {{ page.color_two }});">
+        <h1>#{{ page.main_title }}</h1>
+    </div>
+    <div class="container-flex">
+        <div class="container-guide" style="background-color: {{ page.color_one }}">
+            {% image page.background_image scale-100 as img %}
+            <div class="guide-inner">
+                <div class="guides-bg" style="background-image: url('{{ img.url }}')"></div>
+                {{ page.main_content }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
+
+{% block slider-block %}
+{% endblock %}
+{% block subscribe %}
+    {% include "forms/ajax.html" %}
+{% endblock %}

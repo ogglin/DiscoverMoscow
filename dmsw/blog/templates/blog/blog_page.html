@@ -6,13 +6,22 @@
 
 {% block sharing_block %}
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="#Москвастобой">
     <meta property="og:title" content="{{ page.card_title }}">
     <meta property="og:description" content="{{ page.intro }}">
     <meta property="og:url" content="{{ self.url }}">
-    <meta property="og:locale" content="ru_RU">
     {% image page.article_image scale-100 as img %}
     <meta property="og:image" content="{{ page.get_site.root_url }}/media/to_share_imgs/{{ img.url|image_name }}">
+    {% if page.locale == 'ru' %}
+        <meta property="og:locale" content="ru_RU">
+        <meta property="og:site_name" content="#Москвастобой">
+{#        {% image page.article_image scale-100 as img %}#}
+{#        <meta property="og:image" content="{{ page.get_site.root_url }}/media/to_share_imgs/ru{{ img.url|image_name }}">#}
+    {% else %}
+        <meta property="og:locale" content="en_EN">
+        <meta property="og:site_name" content="#Moscowwithyou">
+{#        {% image page.article_image scale-100 as img %}#}
+{#        <meta property="og:image" content="{{ page.get_site.root_url }}/media/to_share_imgs/en{{ img.url|image_name }}">#}
+    {% endif %}
     <meta property="og:image:width" content="968">
     <meta property="og:image:height" content="504">
 
@@ -21,6 +30,13 @@
     <meta name="twitter:description" content="{{ page.intro }}">
     {% image page.article_image scale-100 as img %}
     <meta name="twitter:image:src" content="{{ page.get_site.root_url }}/media/to_share_imgs/{{ img.url|image_name }}">
+{#    {% if page.locale == 'ru' %}#}
+{#        {% image page.article_image scale-100 as img %}#}
+{#        <meta name="twitter:image:src" content="{{ page.get_site.root_url }}/media/to_share_imgs/ru{{ img.url|image_name }}">#}
+{#    {% else %}#}
+{#        {% image page.article_image scale-100 as img %}#}
+{#        <meta name="twitter:image:src" content="{{ page.get_site.root_url }}/media/to_share_imgs/en{{ img.url|image_name }}">#}
+{#    {% endif %}#}
     <meta name="twitter:url" content="{{ self.url }}">
     <meta name="twitter:domain" content="{{ page.get_site.root_url }}">
     <meta name="twitter:site" content="@moscowwithyou.ru">
@@ -29,6 +45,7 @@
 
 {% block content %}
     <div class="header-block {% if page.show_image_on_mobile %}show_image_on_mobile{% endif %}"
+            {{ page.main_color_id }}
             {% for ctag in page.color_tags %}
                 {% if page.main_color_id %}
                     {% if ctag.id == page.main_color_id %}
@@ -51,7 +68,13 @@
         <div class="head-block">
             <div class="head-title">
                 <div class="breadcrumbs {{ page.title_color }}">
-                    <a href="{{ page.get_parent.url }}">Главная</a>
+                    <a href="{{ page.get_parent.url }}">
+                        {% if 'en.' in request.get_host %}
+                            Main
+                        {% else %}
+                            Главная
+                        {% endif %}
+                    </a>
                     {% if page.main_tag %}
                         <a href="/tags/?tag={{ page.main_tag }}" class="active">{{ page.main_tag }}</a>
                     {% elif page.sub_tag %}
@@ -76,10 +99,10 @@
     </div>
     <div class="card-wrap tagged one_row">
         {% for post in blogpages %}
-            {% if post.locale == 'ru' %}
-                {% if page.id != post.id %}
-                    {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag %}
-                        {% if forloop.counter < 12 %}
+            {% if 'en.' in request.get_host %}
+                {% if post.locale == 'en' %}
+                    {% if page.id != post.id %}
+                        {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag and post.sub_tag is not None %}
                             {% with post=post.specific %}
                                 <div class="card-item {{ post.page_color }} {{ post.locale }}">
                                     <div class="card-front {{ post.page_type }}">
@@ -142,14 +165,96 @@
                                                 {{ post.title }}{% endif %}
                                         </p>
                                         <div class="tags">
-                                        <span>
-                                            {% if post.main_tag %}
-                                                <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
+                                            <span>
+                                                {% if post.main_tag %}
+                                                    <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
+                                                {% endif %}
+                                                {% if post.sub_tag.name and post.main_tag|clear_val != post.sub_tag.name|clear_val %}
+                                                    <a href="/tags/?tag={{ post.sub_tag.name }}">#{{ post.sub_tag.name }}</a>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {% if post.locale == 'ru' %}
+                    {% if page.id != post.id %}
+                        {% if post.main_tag == page.main_tag or post.sub_tag == page.sub_tag and post.sub_tag is not None %}
+                            {% with post=post.specific %}
+                                <div class="card-item {{ post.page_color }} {{ post.locale }}">
+                                    <div class="card-front {{ post.page_type }}">
+                                        <div {{ post.main_tag.id }} class="background"
+                                                {% for ctag in post.color_tags %}
+                                                    {% if post.main_color_id %}
+                                                        {% if ctag.id == post.main_color_id %}
+                                                                    style="background-color: {{ ctag.color }}"
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if ctag.tag_id.tag_id == post.main_tag_id %}
+                                                                    style="background-color: {{ ctag.color }}"
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                        ></div>
+                                        <div class="card-item-inner">
+                                            {% if post.main_image %}
+                                                {% image post.main_image scale-100 as img %}
+                                                <div class="image"
+                                                     style='background-image: url("{{ img.url }}")'></div>
                                             {% endif %}
-                                            {% if post.sub_tag.name and post.main_tag|clear_val != post.sub_tag.name|clear_val %}
-                                                <a href="/tags/?tag={{ post.sub_tag.name }}">#{{ post.sub_tag.name }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-back {{ post.page_type_hover }}">
+                                        <div class="background"
+                                                {% for ctag in post.color_tags %}
+                                                    {% if post.main_color_id %}
+                                                        {% if ctag.id == post.main_color_id %}
+                                             style="background-color: {{ ctag.color }}"
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if ctag.tag_id.tag_id == post.main_tag_id %}
+                                             style="background-color: {{ ctag.color }}"
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                        ></div>
+                                        <div class="card-item-inner">
+                                            {% if post.animate_image %}
+                                                <div class="image"
+                                                     style='background-image: url("/media/{{ post.animate_image }}")'></div>
                                             {% endif %}
-                                        </span>
+                                            <p class="intro">{{ post.intro }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-meta {{ post.page_type_hover }}">
+                                        {% if post.main_tag.id == 14 %}
+                                            <a href="{{ post.adv_link|safe }}" target="_blank">
+                                        {% else %}
+                                            <a href="{% pageurl post %}">
+                                        {% endif %}
+                                        </a>
+                                        <h2 class="title">{% if post.card_title %}
+                                            {{ post.card_title }}
+                                        {% elif post.sub_tag.name %} #{{ post.sub_tag.name }}
+                                        {% else %}#{{ post.main_tag }}{% endif %}
+                                        </h2>
+                                        <p class="subtitle">
+                                            {% if post.card_sub_title %}{{ post.card_sub_title }}{% else %}
+                                                {{ post.title }}{% endif %}
+                                        </p>
+                                        <div class="tags">
+                                            <span>
+                                                {% if post.main_tag %}
+                                                    <a href="/tags/?tag={{ post.main_tag }}">#{{ post.main_tag }}</a>
+                                                {% endif %}
+                                                {% if post.sub_tag.name and post.main_tag|clear_val != post.sub_tag.name|clear_val %}
+                                                    <a href="/tags/?tag={{ post.sub_tag.name }}">#{{ post.sub_tag.name }}</a>
+                                                {% endif %}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -166,28 +271,29 @@
 {% block extra_js %}
     <script>
         $(document).ready(function () {
+
+            {#var slider = #}
+            $('.image-gallery').lightSlider({
+                gallery: true,
+                item: 1,
+                thumbItem: 4,
+                slideMargin: 10,
+                thumbMargin: 20,
+                speed: 2500,
+                loop: true,
+                onSliderLoad: function (el) {
+                    $('.image-gallery').removeClass('cS-hidden');
+                    {#$('.image-gallery .lslide').lightGallery()#}
+                    {#el.lightGallery({selector: '.image-gallery .lslide'});#}
+                }
+            });
             if ($('.image-gallery').length) {
-                var slider = $('.image-gallery').lightSlider({
-                    gallery: true,
-                    item: 1,
-                    thumbItem: 4,
-                    slideMargin: 10,
-                    thumbMargin: 20,
-                    speed: 2500,
-                    loop: true,
-                    onSliderLoad: function (el) {
-                        $('.image-gallery').removeClass('cS-hidden');
-                        el.lightGallery({
-                            selector: '.image-gallery .lslide'
-                        });
-                    }
-                });
             }
             $('.lSPrev').click(function () {
-                slider.goToPrevSlide();
+                {#slider.goToPrevSlide();#}
             })
             $('.lSNext').click(function () {
-                slider.goToNextSlide();
+                {#slider.goToNextSlide();#}
             })
         })
     </script>

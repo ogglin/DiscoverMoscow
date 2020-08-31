@@ -30,11 +30,16 @@
     {# Global stylesheets #}
     <link type="text/css" href="{% static 'css/all.min.css' %}" media="screen">
     {% compress css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" media="screen">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">
+        <link type="text/x-scss" href="{% static 'css/main.scss' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'css/lightbox.css' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'css/lightslider.css' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'css/ant.carousel.scss' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'css/dmsw.css' %}" rel="stylesheet" media="screen">
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" media="screen">#}
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">#}
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}">#}
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/ant.carousel.css' %}">#}
+{#        <link rel="stylesheet" type="text/css" href="{% static 'css/dmsw.css' %}">#}
     {% endcompress %}
 
 
@@ -115,6 +120,9 @@
                         {% for tag in ar_tags %}
                             {% if tag.id == idx %}
                                 <li class="first"><a href="/tags/?tag={{ tag.name }}">#{{ tag.name }}</a></li>
+{#                                {% if 'образ жизни' in tag.name %}#}
+{#                                    <li><a href="https://moscow-routes.moscowwithyou.ru/" target="_blank">#МаршрутыпоМоскве</a></li>#}
+{#                                {% endif %}#}
                                 {% if el %}
                                     {% for item in el %}
                                         {% for tag in ar_tags %}

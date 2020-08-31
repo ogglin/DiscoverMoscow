@@ -12,3 +12,23 @@
         color: #fff;
     }
 }
+
+.sub_tag, .main_color {
+    option {
+        display: none;
+        position: relative;
+        &.active {
+            display: block;
+        }
+        &:before {
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            height: 2em;
+            width: 20px;
+        }
+    }
+}
+
+.hidden {visibility: hidden}

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'blog',
     'subscriber',
     'dashboard',
+    'guides',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -240,3 +241,5 @@ SITE_URL = 'https://moscowwithyou.ru'
 EL_PAGINATION_PER_PAGE = 23
 JQUERY_URL = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
+
+X_FRAME_OPTIONS = 'ALLOW-FROM webvisor.com'

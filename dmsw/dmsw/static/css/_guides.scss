@@ -1,0 +1,139 @@
+.guides-header {
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  font-family: 'ALS Gorizont ExtraBold Expanded';
+  padding: calc(100vw * 0.03) 110px;
+  font-size: calc(100vw * 0.03);
+}
+
+.guides-header h1 {
+  color: #FFFFFF;
+  line-height: 0.85em;
+}
+
+.container-flex {
+  display: flex;
+}
+
+.container-guides, .container-maps {
+  width: 50%;
+  min-height: 50vh;
+}
+
+.container-guide {
+  width: 100%;
+  min-height: 50vh;
+
+  .block-guide_block {
+    position: relative;
+    z-index: 19;
+    color: #FFFFFF;
+  }
+
+  .guide-block {
+    padding: calc(100vw * 0.10) calc(100vw * 0.15);
+    display: flex;
+    justify-content: space-between;
+
+    .rich-text {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      width: 50%;
+    }
+
+    img {
+      max-height: calc(100vw * 0.5);
+      width: auto;
+      max-width: calc(50% - 100vw * 0.05);
+    }
+
+    h3 {
+      font-size: calc(100vw * 0.04);
+      padding-bottom: calc(100vw * 0.04);
+      font-weight: 500;
+    }
+
+    h4 {
+      font-size: calc(100vw * 0.02);
+      padding-bottom: calc(100vw * 0.04);
+      font-weight: 500;
+    }
+
+    a {
+      font-size: calc(100vw * 0.018);
+      color: #FFFFFF;
+      padding: 0 calc(100vw * 0.05);
+      border-radius: calc(100vw * 0.018);
+      border: 1px solid #FFFFFF;
+      text-decoration: none;
+      line-height: 1.6em;
+      display: inline-block;
+      font-weight: 300;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+.guide-inner {
+  min-height: 100%;
+  position: relative;
+  padding-bottom: calc(100vw * 0.17);
+
+  .guides-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: bottom center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: opacity(0.21);
+  }
+}
+
+.local-link {
+  padding: calc(100vw * 0.04) 70px;
+  position: relative;
+  z-index: 99;
+
+  a {
+    display: inline-block;
+    font-size: calc(100vw * 0.04);
+    font-weight: 600;
+    color: #ffffff;
+    padding-bottom: calc(100vw * 0.04);
+  }
+}
+
+@media only screen and (max-width: 1125px) {
+  .container-flex {
+    display: flex;
+    flex-direction: column;
+  }
+  .guides-header {
+    display: none;
+  }
+  .local-link a {
+    font-size: calc(100vw * 0.07);
+  }
+  .guide-inner {
+    padding-top: calc(100vw * 0.17);
+  }
+  .container-guides, .container-maps {
+    width: 100%;
+    min-height: auto;
+
+    .block-link {
+      text-align: center;
+    }
+  }
+  .container-guide {
+
+  }
+}

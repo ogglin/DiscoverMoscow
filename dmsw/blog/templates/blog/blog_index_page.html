@@ -3,7 +3,13 @@
 {% load static wagtailcore_tags wagtailimages_tags cfilters widget_tweaks el_pagination_tags %}
 
 {% block body_class %}template-blogindexpage{% endblock %}
-
+<!--[if  gte IE 6]>
+  <style type="text/css">
+   .card-item {
+      width: calc(100% / var(--columns) - 0.01%);
+    }
+  </style>
+<![endif]-->
 {% block content %}
     <div class="card-wrap">
         {% lazy_paginate blogpages %}

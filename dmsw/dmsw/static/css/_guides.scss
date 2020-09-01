@@ -82,7 +82,7 @@
 .guide-inner {
   min-height: 100%;
   position: relative;
-  padding-bottom: calc(100vw * 0.17);
+  padding-bottom: calc(100vw * 0.09);
 
   .guides-bg {
     position: absolute;
@@ -98,16 +98,16 @@
 }
 
 .local-link {
-  padding: calc(100vw * 0.04) 70px;
+  padding: calc(100vw * 0.05) 70px calc(100vw * 0.04);
   position: relative;
   z-index: 99;
 
   a {
     display: inline-block;
-    font-size: calc(100vw * 0.04);
+    font-size: calc(100vw * 0.03);
     font-weight: 600;
     color: #ffffff;
-    padding-bottom: calc(100vw * 0.04);
+    padding-bottom: calc(100vw * 0.03);
   }
 }
 
@@ -120,10 +120,14 @@
     display: none;
   }
   .local-link a {
-    font-size: calc(100vw * 0.07);
+    font-size: 26px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
   }
   .guide-inner {
-    padding-top: calc(100vw * 0.17);
+    padding-top: calc(100vw * 0.09);
+    padding-bottom: calc(100vw * 0.09);
   }
   .container-guides, .container-maps {
     width: 100%;

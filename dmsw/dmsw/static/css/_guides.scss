@@ -120,6 +120,9 @@
     display: none;
   }
   .local-link a {
+    font-size: calc(100vw * 0.04);
+  }
+  .container-guide .guide-block a {
     font-size: 26px;
     display: inline-block;
     width: 100%;

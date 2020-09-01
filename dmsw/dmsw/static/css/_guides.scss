@@ -123,14 +123,14 @@
     font-size: calc(100vw * 0.04);
   }
   .container-guide .guide-block a {
-    font-size: 26px;
+    font-size: calc(100vw * 0.037);
     display: inline-block;
     width: 100%;
     text-align: center;
   }
   .guide-inner {
-    padding-top: calc(100vw * 0.09);
-    padding-bottom: calc(100vw * 0.09);
+    padding-top: calc(100vw * 0.17);
+    padding-bottom: calc(100vw * 0.17);
   }
   .container-guides, .container-maps {
     width: 100%;

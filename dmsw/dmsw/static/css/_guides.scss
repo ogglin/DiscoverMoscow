@@ -111,7 +111,7 @@
   }
 }
 
-@media only screen and (max-width: 1125px) {
+@media only screen and (max-width: 767px) {
   .container-flex {
     display: flex;
     flex-direction: column;
@@ -120,7 +120,8 @@
     display: none;
   }
   .local-link a {
-    font-size: calc(100vw * 0.04);
+    font-size: calc(100vw * 0.070);
+    padding-bottom: calc(100vw * 0.055);
   }
   .container-guide .guide-block a {
     font-size: calc(100vw * 0.037);

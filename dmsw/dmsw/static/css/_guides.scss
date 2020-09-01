@@ -112,6 +112,21 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .container-guide {
+    .guide-block {
+      padding: calc(100vw * 0.10) calc(100vw * 0.075);
+      h3 {
+        font-size: calc(100vw * 0.055);
+      }
+      h4 {
+        font-size: calc(100vw * 0.03);
+      }
+      .rich-text {
+        width: calc(50% + 100vw * 0.04);
+      }
+    }
+  }
+
   .container-flex {
     display: flex;
     flex-direction: column;
